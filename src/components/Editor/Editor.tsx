@@ -9,7 +9,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { BubbleMenu, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextareaAutosize from "react-textarea-autosize";
-
+import Link from "@tiptap/extension-link";
 import {
   BoilerplateDocument,
   SlashCommands,
@@ -22,6 +22,8 @@ import LinkComponent from "@/lib/tiptap/link/Extension";
 import { useRef, useState } from "react";
 import EditorContent from "./EditorContent";
 import Icons from "../Icons";
+import tippy from "tippy.js";
+
 const Editor = () => {
   const [isAddSubtitle, setIsAddSubtitle] = useState(false);
 
@@ -31,7 +33,9 @@ const Editor = () => {
   const editor = useEditor({
     extensions: [
       BoilerplateDocument,
-      LinkComponent,
+      Link.configure({
+        openOnClick: false,
+      }),
       StarterKit.configure({
         document: false,
         bulletList: {
@@ -59,7 +63,9 @@ const Editor = () => {
           return 'Nhập " / " để mở các lệnh…';
         },
       }),
-      Focus,
+      Focus.configure({
+        mode: "deepest",
+      }),
     ],
     editorProps: {
       attributes: {
@@ -130,7 +136,7 @@ const Editor = () => {
         </HStack>
 
         <TextareaAutosize
-          className="w-full text-4xl font-bold outline-none border-none resize-none"
+          className="w-full text-4xl font-bold border-none outline-none resize-none"
           placeholder="Tiêu đề..."
           autoFocus
           onKeyDown={handleTitleKeyDown}
@@ -139,7 +145,7 @@ const Editor = () => {
 
         {isAddSubtitle && (
           <TextareaAutosize
-            className="w-full text-3xl font-medium outline-none border-none resize-none"
+            className="w-full text-3xl font-medium border-none outline-none resize-none"
             placeholder="Phụ đề..."
             onKeyDown={handleSubtitleKeyDown}
             ref={subtitleTextareaRef}
@@ -153,7 +159,18 @@ const Editor = () => {
         />
       </Box>
       {editor && (
-        <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+        <BubbleMenu
+          editor={editor}
+          tippyOptions={{ duration: 100 }}
+          shouldShow={({ editor }) => {
+            return (
+              (editor.isActive("bold") ||
+                editor.isActive("italic") ||
+                editor.isActive("strike")) &&
+              !editor.isActive("link")
+            );
+          }}
+        >
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={editor.isActive("bold") ? "is-active" : ""}
@@ -171,6 +188,78 @@ const Editor = () => {
             className={editor.isActive("strike") ? "is-active" : ""}
           >
             strike
+          </button>
+        </BubbleMenu>
+      )}
+
+      {editor && (
+        <BubbleMenu
+          editor={editor}
+          tippyOptions={{ duration: 100 }}
+          shouldShow={({ editor }) => {
+            return editor.isActive("link");
+          }}
+        >
+          <button
+            onClick={() => {
+              editor.chain().focus().toggleLink({ href: "/" }).run();
+              const anchorEl = window.getSelection()?.anchorNode?.parentElement;
+
+              if (!anchorEl) return;
+
+              tippy(anchorEl, {
+                content: `
+                <div class='wrapper'>
+                  <input id='text-input' class='input' placeholder='Test'/>
+                  <input id='link-input' class='input' placeholder='Test'/>
+                  <button id='btn-insert'>Insert link</button>
+                </div>
+                `,
+                appendTo: () => document.body,
+                showOnCreate: true,
+                interactive: true,
+                trigger: "manual",
+                placement: "bottom-start",
+                allowHTML: true,
+                onMount: (instance) => {
+                  const textInput = instance.popper.querySelector(
+                    "#text-input"
+                  ) as HTMLInputElement;
+                  const linkInput = instance.popper.querySelector(
+                    "#link-input"
+                  ) as HTMLInputElement;
+
+                  const btnInsert = instance.popper.querySelector(
+                    "#btn-insert"
+                  ) as HTMLButtonElement;
+
+                  if (!textInput || !linkInput || !btnInsert) return;
+                  textInput.focus();
+                  linkInput.value = anchorEl.getAttribute("href") || "";
+                  btnInsert.onclick = () => {
+                    editor
+                      .chain()
+                      .focus()
+                      .setLink({ href: linkInput.value })
+                      .selectNodeBackward()
+                      .run();
+                    instance.destroy();
+                  };
+                },
+              });
+            }}
+            className={editor.isActive("bold") ? "is-active" : ""}
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              editor.chain().focus().unsetLink().run();
+              console.log(window.getSelection());
+            }}
+            className={editor.isActive("link") ? "is-active" : ""}
+          >
+            Unlink
           </button>
         </BubbleMenu>
       )}

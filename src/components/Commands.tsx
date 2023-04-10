@@ -1,8 +1,13 @@
 import { TItem } from "@/lib/tiptap";
 import { Text } from "@chakra-ui/react";
 import classnames from "classnames";
-import React, { useImperativeHandle } from "react";
-import { useEffect, useState } from "react";
+import React, {
+  useImperativeHandle,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 
 interface IProps {
   items: TItem[];
@@ -13,6 +18,42 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const totalItems = items.length;
 
+  const currentItemActiveRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    return () => setSelectedIndex(0);
+  }, [items]);
+
+  const onKeydown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowUp") {
+        event.stopPropagation();
+        setSelectedIndex((prev) => (prev + totalItems - 1) % totalItems);
+        return true;
+      }
+
+      if (event.key === "ArrowDown") {
+        event.stopPropagation();
+        setSelectedIndex((prev) => (prev + 1) % totalItems);
+        return true;
+      }
+
+      if (event.key === "Enter") {
+        event.stopPropagation();
+        command(items[selectedIndex]);
+
+        return true;
+      }
+
+      return false;
+    },
+    [command, items, selectedIndex, totalItems]
+  );
+
+  useEffect(() => {
+    currentItemActiveRef.current?.scrollIntoView(false);
+  }, [selectedIndex]);
+
   useImperativeHandle(
     ref,
     () => {
@@ -20,46 +61,8 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
         onKeydown,
       };
     },
-    [items, selectedIndex]
+    [onKeydown]
   );
-
-  useEffect(() => {
-    return () => setSelectedIndex(0);
-  }, [items]);
-
-  const onKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowUp") {
-      event.stopPropagation();
-      upHandler();
-      return true;
-    }
-
-    if (event.key === "ArrowDown") {
-      event.stopPropagation();
-      downHandler();
-      return true;
-    }
-
-    if (event.key === "Enter") {
-      event.stopPropagation();
-      enterHandler();
-      return true;
-    }
-
-    return false;
-  };
-
-  const upHandler = () => {
-    setSelectedIndex((prev) => (prev + totalItems - 1) % totalItems);
-  };
-
-  const downHandler = () => {
-    setSelectedIndex((prev) => (prev + 1) % totalItems);
-  };
-
-  const enterHandler = () => {
-    command(items[selectedIndex]);
-  };
 
   return (
     <div
@@ -80,6 +83,9 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
               }
             )}
             onClick={() => command(item)}
+            ref={(el) => {
+              if (isActive) currentItemActiveRef.current = el;
+            }}
           >
             <div
               className={classnames(
@@ -90,9 +96,9 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
                 }
               )}
             >
-              {<item.icon className="h-6 w-6" />}
+              {<item.icon className="w-6 h-6" />}
             </div>
-            <div className="flex flex-col flex-1 items-start">
+            <div className="flex flex-col items-start flex-1">
               <Text fontSize="md" fontWeight="medium">
                 {item.title}
               </Text>
@@ -106,5 +112,7 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
     </div>
   );
 });
+
+Commands.displayName = "Commands";
 
 export default Commands;

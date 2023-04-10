@@ -15,19 +15,19 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const headerRef = useRef<HTMLElement>(null);
   const [isScrollUp, setIsScrollUp] = useState(false);
 
-  let lastPositionY = 0;
-
-  const handleScroll = () => {
-    const header = headerRef.current;
-    if (!header) return;
-
-    const currentPositionY = window.scrollY;
-    setIsScrollUp(currentPositionY > lastPositionY);
-
-    lastPositionY = currentPositionY;
-  };
-
   useEffect(() => {
+    let lastPositionY = 0;
+
+    const handleScroll = () => {
+      const header = headerRef.current;
+      if (!header) return;
+
+      const currentPositionY = window.scrollY;
+      setIsScrollUp(currentPositionY > lastPositionY);
+
+      lastPositionY = currentPositionY;
+    };
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {

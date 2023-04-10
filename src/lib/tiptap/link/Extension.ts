@@ -15,6 +15,12 @@ export default Node.create({
       count: {
         default: 0,
       },
+      href: {
+        default: "",
+      },
+      text: {
+        default: "Edit this text",
+      },
     };
   },
 
