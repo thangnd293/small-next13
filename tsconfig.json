@@ -28,8 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/lib/tiptap/renderItems copy.tsx",
-    "src/lib/tiptap/renderI.jsx"
+    "src/lib/tiptap/render.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -2,28 +2,30 @@
 
 import "@/styles/tiptap.scss";
 
-import { Box, Button, HStack } from "@chakra-ui/react";
-import Focus from "@tiptap/extension-focus";
-import Highlight from "@tiptap/extension-highlight";
-import Placeholder from "@tiptap/extension-placeholder";
-import { BubbleMenu, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import TextareaAutosize from "react-textarea-autosize";
-import Link from "@tiptap/extension-link";
 import {
   BoilerplateDocument,
   SlashCommands,
   getSuggestionItems,
   render,
 } from "@/lib/tiptap";
-
-import LinkComponent from "@/lib/tiptap/link/Extension";
+import { Box, Button, HStack } from "@chakra-ui/react";
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { useRef, useState } from "react";
-import EditorContent from "./EditorContent";
 import Icons from "../Icons";
-import tippy from "tippy.js";
+import CommonBubbleMenu from "./CommonBubbleMenu";
+import EditorContent from "./EditorContent";
+import LinkBubbleMenu from "./LinkBubbleMenu";
+import Code from "@tiptap/extension-code";
 
+const CustomLink = Link.extend({
+  selectable: true,
+});
 const Editor = () => {
   const [isAddSubtitle, setIsAddSubtitle] = useState(false);
 
@@ -33,18 +35,19 @@ const Editor = () => {
   const editor = useEditor({
     extensions: [
       BoilerplateDocument,
-      Link.configure({
+      CustomLink.configure({
         openOnClick: false,
+        autolink: false,
       }),
       StarterKit.configure({
         document: false,
         bulletList: {
           keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
         orderedList: {
           keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
       }),
       Highlight,
@@ -63,9 +66,7 @@ const Editor = () => {
           return 'Nhập " / " để mở các lệnh…';
         },
       }),
-      Focus.configure({
-        mode: "deepest",
-      }),
+      Code,
     ],
     editorProps: {
       attributes: {
@@ -136,7 +137,7 @@ const Editor = () => {
         </HStack>
 
         <TextareaAutosize
-          className="w-full text-4xl font-bold border-none outline-none resize-none"
+          className="w-full text-4xl font-bold border-none outline-none resize-none leading-relaxed"
           placeholder="Tiêu đề..."
           autoFocus
           onKeyDown={handleTitleKeyDown}
@@ -158,111 +159,8 @@ const Editor = () => {
           subtitleTextareaRef={subtitleTextareaRef}
         />
       </Box>
-      {editor && (
-        <BubbleMenu
-          editor={editor}
-          tippyOptions={{ duration: 100 }}
-          shouldShow={({ editor }) => {
-            return (
-              (editor.isActive("bold") ||
-                editor.isActive("italic") ||
-                editor.isActive("strike")) &&
-              !editor.isActive("link")
-            );
-          }}
-        >
-          <button
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            className={editor.isActive("bold") ? "is-active" : ""}
-          >
-            bold
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={editor.isActive("italic") ? "is-active" : ""}
-          >
-            italic
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleHighlight().run()}
-            className={editor.isActive("strike") ? "is-active" : ""}
-          >
-            strike
-          </button>
-        </BubbleMenu>
-      )}
-
-      {editor && (
-        <BubbleMenu
-          editor={editor}
-          tippyOptions={{ duration: 100 }}
-          shouldShow={({ editor }) => {
-            return editor.isActive("link");
-          }}
-        >
-          <button
-            onClick={() => {
-              editor.chain().focus().toggleLink({ href: "/" }).run();
-              const anchorEl = window.getSelection()?.anchorNode?.parentElement;
-
-              if (!anchorEl) return;
-
-              tippy(anchorEl, {
-                content: `
-                <div class='wrapper'>
-                  <input id='text-input' class='input' placeholder='Test'/>
-                  <input id='link-input' class='input' placeholder='Test'/>
-                  <button id='btn-insert'>Insert link</button>
-                </div>
-                `,
-                appendTo: () => document.body,
-                showOnCreate: true,
-                interactive: true,
-                trigger: "manual",
-                placement: "bottom-start",
-                allowHTML: true,
-                onMount: (instance) => {
-                  const textInput = instance.popper.querySelector(
-                    "#text-input"
-                  ) as HTMLInputElement;
-                  const linkInput = instance.popper.querySelector(
-                    "#link-input"
-                  ) as HTMLInputElement;
-
-                  const btnInsert = instance.popper.querySelector(
-                    "#btn-insert"
-                  ) as HTMLButtonElement;
-
-                  if (!textInput || !linkInput || !btnInsert) return;
-                  textInput.focus();
-                  linkInput.value = anchorEl.getAttribute("href") || "";
-                  btnInsert.onclick = () => {
-                    editor
-                      .chain()
-                      .focus()
-                      .setLink({ href: linkInput.value })
-                      .selectNodeBackward()
-                      .run();
-                    instance.destroy();
-                  };
-                },
-              });
-            }}
-            className={editor.isActive("bold") ? "is-active" : ""}
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => {
-              editor.chain().focus().unsetLink().run();
-              console.log(window.getSelection());
-            }}
-            className={editor.isActive("link") ? "is-active" : ""}
-          >
-            Unlink
-          </button>
-        </BubbleMenu>
-      )}
+      <CommonBubbleMenu editor={editor} />
+      <LinkBubbleMenu editor={editor} />
     </>
   );
 };

@@ -32,7 +32,7 @@
   }
 
   p.is-empty:first-of-type::before,
-  p.is-empty.has-focus::before {
+  p.is-empty::before {
     color: #adb5bd;
     content: attr(data-placeholder);
     float: left;
@@ -43,6 +43,15 @@
   ul,
   ol {
     padding: 0 1rem;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    border-radius: 0.25em;
+    box-decoration-break: clone;
+    color: #616161;
+    font-size: 0.9rem;
+    padding: 0.25em;
   }
 
   .link-component {
