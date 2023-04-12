@@ -2,7 +2,7 @@ import { displayEditLinkPopup } from "@/lib/tiptap";
 import { Editor } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/react";
 import Icons from "../Icons";
-import classNames from "classnames";
+import { ToolbarButton } from "./ToolbarButton";
 
 interface IProps {
   editor: Editor | null;
@@ -12,31 +12,31 @@ const LinkBubbleMenu = ({ editor }: IProps) => {
 
   const actions = [
     {
-      name: "Go to",
-      action: () => {
+      label: "Truy cập",
+      onClick: () => {
         const anchorEl = window.getSelection()?.anchorNode?.parentElement;
         const href = anchorEl?.getAttribute("href");
         if (href) window.open(href, "_blank");
       },
-      icon: Icons.Goto,
+      Icon: Icons.Goto,
       isDisabled: () => {
         const anchorEl = window.getSelection()?.anchorNode?.parentElement;
         return !anchorEl?.getAttribute("href");
       },
     },
     {
-      name: "Edit",
-      action: () => {
+      label: "Chỉnh sửa",
+      onClick: () => {
         displayEditLinkPopup(editor);
       },
-      icon: Icons.Pencil,
+      Icon: Icons.Pencil,
     },
     {
-      name: "Unlink",
-      action: () => {
+      label: "Unlink",
+      onClick: () => {
         editor.chain().focus().unsetLink().run();
       },
-      icon: Icons.Unlink,
+      Icon: Icons.Unlink,
     },
   ];
 
@@ -50,22 +50,7 @@ const LinkBubbleMenu = ({ editor }: IProps) => {
       }}
     >
       {actions.map((item) => (
-        <button
-          key={item.name}
-          className={classNames(
-            "py-1.5 px-2.5 rounded-full hover:bg-slate-100",
-            {
-              "text-slate-300 cursor-not-allowed pointer-events-none":
-                item.isDisabled?.(),
-            }
-          )}
-          onClick={() => {
-            if (item.isDisabled?.()) return;
-            item.action();
-          }}
-        >
-          {<item.icon />}
-        </button>
+        <ToolbarButton {...item} isDisabled={item.isDisabled?.()} />
       ))}
     </BubbleMenu>
   );

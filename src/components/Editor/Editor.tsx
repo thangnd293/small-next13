@@ -16,15 +16,24 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextareaAutosize from "react-textarea-autosize";
 
+import { ImageComponent } from "@/lib/tiptap/components/Image";
+import Code from "@tiptap/extension-code";
 import { useRef, useState } from "react";
 import Icons from "../Icons";
 import CommonBubbleMenu from "./CommonBubbleMenu";
 import EditorContent from "./EditorContent";
 import LinkBubbleMenu from "./LinkBubbleMenu";
-import Code from "@tiptap/extension-code";
 
 const CustomLink = Link.extend({
   selectable: true,
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      "data-id": {
+        default: null,
+      },
+    };
+  },
 });
 const Editor = () => {
   const [isAddSubtitle, setIsAddSubtitle] = useState(false);
@@ -34,6 +43,7 @@ const Editor = () => {
 
   const editor = useEditor({
     extensions: [
+      ImageComponent,
       BoilerplateDocument,
       CustomLink.configure({
         openOnClick: false,
@@ -70,9 +80,10 @@ const Editor = () => {
     ],
     editorProps: {
       attributes: {
-        class: "outline-none",
+        class: "outline-none pb-40 min-h-screen",
       },
     },
+    content: ``,
   });
 
   const handleTitleKeyDown = (
@@ -134,6 +145,7 @@ const Editor = () => {
               Thêm phụ đề
             </Button>
           )}
+          <Button onClick={() => console.log(editor?.getHTML())}>Export</Button>
         </HStack>
 
         <TextareaAutosize

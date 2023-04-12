@@ -1,8 +1,10 @@
 import { Editor } from "@tiptap/core";
 import tippy from "tippy.js";
 
-export const displayEditLinkPopup = (editor: Editor) => {
-  const anchorEl = window.getSelection()?.anchorNode?.parentElement;
+export const displayEditLinkPopup = (editor: Editor, id?: number) => {
+  const anchorEl = id
+    ? document.querySelector(`a[data-id="${id}"]`)
+    : window.getSelection()?.anchorNode?.parentElement;
   if (!anchorEl) return;
 
   tippy(anchorEl, {

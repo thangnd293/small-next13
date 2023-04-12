@@ -91,37 +91,49 @@ const items: TItem[] = [
         from: range.from,
         to: range.from + "Edit this text".length + 1,
       };
+
+      const id = new Date().getTime();
+      // editor
+      //   .chain()
+      //   .focus()
+      //   .deleteRange(range)
+      //   .insertContent("Edit this text")
+      //   .setTextSelection(newRange)
+      //   .setMark(Link.name, {
+      //     href: "",
+      //     "data-id": id,
+      //   })
+      //   .extendMarkRange(Link.name)
+      //   .run();
+
       editor
         .chain()
         .focus()
         .deleteRange(range)
-        .insertContent("Edit this text")
-        .setTextSelection(newRange)
+        .extendMarkRange("link")
         .setLink({ href: "" })
+        .command(({ tr }) => {
+          tr.insertText("Edit this text");
+          return true;
+        })
         .run();
 
       displayEditLinkPopup(editor);
     },
   },
   {
-    icon: Icons.Text,
-    title: "image",
-    description: "Văn bản",
+    icon: Icons.Image,
+    title: "Image",
+    description: "Tải ảnh lên",
     command: ({ editor, range }) => {
-      console.log(
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .insertContent("Edit this text")
-          .setTextSelection({
-            from: range.from,
-            to: range.from + "Edit this text".length + 1,
-          })
-          .toggleLink({ href: "" })
-
-          .run()
-      );
+      return editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertContentAt(range.from, {
+          type: "imageComponent",
+        })
+        .run();
     },
   },
 ];

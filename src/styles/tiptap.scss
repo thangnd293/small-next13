@@ -20,19 +20,12 @@
   }
 
   a {
-    color: #68cef8;
+    color: #292929;
+    text-decoration: underline;
   }
 
-  .is-empty:not(p):before {
-    color: #adb5bd;
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
-  }
-
-  p.is-empty:first-of-type::before,
-  p.is-empty::before {
+  p.is-empty.is-editor-empty:first-of-type::before,
+  p.is-empty:before {
     color: #adb5bd;
     content: attr(data-placeholder);
     float: left;
