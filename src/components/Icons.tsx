@@ -6,6 +6,7 @@ import {
   ChartBarIcon,
   ChevronLeftIcon,
   DocumentChartBarIcon,
+  DocumentDuplicateIcon,
   DocumentIcon,
   DocumentPlusIcon,
   HeartIcon,
@@ -293,6 +294,7 @@ const Icons = {
   OutlineHighlight: AiOutlineHighlight,
   XMark: XMarkIcon,
   Upload: ArrowUpTrayIcon,
+  Copy: DocumentDuplicateIcon,
 };
 
 export default Icons;

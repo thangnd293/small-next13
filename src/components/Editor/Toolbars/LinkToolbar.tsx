@@ -1,13 +1,13 @@
 import { displayEditLinkPopup } from "@/lib/tiptap";
 import { Editor } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/react";
-import Icons from "../Icons";
-import { ToolbarButton } from "./ToolbarButton";
+import Icons from "../../Icons";
+import { ToolbarButton } from "../ToolbarButton";
 
 interface IProps {
   editor: Editor | null;
 }
-const LinkBubbleMenu = ({ editor }: IProps) => {
+export const LinkToolbar = ({ editor }: IProps) => {
   if (!editor) return null;
 
   const actions = [
@@ -50,10 +50,12 @@ const LinkBubbleMenu = ({ editor }: IProps) => {
       }}
     >
       {actions.map((item) => (
-        <ToolbarButton {...item} isDisabled={item.isDisabled?.()} />
+        <ToolbarButton
+          key={item.label}
+          {...item}
+          isDisabled={item.isDisabled?.()}
+        />
       ))}
     </BubbleMenu>
   );
 };
-
-export default LinkBubbleMenu;

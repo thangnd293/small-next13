@@ -2,13 +2,13 @@ import { Editor } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/react";
 import { Fragment } from "react";
 
-import Icons from "../Icons";
-import { ToolbarButton } from "./ToolbarButton";
+import Icons from "../../Icons";
+import { ToolbarButton } from "../ToolbarButton";
 
 interface IProps {
   editor: Editor | null;
 }
-const CommonBubbleMenu = ({ editor }: IProps) => {
+export const CommonToolbar = ({ editor }: IProps) => {
   if (!editor) return null;
 
   const actions = [
@@ -98,21 +98,23 @@ const CommonBubbleMenu = ({ editor }: IProps) => {
 
   return (
     <BubbleMenu
-      className="flex items-center p-1 bg-white border border-slate-200 rounded-xl shadow-sm space-x-1"
+      className="flex items-center p-1 space-x-1 bg-white border shadow-sm border-slate-200 rounded-xl"
       editor={editor}
       tippyOptions={{ duration: 100 }}
       shouldShow={({ editor, state }) => {
-        return !editor.isActive("link") && !state.selection.empty;
+        return (
+          !editor.isActive("link") &&
+          !state.selection.empty &&
+          !editor.isActive("codeBlockComponent")
+        );
       }}
     >
       {actions.map((item) => (
         <Fragment key={item.label}>
           <ToolbarButton {...item} />
-          {item.hasDivider && <hr className="h-7 border-l " />}
+          {item.hasDivider && <hr className="border-l h-7 " />}
         </Fragment>
       ))}
     </BubbleMenu>
   );
 };
-
-export default CommonBubbleMenu;

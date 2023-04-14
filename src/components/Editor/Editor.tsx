@@ -1,5 +1,3 @@
-"use client";
-
 import "@/styles/tiptap.scss";
 
 import {
@@ -8,7 +6,18 @@ import {
   getSuggestionItems,
   render,
 } from "@/lib/tiptap";
+import { useRef, useState } from "react";
+
+import css from "highlight.js/lib/languages/css";
+import java from "highlight.js/lib/languages/java";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import html from "highlight.js/lib/languages/xml";
+import { lowlight } from "lowlight/lib/core";
+
 import { Box, Button, HStack } from "@chakra-ui/react";
+import Code from "@tiptap/extension-code";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -17,12 +26,17 @@ import StarterKit from "@tiptap/starter-kit";
 import TextareaAutosize from "react-textarea-autosize";
 
 import { ImageComponent } from "@/lib/tiptap/components/Image";
-import Code from "@tiptap/extension-code";
-import { useRef, useState } from "react";
 import Icons from "../Icons";
-import CommonBubbleMenu from "./CommonBubbleMenu";
 import EditorContent from "./EditorContent";
-import LinkBubbleMenu from "./LinkBubbleMenu";
+import { CommonToolbar, LinkToolbar } from "./Toolbars";
+
+lowlight.registerLanguage("html", html);
+lowlight.registerLanguage("css", css);
+lowlight.registerLanguage("js", js);
+lowlight.registerLanguage("ts", ts);
+lowlight.registerLanguage("java", java);
+
+import CodeBlockExtension from "@/lib/tiptap/components/CodeBlock/CodeBlockExtension";
 
 const CustomLink = Link.extend({
   selectable: true,
@@ -35,14 +49,15 @@ const CustomLink = Link.extend({
     };
   },
 });
+
 const Editor = () => {
   const [isAddSubtitle, setIsAddSubtitle] = useState(false);
 
   const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const subtitleTextareaRef = useRef<HTMLTextAreaElement>(null);
-
   const editor = useEditor({
     extensions: [
+      CodeBlockExtension,
       ImageComponent,
       BoilerplateDocument,
       CustomLink.configure({
@@ -51,6 +66,7 @@ const Editor = () => {
       }),
       StarterKit.configure({
         document: false,
+        codeBlock: false,
         bulletList: {
           keepMarks: true,
           keepAttributes: false,
@@ -77,6 +93,13 @@ const Editor = () => {
         },
       }),
       Code,
+
+      CodeBlockLowlight.configure({
+        lowlight,
+        exitOnTripleEnter: false,
+        exitOnArrowDown: false,
+        defaultLanguage: "js",
+      }),
     ],
     editorProps: {
       attributes: {
@@ -145,11 +168,10 @@ const Editor = () => {
               Thêm phụ đề
             </Button>
           )}
-          <Button onClick={() => console.log(editor?.getHTML())}>Export</Button>
         </HStack>
 
         <TextareaAutosize
-          className="w-full text-4xl font-bold border-none outline-none resize-none leading-relaxed"
+          className="w-full text-4xl font-bold leading-relaxed border-none outline-none resize-none"
           placeholder="Tiêu đề..."
           autoFocus
           onKeyDown={handleTitleKeyDown}
@@ -171,8 +193,8 @@ const Editor = () => {
           subtitleTextareaRef={subtitleTextareaRef}
         />
       </Box>
-      <CommonBubbleMenu editor={editor} />
-      <LinkBubbleMenu editor={editor} />
+      <CommonToolbar editor={editor} />
+      <LinkToolbar editor={editor} />
     </>
   );
 };

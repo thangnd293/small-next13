@@ -1,5 +1,3 @@
-"use client";
-
 import { Editor, EditorContent as TiptapEditorContent } from "@tiptap/react";
 
 interface IProps {
