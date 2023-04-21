@@ -8,6 +8,7 @@ const useCloudinaryUpload = (onDone?: (value: string) => void) => {
   const [error, setError] = useState<unknown>(null);
   const [url, setUrl] = useState<string>("");
 
+  const clearUrl = useCallback(() => setUrl(""), []);
   const handleUploadToCloudinary = useCallback(
     async (file: File) => {
       setIsUploading(true);
@@ -38,6 +39,7 @@ const useCloudinaryUpload = (onDone?: (value: string) => void) => {
     isUploading,
     error,
     url,
+    clearUrl,
   } as const;
 };
 

@@ -92,13 +92,13 @@ const Image = (props: NodeViewProps) => {
               onClick={showUploader}
             >
               {isUploading || !src ? (
-                <div className="w-full h-32 flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 hover:bg-gray-100 cursor-pointer select-none">
+                <div className="flex items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer select-none hover:bg-gray-100">
                   {isUploading ? (
                     <div className="flex items-center gap-2">
                       <Spinner /> Đang tải ảnh
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 text-slate-500 text-xl font-semibold cursor-pointer  rounded-lg p-2">
+                    <div className="flex items-center gap-2 p-2 text-xl font-semibold rounded-lg cursor-pointer text-slate-500">
                       <Icons.Photo width={24} height={24} /> Thêm ảnh
                     </div>
                   )}

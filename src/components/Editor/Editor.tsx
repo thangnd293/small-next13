@@ -15,7 +15,19 @@ import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import { lowlight } from "lowlight/lib/core";
 
-import { Box, Button, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  IconButton,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  Tooltip,
+} from "@chakra-ui/react";
 import Code from "@tiptap/extension-code";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Highlight from "@tiptap/extension-highlight";
@@ -36,6 +48,7 @@ lowlight.registerLanguage("js", js);
 lowlight.registerLanguage("ts", ts);
 lowlight.registerLanguage("java", java);
 
+import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
 import CodeBlockExtension from "@/lib/tiptap/components/CodeBlock/CodeBlockExtension";
 
 const CustomLink = Link.extend({
@@ -52,6 +65,16 @@ const CustomLink = Link.extend({
 
 const Editor = () => {
   const [isAddSubtitle, setIsAddSubtitle] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const { handleUploadToCloudinary, isUploading, url, clearUrl } =
+    useCloudinaryUpload();
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    handleUploadToCloudinary(file);
+  };
 
   const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const subtitleTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -149,16 +172,55 @@ const Editor = () => {
     }
   };
 
+  console.log("url", url);
+
   return (
     <>
       <Box px="24px">
         <HStack spacing="20px" mb="10px">
-          <Button
-            variant="text"
-            leftIcon={<Icons.Photo width="24px" height="24px" />}
-          >
-            Thêm ảnh bìa
-          </Button>
+          {!url && (
+            <Popover placement="bottom-start">
+              <PopoverTrigger>
+                <Button
+                  variant="text"
+                  leftIcon={
+                    isUploading ? (
+                      <Icons.Loading
+                        className="animate-spin"
+                        width="24px"
+                        height="24px"
+                      />
+                    ) : (
+                      <Icons.Photo width="24px" height="24px" />
+                    )
+                  }
+                >
+                  {isUploading ? "Đang tải lên" : "Tải ảnh lên"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[732px]">
+                <PopoverCloseButton />
+                <PopoverHeader>Tải ảnh lên</PopoverHeader>
+                <PopoverBody className="p-5">
+                  <div
+                    className="flex items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer select-none hover:bg-gray-100"
+                    onClick={() => inputRef.current?.click()}
+                  >
+                    <div className="flex items-center gap-2 p-2 text-xl font-semibold rounded-lg cursor-pointer text-slate-500">
+                      <Icons.Photo width={24} height={24} /> Thêm ảnh
+                      <input
+                        className="hidden"
+                        type="file"
+                        accept=".png, .jpg, .jpeg"
+                        onChange={handleFileChange}
+                        ref={inputRef}
+                      />
+                    </div>
+                  </div>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          )}
           {!isAddSubtitle && (
             <Button
               variant="text"
@@ -169,7 +231,27 @@ const Editor = () => {
             </Button>
           )}
         </HStack>
-
+        {url && (
+          <Box className="relative aspect-[40/21]">
+            <Tooltip label="Xóa ảnh bìa">
+              <IconButton
+                colorScheme="gray"
+                className="absolute top-1 right-1"
+                aria-label={"Delete background image"}
+                onClick={clearUrl}
+              >
+                <Icons.XMark width="24px" height="24px" />
+              </IconButton>
+            </Tooltip>
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: `url(${url}) no-repeat center center / cover`,
+              }}
+            />
+          </Box>
+        )}
         <TextareaAutosize
           className="w-full text-4xl font-bold leading-relaxed border-none outline-none resize-none"
           placeholder="Tiêu đề..."

@@ -18,7 +18,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { SVGAttributes } from "react";
-import { AiOutlineHighlight } from "react-icons/ai";
+import { AiOutlineHighlight, AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Icons = {
   Logo: () => (
@@ -295,6 +295,7 @@ const Icons = {
   XMark: XMarkIcon,
   Upload: ArrowUpTrayIcon,
   Copy: DocumentDuplicateIcon,
+  Loading: AiOutlineLoading3Quarters,
 };
 
 export default Icons;

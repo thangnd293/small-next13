@@ -13,7 +13,6 @@ const options = [
 export const CodeBlock = (props: NodeViewProps) => {
   const { updateAttributes, editor, deleteNode, node, extension } = props;
   const { language } = node.attrs;
-  console.log("language", language);
 
   return (
     <NodeViewWrapper

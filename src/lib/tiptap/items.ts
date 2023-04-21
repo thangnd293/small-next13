@@ -87,25 +87,6 @@ const items: TItem[] = [
     title: "Link",
     description: "Chèn một liên kết",
     command: ({ editor, range }) => {
-      const newRange: Range = {
-        from: range.from,
-        to: range.from + "Edit this text".length + 1,
-      };
-
-      const id = new Date().getTime();
-      // editor
-      //   .chain()
-      //   .focus()
-      //   .deleteRange(range)
-      //   .insertContent("Edit this text")
-      //   .setTextSelection(newRange)
-      //   .setMark(Link.name, {
-      //     href: "",
-      //     "data-id": id,
-      //   })
-      //   .extendMarkRange(Link.name)
-      //   .run();
-
       editor
         .chain()
         .focus()
@@ -132,6 +113,26 @@ const items: TItem[] = [
         .deleteRange(range)
         .insertContentAt(range.from, {
           type: "imageComponent",
+        })
+        .run();
+    },
+  },
+  {
+    icon: Icons.Code,
+    title: "Code",
+    description: "Thêm một khối mã",
+    command: ({ editor, range }) => {
+      return editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertContent({
+          type: "codeBlockComponent",
+          content: [
+            {
+              type: "codeBlock",
+            },
+          ],
         })
         .run();
     },

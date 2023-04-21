@@ -3,6 +3,7 @@
 import { Editor } from "@/components/Editor";
 import IconButton from "@/components/IconButton";
 import Icons from "@/components/Icons";
+import PublicArticle from "@/components/PublicArticle";
 import { SearchBar } from "@/components/SearchBar";
 import {
   Accordion,
@@ -119,9 +120,7 @@ export default function EditorPage() {
             <Button variant="outline" colorScheme="teal" size="sm">
               Xem trước
             </Button>
-            <Button colorScheme="teal" size="sm">
-              Đăng bài
-            </Button>
+            <PublicArticle />
           </HStack>
         </HStack>
         <Box minH="calc(100% - 72px)">
