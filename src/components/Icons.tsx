@@ -13,6 +13,8 @@ import {
   PencilSquareIcon,
   PhotoIcon,
   SunIcon,
+  EllipsisVerticalIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { SVGAttributes } from "react";
 import { AiOutlineHighlight } from "react-icons/ai";
@@ -238,6 +240,22 @@ const Icons = {
       ></path>
     </svg>
   ),
+  Lock: (props: SVGAttributes<SVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={14}
+      height={14}
+      fill="none"
+      {...props}
+    >
+      <path
+        fill="#757575"
+        fillRule="evenodd"
+        d="M7 .875a3.062 3.062 0 0 0-3.063 3.063v1.75a1.75 1.75 0 0 0-1.75 1.75v3.937a1.75 1.75 0 0 0 1.75 1.75h6.126a1.75 1.75 0 0 0 1.75-1.75V7.437a1.75 1.75 0 0 0-1.75-1.75v-1.75A3.062 3.062 0 0 0 7 .876Zm2.188 4.813v-1.75a2.188 2.188 0 0 0-4.376 0v1.75h4.375Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  ),
   Search: MagnifyingGlassIcon,
   Moon: MoonIcon,
   Bell: BellIcon,
@@ -253,6 +271,8 @@ const Icons = {
   Photo: PhotoIcon,
   Bars3BottomLeft: Bars3BottomLeftIcon,
   OutlineHighlight: AiOutlineHighlight,
+  EllipsisVertical: EllipsisVerticalIcon,
+  X: XMarkIcon,
 };
 
 export default Icons;
