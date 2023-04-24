@@ -172,8 +172,6 @@ const Editor = () => {
     }
   };
 
-  console.log("url", url);
-
   return (
     <>
       <Box px="24px">

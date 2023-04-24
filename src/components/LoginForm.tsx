@@ -1,63 +1,91 @@
 "use client";
 
-import { Button, Input } from "@chakra-ui/react";
-import { Formik } from "formik";
-import { signIn, useSession } from "next-auth/react";
+import { Button, Text } from "@chakra-ui/react";
+import { Formik, FormikHelpers } from "formik";
+import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import * as Yup from "yup";
+
+import Link from "next/link";
+import { toast } from "react-toastify";
+import InputField from "./InputField";
+
+type Input = {
+  usernameOrEmail: string;
+  password: string;
+};
+
+const initialValues: Input = {
+  usernameOrEmail: "thang@gmail.com",
+  password: "123456789",
+};
+
+const validateSchema = Yup.object().shape({
+  usernameOrEmail: Yup.string().required(),
+  password: Yup.string().required(),
+});
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const { data } = useSession();
-  console.log("data", data);
+
+  const handleSubmit = async (
+    values: Input,
+    { setSubmitting }: FormikHelpers<Input>
+  ) => {
+    const signInResult = await signIn("credentials", {
+      redirect: true,
+      usernameOrEmail: values.usernameOrEmail,
+      password: values.password,
+      callbackUrl: searchParams?.get("from") || "/",
+    });
+
+    setSubmitting(false);
+
+    if (!signInResult?.ok) {
+      return toast.error(
+        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập"
+      );
+    }
+
+    toast.success("Đăng nhập thành công");
+  };
 
   return (
-    <Formik
-      initialValues={{ email: "tesa@gmail.com", password: "1" }}
-      onSubmit={async (values, { setSubmitting }) => {
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          password: values.password,
-          callbackUrl: searchParams?.get("from") || "/dashboard",
-        });
-        console.log("result", result);
-        setSubmitting(false);
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <Input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-            placeholder="Email"
-          />
-          {errors.email && touched.email && errors.email}
-          <Input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-            placeholder="Password"
-          />
-          {errors.password && touched.password && errors.password}
-          <Button type="submit" isLoading={isSubmitting}>
-            Submit
-          </Button>
-          <Button onClick={() => signIn("github")}>Github</Button>
-        </form>
-      )}
-    </Formik>
+    <>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validateSchema}
+      >
+        {({ handleSubmit, isSubmitting }) => (
+          <form className="w-full mt-12 space-y-5" onSubmit={handleSubmit}>
+            <InputField
+              label="Email"
+              name="usernameOrEmail"
+              placeholder="VD: A@gmail.com"
+            />
+            <InputField
+              label="Password"
+              name="password"
+              placeholder="VD: @13a@12aaa"
+            />
+
+            <div className="ml-auto w-fit">
+              <Button colorScheme="teal" type="submit" isLoading={isSubmitting}>
+                Đăng nhập
+              </Button>
+            </div>
+          </form>
+        )}
+      </Formik>
+      <Text mt="20px">
+        Chưa có tài khoản?{" "}
+        <Link href="/sign-up" className="text-primary">
+          Đăng ký ngay
+        </Link>
+      </Text>
+      <div></div>
+      <Button onClick={() => signIn("github")}>Github</Button>
+    </>
   );
 }

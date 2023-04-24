@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   async function middleware(req) {
-    console.log("middleware -----------------------------------------");
     const token = await getToken({ req });
     const isAuth = !!token;
     const isAuthPage =
@@ -13,7 +12,7 @@ export default withAuth(
 
     if (isAuthPage) {
       if (isAuth) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
+        return NextResponse.redirect(new URL("/", req.url));
       }
 
       return null;
@@ -42,10 +41,6 @@ export default withAuth(
   }
 );
 
-// export const config = {
-//   matcher: ["/dashboard/:path*", "/editor/:path*", "/login", "/register"],
-// };
-
 export const config = {
-  matcher: [],
+  matcher: ["/editor/:path*", "/login", "/register"],
 };

@@ -2,6 +2,8 @@ import NextAuth, { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const API_URL = "http://14.225.205.235:8080";
+
 export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
@@ -11,18 +13,23 @@ export const authOptions: AuthOptions = {
   },
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        return { id: 1, name: "J Smith", email: "jsmith@example.com" } as any;
+      async authorize(credentials) {
+        const res = await fetch(`${API_URL}/api/auth/signin`, {
+          method: "POST",
+          body: JSON.stringify(credentials),
+          headers: { "Content-Type": "application/json" },
+        });
+        const user = await res.json();
+
+        if (res.ok && user) {
+          return user;
+        }
+        return null;
       },
     }),
     GithubProvider({
@@ -32,21 +39,35 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
+      const res = await fetch(`${API_URL}/api/user/me`, {
+        headers: {
+          Authorization: "Bearer " + token.accessToken,
+        },
+      });
+
+      const { data } = await res.json();
+
       if (token) {
         session.user = {
           ...token,
-          email: "tesasdas",
+          ...data,
         };
       }
 
       return session;
     },
     async jwt({ token, user }) {
-      console.log("user", user);
-      return {
-        id: "test",
-      };
+      if (user) {
+        token.accessToken = (user as any).accessToken;
+      }
+      return token;
+    },
+    async redirect({ url, baseUrl }) {
+      console.log("redirect", url, baseUrl);
+
+      return baseUrl;
     },
   },
 };
+
 export default NextAuth(authOptions);

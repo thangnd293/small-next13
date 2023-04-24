@@ -18,11 +18,14 @@ import {
   Text,
   HStack,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function EditorPage() {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const { data } = useSession();
+  console.log("data", data);
 
   const router = useRouter();
 
