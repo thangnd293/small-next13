@@ -17,17 +17,13 @@ export function SearchBar({ containerProps, ...restProps }: IProps) {
   const dimension = size === "sm" ? "18px" : "24px";
   return (
     <InputGroup {...containerProps} size={size}>
-      <InputLeftElement
-        color="gray.500"
-        pointerEvents="none"
-        children={
-          <Icons.Search
-            width={dimension}
-            height={dimension}
-            color="currentColor"
-          />
-        }
-      />
+      <InputLeftElement color="gray.500" pointerEvents="none">
+        <Icons.Search
+          width={dimension}
+          height={dimension}
+          color="currentColor"
+        />
+      </InputLeftElement>
       <ChakraInput borderRadius="9999px" maxWidth="512px" {...restProps} />
     </InputGroup>
   );

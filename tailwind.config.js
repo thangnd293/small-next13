@@ -16,6 +16,7 @@ module.exports = {
           primary: "#292929",
           secondary: "#757575",
         },
+        border: "#F2F2F2",
       },
     },
   },

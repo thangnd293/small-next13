@@ -15,6 +15,7 @@ import {
   PencilSquareIcon,
   PhotoIcon,
   SunIcon,
+  EllipsisVerticalIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { SVGAttributes } from "react";
@@ -277,6 +278,22 @@ const Icons = {
       <path d="M432 48c8.8 0 16 7.16 16 16s-7.2 16-16 16H176c-8.8 0-16-7.16-16-16s7.2-16 16-16h256zm0 128c8.8 0 16 7.2 16 16s-7.2 16-16 16H16c-8.836 0-16-7.2-16-16s7.164-16 16-16h416zm0 160H176c-8.8 0-16-7.2-16-16s7.2-16 16-16h256c8.8 0 16 7.2 16 16s-7.2 16-16 16zm0 96c8.8 0 16 7.2 16 16s-7.2 16-16 16H16c-8.836 0-16-7.2-16-16s7.164-16 16-16h416z"></path>
     </svg>
   ),
+  Lock: (props: SVGAttributes<SVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={14}
+      height={14}
+      fill="none"
+      {...props}
+    >
+      <path
+        fill="#757575"
+        fillRule="evenodd"
+        d="M7 .875a3.062 3.062 0 0 0-3.063 3.063v1.75a1.75 1.75 0 0 0-1.75 1.75v3.937a1.75 1.75 0 0 0 1.75 1.75h6.126a1.75 1.75 0 0 0 1.75-1.75V7.437a1.75 1.75 0 0 0-1.75-1.75v-1.75A3.062 3.062 0 0 0 7 .876Zm2.188 4.813v-1.75a2.188 2.188 0 0 0-4.376 0v1.75h4.375Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  ),
   Search: MagnifyingGlassIcon,
   Moon: MoonIcon,
   Bell: BellIcon,
@@ -296,6 +313,8 @@ const Icons = {
   Upload: ArrowUpTrayIcon,
   Copy: DocumentDuplicateIcon,
   Loading: AiOutlineLoading3Quarters,
+  EllipsisVertical: EllipsisVerticalIcon,
+  X: XMarkIcon,
 };
 
 export default Icons;
