@@ -49,7 +49,7 @@ lowlight.registerLanguage("ts", ts);
 lowlight.registerLanguage("java", java);
 
 import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
-import CodeBlockExtension from "@/lib/tiptap/components/CodeBlock/CodeBlockExtension";
+import { CodeBlockExtension } from "@/lib/tiptap/components/CodeBlock";
 
 const CustomLink = Link.extend({
   selectable: true,
@@ -172,8 +172,6 @@ const Editor = () => {
     }
   };
 
-  console.log("url", url);
-
   return (
     <>
       <Box px="24px">
@@ -230,6 +228,14 @@ const Editor = () => {
               Thêm phụ đề
             </Button>
           )}
+
+          <Button
+            onClick={() =>
+              navigator.clipboard.writeText(editor?.getHTML() || "")
+            }
+          >
+            Copy html
+          </Button>
         </HStack>
         {url && (
           <Box className="relative aspect-[40/21]">

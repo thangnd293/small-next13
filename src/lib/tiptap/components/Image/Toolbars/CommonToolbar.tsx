@@ -3,16 +3,15 @@ import Icons from "@/components/Icons";
 import { NodeViewProps } from "@tiptap/react";
 import { Fragment } from "react";
 
-type TProps = Pick<NodeViewProps, "updateAttributes" | "deleteNode">;
-export const CommonToolbar = ({ updateAttributes, deleteNode }: TProps) => {
+type TProps = Pick<NodeViewProps, "deleteNode"> & {
+  updateToolbar: (toolbar: string) => void;
+};
+export const CommonToolbar = ({ updateToolbar, deleteNode }: TProps) => {
   const actions = [
     {
       name: "Tải ảnh lên",
       icon: Icons.Upload,
-      onClick: () =>
-        updateAttributes({
-          toolbar: "upload",
-        }),
+      onClick: () => updateToolbar("upload"),
       hasDivider: true,
     },
     {
@@ -31,7 +30,7 @@ export const CommonToolbar = ({ updateAttributes, deleteNode }: TProps) => {
             Icon={item.icon}
             onClick={item.onClick}
           />
-          {item.hasDivider && <hr className="h-7 border-l " />}
+          {item.hasDivider && <hr className="border-l h-7 " />}
         </Fragment>
       ))}
     </div>

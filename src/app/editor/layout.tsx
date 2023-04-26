@@ -4,7 +4,6 @@ import { Container, Flex } from "@chakra-ui/react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
       <Container
         as={Flex}
         w="100%"
@@ -18,6 +17,5 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       >
         {children}
       </Container>
-    </>
   );
 }

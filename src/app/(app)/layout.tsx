@@ -4,8 +4,12 @@ import { Box, Container, Flex } from "@chakra-ui/react";
 import { LayoutProvider } from "./context";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { usePathname } from "next/navigation";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  console.log("pathname", pathname?.split("/").length);
+
   return (
     <LayoutProvider>
       <Header />

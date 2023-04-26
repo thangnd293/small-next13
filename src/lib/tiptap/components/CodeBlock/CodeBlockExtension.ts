@@ -18,7 +18,7 @@ export default Node.create({
   addAttributes() {
     return {
       language: {
-        default: "plaintext",
+        default: "javascript",
       },
     };
   },

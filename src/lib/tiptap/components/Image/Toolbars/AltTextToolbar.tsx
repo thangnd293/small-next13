@@ -4,9 +4,14 @@ import { NodeViewProps } from "@tiptap/react";
 import { useRef } from "react";
 
 type TProps = Pick<NodeViewProps, "updateAttributes"> & {
+  updateToolbar: (toolbar: string) => void;
   alt: string;
 };
-export const AltTextToolbar = ({ updateAttributes, alt }: TProps) => {
+export const AltTextToolbar = ({
+  updateAttributes,
+  updateToolbar,
+  alt,
+}: TProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onUpdate = () => {
@@ -14,21 +19,17 @@ export const AltTextToolbar = ({ updateAttributes, alt }: TProps) => {
 
     updateAttributes({
       alt: inputRef.current.value,
-      toolbar: "setting",
     });
+    updateToolbar("setting");
   };
 
   return (
     <>
-      <div className="w-96 p-4 flex justify-between items-center font-bold">
+      <div className="flex items-center justify-between p-4 font-bold w-96">
         <span>Thêm văn bản thay thế</span>
         <IconButton
           size="xs"
-          onClick={() =>
-            updateAttributes({
-              toolbar: "setting",
-            })
-          }
+          onClick={() => updateToolbar("setting")}
           aria-label={"Close"}
         >
           <Icons.XMark width={24} height={24} />
@@ -41,7 +42,7 @@ export const AltTextToolbar = ({ updateAttributes, alt }: TProps) => {
           placeholder="Nhập văn bản thay thế vào đây"
         />
 
-        <div className="w-fit ml-auto">
+        <div className="ml-auto w-fit">
           <Button colorScheme="teal" size="sm" onClick={onUpdate}>
             Cập nhật
           </Button>
