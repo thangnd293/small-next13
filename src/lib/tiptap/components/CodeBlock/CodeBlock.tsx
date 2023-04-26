@@ -11,26 +11,31 @@ const options = [
 ];
 
 export const CodeBlock = (props: NodeViewProps) => {
-  const { updateAttributes, editor, deleteNode, node, extension } = props;
+  const { updateAttributes, editor, deleteNode, node } = props;
+  const { isEditable } = editor;
   const { language } = node.attrs;
 
   return (
     <NodeViewWrapper
       className="relative px-4 pt-12 pb-8 bg-black rounded-md"
-      draggable="true"
+      draggable={isEditable}
       data-drag-handle=""
     >
       <div className="absolute flex items-center justify-between w-full gap-4 pr-2 top-1 left-1">
-        <Select
-          options={options}
-          value={options.find((o) => o.value === language)}
-          onChange={(v) => {
-            const { value } = v as { value: string; label: string };
-            updateAttributes({
-              language: value,
-            });
-          }}
-        />
+        {isEditable ? (
+          <Select
+            options={options}
+            value={options.find((o) => o.value === language)}
+            onChange={(v) => {
+              const { value } = v as { value: string; label: string };
+              updateAttributes({
+                language: value,
+              });
+            }}
+          />
+        ) : (
+          <div />
+        )}
         <div className="flex items-center space-x-2 rounded-md bg-slate-900">
           <ToolbarButton
             onClick={() => {
@@ -41,11 +46,13 @@ export const CodeBlock = (props: NodeViewProps) => {
             label={"Copy text"}
             Icon={Icons.Copy}
           />
-          <ToolbarButton
-            onClick={deleteNode}
-            label={"Delete"}
-            Icon={Icons.Trash}
-          />
+          {isEditable && (
+            <ToolbarButton
+              onClick={deleteNode}
+              label={"Delete"}
+              Icon={Icons.Trash}
+            />
+          )}
         </div>
       </div>
 

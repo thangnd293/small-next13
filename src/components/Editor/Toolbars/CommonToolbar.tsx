@@ -105,7 +105,8 @@ export const CommonToolbar = ({ editor }: IProps) => {
         return (
           !editor.isActive("link") &&
           !state.selection.empty &&
-          !editor.isActive("codeBlockComponent")
+          !editor.isActive("codeBlockComponent") &&
+          !editor.isActive("imageComponent")
         );
       }}
     >

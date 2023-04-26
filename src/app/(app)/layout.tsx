@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, Container, Flex } from "@chakra-ui/react";
-import { LayoutProvider } from "./context";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { Box, Container, Flex } from "@chakra-ui/react";
+import { LayoutProvider } from "./context";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { useOnClickOutside } from "usehooks-ts";
 import {
@@ -21,54 +21,64 @@ import {
 } from "./Toolbars";
 
 const Image = (props: NodeViewProps) => {
+  const [isOpenToolbar, setIsOpenToolbar] = useState(true);
+  const [toolbar, setToolbar] = useState("upload");
   const { updateAttributes, node, editor, deleteNode } = props;
 
-  const { src, alt, isOpenToolbar, toolbar, align } = node.attrs;
+  const { src, alt, align } = node.attrs;
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const { handleUploadToCloudinary, isUploading } = useCloudinaryUpload(
+  const { handleUploadToCloudinary, isUploading, url } = useCloudinaryUpload(
     (value) => updateAttributes({ src: value })
   );
+  console.log("url", url);
 
   const showUploader = () => {
-    updateAttributes({
-      isOpenToolbar: true,
-      toolbar: src ? "setting" : "upload",
-    });
+    setIsOpenToolbar(true);
+    setToolbar(src ? "setting" : "upload");
   };
 
   const hiddenUploader = () => {
-    updateAttributes({
-      isOpenToolbar: false,
-    });
+    setIsOpenToolbar(false);
+  };
+
+  const updateToolbar = (value: string) => {
+    setToolbar(value);
   };
 
   useOnClickOutside(ref, hiddenUploader);
 
   const Toolbar = {
     common: (
-      <CommonToolbar
-        updateAttributes={updateAttributes}
-        deleteNode={deleteNode}
-      />
+      <CommonToolbar updateToolbar={updateToolbar} deleteNode={deleteNode} />
     ),
     upload: (
       <UploadToolbar
-        updateAttributes={updateAttributes}
+        updateToolbar={updateToolbar}
+        hiddenUploader={hiddenUploader}
         handleUploadToCloudinary={handleUploadToCloudinary}
       />
     ),
     setting: (
       <SettingToolbar
         updateAttributes={updateAttributes}
+        updateToolbar={updateToolbar}
         deleteNode={deleteNode}
         align={align}
       />
     ),
-    alt: <AltTextToolbar updateAttributes={updateAttributes} alt={alt} />,
+
+    alt: (
+      <AltTextToolbar
+        updateAttributes={updateAttributes}
+        updateToolbar={updateToolbar}
+        alt={alt}
+      />
+    ),
   };
 
+  const alignItem = `items-${align}`;
   return (
     <NodeViewWrapper draggable="true" data-drag-handle="">
       <Popover
@@ -84,11 +94,7 @@ const Image = (props: NodeViewProps) => {
             })}
           >
             <div
-              className={classNames("flex flex-col", {
-                "items-start": align === "left",
-                "items-center": align === "center",
-                "items-end": align === "right",
-              })}
+              className={classNames("flex flex-col", alignItem)}
               onClick={showUploader}
             >
               {isUploading || !src ? (

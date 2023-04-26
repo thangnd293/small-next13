@@ -4,6 +4,7 @@ import { NodeViewProps } from "@tiptap/react";
 import React, { Fragment } from "react";
 
 type TProps = Pick<NodeViewProps, "updateAttributes" | "deleteNode"> & {
+  updateToolbar: (toolbar: string) => void;
   align: string;
 };
 
@@ -11,19 +12,20 @@ export const SettingToolbar = ({
   updateAttributes,
   deleteNode,
   align,
+  updateToolbar,
 }: TProps) => {
   const actions = [
     {
       label: "Đổi ảnh",
       Icon: Icons.Replace,
-      onClick: () => updateAttributes({ toolbar: "upload" }),
+      onClick: () => updateToolbar("upload"),
       hasDivider: true,
     },
     {
       label: "Căn lề trái",
       Icon: Icons.AlignLeft,
-      onClick: () => updateAttributes({ align: "left" }),
-      isActive: align === "left",
+      onClick: () => updateAttributes({ align: "start" }),
+      isActive: align === "start",
     },
     {
       label: "Căn giữa",
@@ -34,14 +36,14 @@ export const SettingToolbar = ({
     {
       label: "Căn lề phải",
       Icon: Icons.AlignRight,
-      onClick: () => updateAttributes({ align: "right" }),
-      isActive: align === "right",
+      onClick: () => updateAttributes({ align: "end" }),
+      isActive: align === "end",
       hasDivider: true,
     },
     {
       label: "Cập nhật văn bản thay thế",
       Icon: Icons.Text,
-      onClick: () => updateAttributes({ toolbar: "alt" }),
+      onClick: () => updateToolbar("alt"),
       hasDivider: true,
     },
     {
@@ -56,7 +58,7 @@ export const SettingToolbar = ({
       {actions.map((item) => (
         <Fragment key={item.label}>
           <ToolbarButton {...item} />
-          {item.hasDivider && <hr className="h-7 border-l " />}
+          {item.hasDivider && <hr className="border-l h-7 " />}
         </Fragment>
       ))}
     </div>
