@@ -1,15 +1,14 @@
-import { useRouter, usePathname } from "next/navigation";
+import { useLayoutContext } from "@/app/(app)/context";
 import { Link } from "@chakra-ui/next-js";
 import { Flex, HStack, Text } from "@chakra-ui/react";
-import { useLayoutContext } from "@/app/(app)/context";
-import RecommendSidebar from "./RecommendSidebar";
+import { usePathname } from "next/navigation";
 import InfoSidebar from "./InfoSidebar";
+import RecommendSidebar from "./RecommendSidebar";
 
 const Sidebar = () => {
   const { headerRef, isScrollUp } = useLayoutContext();
   const header = headerRef.current as HTMLElement;
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <Flex
@@ -26,7 +25,11 @@ const Sidebar = () => {
       top={isScrollUp ? "0" : header?.offsetHeight}
       transition="top 0.2s ease-in-out"
     >
-      {pathname?.startsWith("/me") ? <InfoSidebar /> : <RecommendSidebar />}
+      {pathname?.startsWith("/profile") ? (
+        <InfoSidebar />
+      ) : (
+        <RecommendSidebar />
+      )}
       <HStack as="footer" spacing="10px" mt="auto">
         {Array.from({ length: 3 }).map((_, index) => (
           <Text key={index} as={Link} href="/" color="gray.500" py="24px">

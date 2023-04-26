@@ -5,10 +5,11 @@ import { NextResponse } from "next/server";
 export default withAuth(
   async function middleware(req) {
     const token = await getToken({ req });
+
     const isAuth = !!token;
     const isAuthPage =
       req.nextUrl.pathname.startsWith("/login") ||
-      req.nextUrl.pathname.startsWith("/register");
+      req.nextUrl.pathname.startsWith("/sign-up");
 
     if (isAuthPage) {
       if (isAuth) {
@@ -42,5 +43,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/editor/:path*", "/login", "/register"],
+  matcher: ["/editor/:path*", "/login", "/register", "/profile"],
 };

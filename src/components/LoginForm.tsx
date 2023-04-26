@@ -68,6 +68,7 @@ export default function LoginForm() {
               label="Password"
               name="password"
               placeholder="VD: @13a@12aaa"
+              type="password"
             />
 
             <div className="ml-auto w-fit">
@@ -84,8 +85,6 @@ export default function LoginForm() {
           Đăng ký ngay
         </Link>
       </Text>
-      <div></div>
-      <Button onClick={() => signIn("github")}>Github</Button>
     </>
   );
 }

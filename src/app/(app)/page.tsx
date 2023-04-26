@@ -1,24 +1,24 @@
-"use client";
+import { cookies } from "next/headers";
 
 import Article from "@/components/Article";
-import { Button, Heading, Text, VStack } from "@chakra-ui/react";
+import { getCurrentUser } from "@/utils/session";
+import ChoseCategoryDialog from "./ChoseCategoryDialog";
+import RecommendUserRegister from "./RecommendUserRegister";
+export default async function Home() {
+  const cookieStore = cookies();
 
-export default function Home() {
+  const token = cookieStore.get("next-auth.session-token");
+  const user = await getCurrentUser();
+
   return (
     <>
-      <VStack align="flex-start" spacing="20px" mb="60px">
-        <Heading fontSize="4xl">Chưa là thành viên?</Heading>
-        <Text fontSize="lg" maxW="570px">
-          Trở thành thành viên để khám phá đầy đủ các tính năng của chúng tôi
-        </Text>
-        <Button colorScheme="teal">Đăng ký ngay</Button>
-      </VStack>
-
-      <VStack spacing="32px">
+      <RecommendUserRegister isAuth={!!token} />
+      <div className="flex flex-col gap-8">
         {Array.from({ length: 10 }).map((_, index) => (
           <Article key={index} />
         ))}
-      </VStack>
+      </div>
+      <ChoseCategoryDialog isOpen={user?.categories.length === 0} />
     </>
   );
 }

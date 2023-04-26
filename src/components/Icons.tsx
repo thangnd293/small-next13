@@ -17,6 +17,8 @@ import {
   SunIcon,
   EllipsisVerticalIcon,
   XMarkIcon,
+  EyeIcon,
+  EyeSlashIcon,
 } from "@heroicons/react/24/outline";
 import { SVGAttributes } from "react";
 import { AiOutlineHighlight, AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -315,6 +317,8 @@ const Icons = {
   Loading: AiOutlineLoading3Quarters,
   EllipsisVertical: EllipsisVerticalIcon,
   X: XMarkIcon,
+  Eye: EyeIcon,
+  EyeSlash: EyeSlashIcon,
 };
 
 export default Icons;
