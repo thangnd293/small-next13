@@ -4,6 +4,19 @@ export type Response<T> = {
   message: string;
 };
 
+export type DataWithPaging<T> = {
+  content: T;
+  number: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+};
+
+export type ResponseError = {
+  code: number;
+  message: string;
+};
+
 export type Category = {
   id: number;
   name: string;
@@ -18,4 +31,27 @@ export type User = {
   role: string;
   bio: string;
   categories: Category[];
+};
+
+export enum ArticleStatus {
+  Draft = "DRAFT",
+  Approved = "APPROVED",
+  Delete = "DELETE",
+}
+
+export type Article = {
+  createdBy: User;
+  modifiedBy: User;
+  createdAt: string;
+  updatedAt: string;
+  id: number;
+  title: string;
+  brief: string;
+  status: ArticleStatus;
+  mainImage: string;
+  image1: string;
+  description: string;
+  type: string;
+  category: string;
+  keyword: string;
 };

@@ -4,6 +4,7 @@ import { ReactNodeViewRenderer } from "@tiptap/react";
 import { ContentMatch } from "@tiptap/pm/model";
 import { Selection } from "prosemirror-state";
 import { CodeBlock } from "./CodeBlock";
+
 export default Node.create({
   name: "codeBlockComponent",
 

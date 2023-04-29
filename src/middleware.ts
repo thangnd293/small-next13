@@ -1,6 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
+import { getLatestDraft } from "./app/draft/[id]/service";
 
 export default withAuth(
   async function middleware(req) {
@@ -29,6 +30,12 @@ export default withAuth(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       );
     }
+
+    if (req.nextUrl.pathname === "/draft") {
+      const draft = await getLatestDraft();
+
+      return NextResponse.redirect(new URL(`/draft/${draft.id}`, req.url));
+    }
   },
   {
     callbacks: {
@@ -43,5 +50,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/editor/:path*", "/login", "/register", "/profile"],
+  matcher: ["/draft", "/draft/:path*", "/login", "/register", "/profile"],
 };

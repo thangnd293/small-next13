@@ -14,7 +14,7 @@ export const useUpdateUserInfo = (
   config: UseMutationOptions<unknown, AxiosError, unknown> = {}
 ) => {
   return useMutation(
-    (user: Partial<User>) => axios.put("/api/user/updateInfo", user),
+    (user: Partial<User>) => axios.put("/user/updateInfo", user),
     config
   );
 };

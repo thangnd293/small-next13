@@ -1,12 +1,6 @@
 import "@/styles/tiptap.scss";
 
-import {
-  BoilerplateDocument,
-  SlashCommands,
-  getSuggestionItems,
-  render,
-} from "@/lib/tiptap";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import css from "highlight.js/lib/languages/css";
 import java from "highlight.js/lib/languages/java";
@@ -28,19 +22,12 @@ import {
   PopoverTrigger,
   Tooltip,
 } from "@chakra-ui/react";
-import Code from "@tiptap/extension-code";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import Highlight from "@tiptap/extension-highlight";
-import Link from "@tiptap/extension-link";
-import Placeholder from "@tiptap/extension-placeholder";
 import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import TextareaAutosize from "react-textarea-autosize";
 
-import { ImageComponent } from "@/lib/tiptap/components/Image";
-import Icons from "../Icons";
-import EditorContent from "./EditorContent";
-import { CommonToolbar, LinkToolbar } from "./Toolbars";
+import EditorContent from "@/components/Editor/EditorContent";
+import { CommonToolbar, LinkToolbar } from "@/components/Editor/Toolbars";
+import Icons from "@/components/Icons";
 
 lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("css", css);
@@ -48,27 +35,81 @@ lowlight.registerLanguage("js", js);
 lowlight.registerLanguage("ts", ts);
 lowlight.registerLanguage("java", java);
 
+import { useDraftContext } from "@/app/draft/[id]/DraftContext";
+import { extensions } from "@/components/Editor/extensions";
 import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
-import { CodeBlockExtension } from "@/lib/tiptap/components/CodeBlock";
+import { getDraftsKey, useUpdateDraft } from "@/services";
+import { Article } from "@/types/common";
+import { useQueryClient } from "@tanstack/react-query";
 
-const CustomLink = Link.extend({
-  selectable: true,
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      "data-id": {
-        default: null,
+interface Props {
+  draft: Article;
+}
+const Editor = ({ draft }: Props) => {
+  const queryClient = useQueryClient();
+  const { changeIsSaving } = useDraftContext();
+
+  const isFirstRender = useRef(true);
+  const [title, setTitle] = useState(draft.title);
+  const [subtitle, setSubtitle] = useState(draft.brief);
+  const [content, setContent] = useState(draft.description);
+  const [backgroundImage, setBackgroundImage] = useState(draft.mainImage);
+
+  const { handleUploadToCloudinary, isUploading } = useCloudinaryUpload(
+    (value) => setBackgroundImage(value)
+  );
+
+  const updateDraft = useUpdateDraft({
+    onMutate: () => {
+      changeIsSaving(true);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(getDraftsKey);
+      changeIsSaving(false);
+    },
+  });
+
+  // Turn off auto save
+  // useEffect(() => {
+  //   if (isFirstRender.current) return;
+
+  //   const timer = setTimeout(
+  //     () =>
+  //       updateDraft.mutate({
+  //         id: draft.id,
+  //         description: content,
+  //         title: title,
+  //         brief: subtitle,
+  //         mainImage: backgroundImage,
+  //       }),
+  //     500
+  //   );
+
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [backgroundImage, content, subtitle, title, draft, isFirstRender]);
+
+  useEffect(() => {
+    isFirstRender.current = false;
+  }, []);
+
+  const editor = useEditor({
+    extensions,
+    editorProps: {
+      attributes: {
+        class: "outline-none pb-40 min-h-screen",
       },
-    };
-  },
-});
+    },
+    content: draft.description,
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
+    },
+  });
 
-const Editor = () => {
-  const [isAddSubtitle, setIsAddSubtitle] = useState(false);
+  const [isAddSubtitle, setIsAddSubtitle] = useState(!!draft.brief);
+
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { handleUploadToCloudinary, isUploading, url, clearUrl } =
-    useCloudinaryUpload();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -78,59 +119,6 @@ const Editor = () => {
 
   const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const subtitleTextareaRef = useRef<HTMLTextAreaElement>(null);
-  const editor = useEditor({
-    extensions: [
-      CodeBlockExtension,
-      ImageComponent,
-      BoilerplateDocument,
-      CustomLink.configure({
-        openOnClick: false,
-        autolink: false,
-      }),
-      StarterKit.configure({
-        document: false,
-        codeBlock: false,
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-      }),
-      Highlight,
-      SlashCommands.configure({
-        suggestion: {
-          items: getSuggestionItems,
-          render,
-        },
-      }),
-      Placeholder.configure({
-        placeholder: ({ node, pos }) => {
-          if (node.type.name === "heading") {
-            return pos === 0 ? "Tiêu đề bài viết ?" : "Heading 1";
-          }
-
-          return 'Nhập " / " để mở các lệnh…';
-        },
-      }),
-      Code,
-
-      CodeBlockLowlight.configure({
-        lowlight,
-        exitOnTripleEnter: false,
-        exitOnArrowDown: false,
-        defaultLanguage: "js",
-      }),
-    ],
-    editorProps: {
-      attributes: {
-        class: "outline-none pb-40 min-h-screen",
-      },
-    },
-    content: ``,
-  });
 
   const handleTitleKeyDown = (
     event: React.KeyboardEvent<HTMLTextAreaElement>
@@ -176,7 +164,7 @@ const Editor = () => {
     <>
       <Box px="24px">
         <HStack spacing="20px" mb="10px">
-          {!url && (
+          {!backgroundImage && (
             <Popover placement="bottom-start">
               <PopoverTrigger>
                 <Button
@@ -231,20 +219,26 @@ const Editor = () => {
 
           <Button
             onClick={() =>
-              navigator.clipboard.writeText(editor?.getHTML() || "")
+              updateDraft.mutate({
+                id: draft.id,
+                description: content,
+                title: title,
+                brief: subtitle,
+                mainImage: backgroundImage,
+              })
             }
           >
-            Copy html
+            Update
           </Button>
         </HStack>
-        {url && (
+        {backgroundImage && (
           <Box className="relative aspect-[40/21]">
             <Tooltip label="Xóa ảnh bìa">
               <IconButton
                 colorScheme="gray"
                 className="absolute top-1 right-1"
                 aria-label={"Delete background image"}
-                onClick={clearUrl}
+                onClick={() => setBackgroundImage("")}
               >
                 <Icons.XMark width="24px" height="24px" />
               </IconButton>
@@ -253,7 +247,7 @@ const Editor = () => {
               style={{
                 width: "100%",
                 height: "100%",
-                background: `url(${url}) no-repeat center center / cover`,
+                background: `url(${backgroundImage}) no-repeat center center / cover`,
               }}
             />
           </Box>
@@ -262,6 +256,8 @@ const Editor = () => {
           className="w-full text-4xl font-bold leading-relaxed border-none outline-none resize-none"
           placeholder="Tiêu đề..."
           autoFocus
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           onKeyDown={handleTitleKeyDown}
           ref={titleTextareaRef}
         />
@@ -270,6 +266,8 @@ const Editor = () => {
           <TextareaAutosize
             className="w-full text-3xl font-medium border-none outline-none resize-none"
             placeholder="Phụ đề..."
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
             onKeyDown={handleSubtitleKeyDown}
             ref={subtitleTextareaRef}
           />

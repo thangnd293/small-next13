@@ -91,7 +91,7 @@ export default function Header() {
         <HStack spacing="20px">
           <Button
             as={Link}
-            href="/editor"
+            href="/draft"
             variant="link"
             leftIcon={<Icons.PencilSquare width="20px" height="20px" />}
             display={{

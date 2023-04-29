@@ -13,7 +13,7 @@ export const useUpdateCategories = (
 ) => {
   const { data, ...rest } = useMutation(
     ({ userId, categories }: Payload): any =>
-      axios.post<Response<unknown>>("/api/user/updateCategory", {
+      axios.post<Response<unknown>>("/user/updateCategory", {
         userId,
         categories,
       }),

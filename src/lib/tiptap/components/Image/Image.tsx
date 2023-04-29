@@ -32,7 +32,6 @@ const Image = (props: NodeViewProps) => {
   const { handleUploadToCloudinary, isUploading, url } = useCloudinaryUpload(
     (value) => updateAttributes({ src: value })
   );
-  console.log("url", url);
 
   const showUploader = () => {
     setIsOpenToolbar(true);
