@@ -1,7 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { getLatestDraft } from "./app/draft/[id]/service";
+import { getLatestDraft } from "./services/server/article";
 
 export default withAuth(
   async function middleware(req) {

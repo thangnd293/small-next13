@@ -2,7 +2,7 @@
 
 import Icons from "@/components/Icons";
 import { useUserInfoContext } from "@/context/UserContext";
-import { useCategories, useUpdateCategories } from "@/services";
+import { useCategories, useUpdateCategories } from "@/services/client";
 import { Category } from "@/types/common";
 import {
   Button,

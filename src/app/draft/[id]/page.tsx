@@ -1,6 +1,6 @@
+import { getDraft, getDrafts } from "@/services/server";
 import Aside from "./Aside";
 import EditDraft from "./EditDraft";
-import { getDraft, getDrafts } from "./service";
 
 export default async function DraftDetailPage({
   params,

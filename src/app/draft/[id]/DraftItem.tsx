@@ -1,5 +1,5 @@
 import Icons from "@/components/Icons";
-import { getDraftsKey, useUpdateDraft } from "@/services";
+import { getDraftsKey, useUpdateDraft } from "@/services/client";
 import { Article, ArticleStatus } from "@/types/common";
 import {
   Flex,

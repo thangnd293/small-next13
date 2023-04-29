@@ -38,7 +38,7 @@ lowlight.registerLanguage("java", java);
 import { useDraftContext } from "@/app/draft/[id]/DraftContext";
 import { extensions } from "@/components/Editor/extensions";
 import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
-import { getDraftsKey, useUpdateDraft } from "@/services";
+import { getDraftsKey, useUpdateDraft } from "@/services/client";
 import { Article } from "@/types/common";
 import { useQueryClient } from "@tanstack/react-query";
 
