@@ -53,7 +53,7 @@ const Editor = ({ draft }: Props) => {
   const [title, setTitle] = useState(draft.title);
   const [subtitle, setSubtitle] = useState(draft.brief);
   const [content, setContent] = useState(draft.description);
-  const [backgroundImage, setBackgroundImage] = useState(draft.mainImage);
+  const [backgroundImage, setBackgroundImage] = useState(draft.mainImage || "");
 
   const { handleUploadToCloudinary, isUploading } = useCloudinaryUpload(
     (value) => setBackgroundImage(value)

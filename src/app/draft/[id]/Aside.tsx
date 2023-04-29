@@ -2,8 +2,6 @@
 
 import Icons from "@/components/Icons";
 import { SearchBar } from "@/components/SearchBar";
-import { useCreateDraft } from "@/services/use-create-draft";
-import { getDraftsKey, useDrafts } from "@/services/use-drafts";
 import { Article } from "@/types/common";
 import {
   Accordion,
@@ -20,6 +18,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useDraftContext } from "./DraftContext";
 import DraftItem from "./DraftItem";
+import { getDraftsKey, useCreateDraft, useDrafts } from "@/services/client";
 
 interface Props {
   drafts: Article[];

@@ -15,10 +15,10 @@ import { Form, Formik, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 
 import { useUserInfoContext } from "@/context/UserContext";
-import { useUpdateUserInfo } from "@/services/use-user-info";
 import InputField from "../InputField";
 import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
 import { useRef } from "react";
+import { useUpdateUserInfo } from "@/services/client";
 
 interface Values {
   name: string;

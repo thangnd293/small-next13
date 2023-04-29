@@ -1,6 +1,6 @@
 import Icons from "@/components/Icons";
-import { getDraftsKey, useUpdateDraft } from "@/services/client";
-import { Article, ArticleStatus } from "@/types/common";
+import { getDraftsKey, useDeleteDraft } from "@/services/client";
+import { Article } from "@/types/common";
 import {
   Flex,
   Menu,
@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface Props {
   draft: Partial<Article>;
@@ -20,14 +21,17 @@ export default function DraftItem({ draft, isActive }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const updateDraft = useUpdateDraft({
+  const draftName = draft.title || "Bản nháp";
+  const deleteDraft = useDeleteDraft({
     onSuccess: () => {
       queryClient.invalidateQueries(getDraftsKey);
+      toast.success(`Xóa ${draftName} thành công`);
+      router.push("/draft");
     },
   });
 
   const handleDelete = () => {
-    updateDraft.mutate({ id: draft.id, status: ArticleStatus.Delete });
+    deleteDraft.mutate(draft.id!);
   };
 
   return (
@@ -45,7 +49,7 @@ export default function DraftItem({ draft, isActive }: Props) {
     >
       <Icons.DocumentChartBar width="22px" height="22px" />
       <Text flex={1} noOfLines={1}>
-        {draft.title || "Bản nháp"}
+        {draftName}
       </Text>
       <Menu>
         <MenuButton onClick={(e) => e.stopPropagation()}>

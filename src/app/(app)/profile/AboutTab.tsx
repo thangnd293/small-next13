@@ -1,5 +1,5 @@
 import { useUserInfoContext } from "@/context/UserContext";
-import { useUpdateUserInfo } from "@/services/use-user-info";
+import { useUpdateUserInfo } from "@/services/client";
 import {
   Button,
   ButtonGroup,
