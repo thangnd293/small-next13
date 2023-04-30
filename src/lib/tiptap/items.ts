@@ -113,6 +113,9 @@ const items: TItem[] = [
         .deleteRange(range)
         .insertContentAt(range.from, {
           type: "imageComponent",
+          attrs: {
+            defaultOpen: true,
+          },
         })
         .run();
     },

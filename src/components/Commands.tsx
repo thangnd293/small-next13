@@ -40,6 +40,10 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
 
       if (event.key === "Enter") {
         event.stopPropagation();
+
+        const selectedItem = items[selectedIndex];
+
+        if (!selectedItem) return false;
         command(items[selectedIndex]);
 
         return true;

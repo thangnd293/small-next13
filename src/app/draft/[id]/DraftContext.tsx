@@ -11,24 +11,29 @@ import {
 } from "react";
 
 interface DraftContextValue {
+  isPreviewMode: boolean;
   isOpenSidebar: boolean;
-  toggleSidebar: () => void;
   isSaved: boolean;
   isSaving: boolean;
+  toggleSidebar: () => void;
   changeIsSaving: (isSaving: boolean) => void;
+  changeIsPreviewMode: (isPreviewMode: boolean) => void;
 }
 
 const initialValue: DraftContextValue = {
+  isPreviewMode: false,
   isOpenSidebar: true,
   toggleSidebar: () => {},
   isSaved: false,
   isSaving: false,
   changeIsSaving: () => {},
+  changeIsPreviewMode: () => {},
 };
 const DraftContext = createContext<DraftContextValue>(initialValue);
 export const useDraftContext = () => useContext(DraftContext);
 
 export const DraftProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -43,9 +48,23 @@ export const DraftProvider: FC<PropsWithChildren> = ({ children }) => {
     setIsSaving(isSaving);
   }, []);
 
+  const changeIsPreviewMode = useCallback((isPreviewMode: boolean) => {
+    console.log("changeIsPreviewMode", isPreviewMode);
+
+    setIsPreviewMode(isPreviewMode);
+  }, []);
+
   const value = useMemo(
-    () => ({ isOpenSidebar, toggleSidebar, isSaved, isSaving, changeIsSaving }),
-    [isOpenSidebar, isSaved, isSaving]
+    () => ({
+      isOpenSidebar,
+      isSaved,
+      isSaving,
+      isPreviewMode,
+      toggleSidebar,
+      changeIsSaving,
+      changeIsPreviewMode,
+    }),
+    [isOpenSidebar, isSaved, isSaving, isPreviewMode]
   );
   return (
     <DraftContext.Provider value={value}>{children}</DraftContext.Provider>

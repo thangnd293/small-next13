@@ -1,6 +1,5 @@
 import { getDraft, getDrafts } from "@/services/server";
-import Aside from "./Aside";
-import EditDraft from "./EditDraft";
+import PageContent from "./PageContent";
 
 export default async function DraftDetailPage({
   params,
@@ -12,10 +11,5 @@ export default async function DraftDetailPage({
   const { id } = params;
   const [draft, drafts] = await Promise.all([getDraft(id), getDrafts()]);
 
-  return (
-    <>
-      <Aside drafts={drafts} currentDraft={draft} />
-      <EditDraft draft={draft} />
-    </>
-  );
+  return <PageContent drafts={drafts} currentDraft={draft} />;
 }

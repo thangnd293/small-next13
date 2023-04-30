@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutContext } from "@/app/(app)/context";
+import { useLayoutContext } from "@/app/(app)/LayoutContext";
 import { useUserInfoContext } from "@/context/UserContext";
 import { Link } from "@chakra-ui/next-js";
 import {

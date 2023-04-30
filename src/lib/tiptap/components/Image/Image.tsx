@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { useOnClickOutside } from "usehooks-ts";
 import {
@@ -21,15 +21,15 @@ import {
 } from "./Toolbars";
 
 const Image = (props: NodeViewProps) => {
-  const [isOpenToolbar, setIsOpenToolbar] = useState(true);
-  const [toolbar, setToolbar] = useState("upload");
   const { updateAttributes, node, editor, deleteNode } = props;
+  const { src, alt, align, defaultOpen } = node.attrs;
 
-  const { src, alt, align } = node.attrs;
+  const [isOpenToolbar, setIsOpenToolbar] = useState(defaultOpen);
+  const [toolbar, setToolbar] = useState("upload");
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const { handleUploadToCloudinary, isUploading, url } = useCloudinaryUpload(
+  const { handleUploadToCloudinary, isUploading } = useCloudinaryUpload(
     (value) => updateAttributes({ src: value })
   );
 
@@ -77,7 +77,12 @@ const Image = (props: NodeViewProps) => {
     ),
   };
 
-  const alignItem = `items-${align}`;
+  const alignItem = align === "center" ? align : `flex-${align}`;
+
+  useEffect(() => {
+    updateAttributes({ defaultOpen: false });
+  }, []);
+
   return (
     <NodeViewWrapper draggable="true" data-drag-handle="">
       <Popover
@@ -93,7 +98,10 @@ const Image = (props: NodeViewProps) => {
             })}
           >
             <div
-              className={classNames("flex flex-col", alignItem)}
+              className={classNames("flex flex-col")}
+              style={{
+                alignItems: alignItem,
+              }}
               onClick={showUploader}
             >
               {isUploading || !src ? (

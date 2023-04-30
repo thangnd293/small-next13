@@ -22,11 +22,8 @@ export const ImageComponent = Node.create({
       title: {
         default: null,
       },
-      isOpenToolbar: {
-        default: true,
-      },
-      toolbar: {
-        default: "upload",
+      defaultOpen: {
+        default: false,
       },
       align: {
         default: "center",

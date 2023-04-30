@@ -53,7 +53,7 @@ export default function DraftItem({ draft, isActive }: Props) {
       </Text>
       <Menu>
         <MenuButton onClick={(e) => e.stopPropagation()}>
-          <Icons.EllipsisVertical width={16} />
+          <Icons.EllipsisVertical width={18} />
         </MenuButton>
         <MenuList minW="100px">
           <MenuItem

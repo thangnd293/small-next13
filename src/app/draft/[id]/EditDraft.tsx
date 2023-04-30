@@ -22,8 +22,15 @@ interface Props {
   draft: Article;
 }
 export default function EditDraft({ draft }: Props) {
-  const { isOpenSidebar, toggleSidebar, isSaved, isSaving } = useDraftContext();
+  const {
+    isOpenSidebar,
+    toggleSidebar,
+    isSaved,
+    isSaving,
+    changeIsPreviewMode,
+  } = useDraftContext();
   const SaveStateWrapper = isSaved ? Fragment : VisuallyHidden;
+
   return (
     <Box
       as="main"
@@ -49,7 +56,12 @@ export default function EditDraft({ draft }: Props) {
             </Text>
             <Divider height="40px" orientation="vertical" pr={3} />
           </SaveStateWrapper>
-          <Button variant="outline" colorScheme="teal" size="sm">
+          <Button
+            variant="outline"
+            colorScheme="teal"
+            size="sm"
+            onClick={() => changeIsPreviewMode(true)}
+          >
             Xem trước
           </Button>
           <PublicArticle />

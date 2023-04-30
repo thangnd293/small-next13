@@ -3,7 +3,7 @@
 import { Image } from "@chakra-ui/next-js";
 import { Avatar, Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 
-import ViewArticle from "@/components/ViewArticle/ViewArticle";
+import ViewArticleContent from "@/components/ViewArticle/ViewArticleContent";
 import Article from "@/components/Article";
 
 export default function ArticlePage({
@@ -41,7 +41,7 @@ export default function ArticlePage({
         <Text fontWeight="semibold">Nguyen Dac Thang</Text>
         <Text>· Apr 18, 2023</Text>
       </HStack>
-      <ViewArticle content={content} />
+      <ViewArticleContent content={content} />
       <HStack justify="space-between">
         <HStack spacing="12px">
           <Avatar size="lg" />

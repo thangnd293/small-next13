@@ -8,9 +8,8 @@ import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import "../lib/axios";
-import { createContext } from "react";
 import { UserInfoContextProvider } from "@/context/UserContext";
+import "../lib/axios";
 
 interface IProps {
   children: React.ReactNode;

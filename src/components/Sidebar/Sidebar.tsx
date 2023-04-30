@@ -1,4 +1,4 @@
-import { useLayoutContext } from "@/app/(app)/context";
+import { useLayoutContext } from "@/app/(app)/LayoutContext";
 import { Link } from "@chakra-ui/next-js";
 import { Flex, HStack, Text } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";

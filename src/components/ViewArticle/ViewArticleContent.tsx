@@ -27,7 +27,7 @@ lowlight.registerLanguage("java", java);
 interface Props {
   content: string;
 }
-export default function ViewArticle({ content }: Props) {
+export default function ViewArticleContent({ content }: Props) {
   const editor = useEditor({
     extensions: [
       Link,

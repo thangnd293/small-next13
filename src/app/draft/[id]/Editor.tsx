@@ -69,26 +69,26 @@ const Editor = ({ draft }: Props) => {
     },
   });
 
-  // Turn off auto save
-  // useEffect(() => {
-  //   if (isFirstRender.current) return;
+  // Auto save
+  useEffect(() => {
+    if (isFirstRender.current) return;
 
-  //   const timer = setTimeout(
-  //     () =>
-  //       updateDraft.mutate({
-  //         id: draft.id,
-  //         description: content,
-  //         title: title,
-  //         brief: subtitle,
-  //         mainImage: backgroundImage,
-  //       }),
-  //     500
-  //   );
+    const timer = setTimeout(
+      () =>
+        updateDraft.mutate({
+          id: draft.id,
+          description: content || "",
+          title: title,
+          brief: subtitle,
+          mainImage: backgroundImage,
+        }),
+      500
+    );
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [backgroundImage, content, subtitle, title, draft, isFirstRender]);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [backgroundImage, content, subtitle, title, draft, isFirstRender]);
 
   useEffect(() => {
     isFirstRender.current = false;
@@ -217,7 +217,7 @@ const Editor = ({ draft }: Props) => {
             </Button>
           )}
 
-          <Button
+          {/* <Button
             onClick={() =>
               updateDraft.mutate({
                 id: draft.id,
@@ -229,7 +229,7 @@ const Editor = ({ draft }: Props) => {
             }
           >
             Update
-          </Button>
+          </Button> */}
         </HStack>
         {backgroundImage && (
           <Box className="relative aspect-[40/21]">
@@ -255,7 +255,6 @@ const Editor = ({ draft }: Props) => {
         <TextareaAutosize
           className="w-full text-4xl font-bold leading-relaxed border-none outline-none resize-none"
           placeholder="Tiêu đề..."
-          autoFocus
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           onKeyDown={handleTitleKeyDown}
