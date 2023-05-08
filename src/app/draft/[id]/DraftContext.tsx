@@ -49,8 +49,6 @@ export const DraftProvider: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const changeIsPreviewMode = useCallback((isPreviewMode: boolean) => {
-    console.log("changeIsPreviewMode", isPreviewMode);
-
     setIsPreviewMode(isPreviewMode);
   }, []);
 

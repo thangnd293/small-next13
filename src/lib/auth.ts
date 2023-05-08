@@ -4,11 +4,9 @@ import GithubProvider from "next-auth/providers/github";
 
 const { API_URL } = process.env;
 
-const THIRTY_MINUTES = 30 * 60;
 export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
-    updateAge: THIRTY_MINUTES,
   },
   pages: {
     signIn: "/login",
@@ -26,10 +24,8 @@ export const authOptions: AuthOptions = {
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
-        console.log("res", res);
 
         const user = await res.json();
-        console.log("user", user);
 
         if (res.ok && user) {
           return user;

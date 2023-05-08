@@ -10,7 +10,6 @@ export default function LaptopScreen({ url }: Props) {
   const [isLoadDone, setIsLoadDone] = useState(false);
   const handleLoad = () => {
     setIsLoadDone(true);
-    console.log("vao");
   };
 
   return (
