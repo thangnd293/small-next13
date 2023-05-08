@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 
 export async function getSession(): Promise<Session> {
   const cookie = headers().get("cookie") ?? "";
+
   const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
     headers: {
       cookie,

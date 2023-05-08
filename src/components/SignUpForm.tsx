@@ -19,11 +19,11 @@ type Input = {
 };
 
 const initialValues: Input = {
-  name: "",
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  name: "thang",
+  username: "thang",
+  email: "thang@gmail.com",
+  password: "12345678",
+  confirmPassword: "12345678",
 };
 
 const validateSchema = Yup.object().shape({
@@ -44,15 +44,20 @@ export default function SignUpForm() {
     values: Input,
     { setSubmitting }: FormikHelpers<Input>
   ) => {
-    const {
-      data: { success },
-    } = await axios.post<{
-      success: boolean;
-    }>("/api/auth/signup", values);
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + "/auth/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
 
     setSubmitting(false);
 
-    if (success) {
+    if (response.ok) {
       toast.success("Đăng ký thành công");
       router.push("/login");
     } else {
