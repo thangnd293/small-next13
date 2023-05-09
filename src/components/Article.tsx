@@ -8,6 +8,9 @@ import {
   Heading,
   VStack,
   Text,
+  SkeletonCircle,
+  SkeletonText,
+  Skeleton,
 } from "@chakra-ui/react";
 import Icons from "./Icons";
 
@@ -34,8 +37,8 @@ const Article = () => {
             1 ngày trước
           </Text>
         </HStack>
-        <HStack as={Link} href="/" align="flex-start" spacing="64px">
-          <Box>
+        <HStack as={Link} href="/" align="flex-start" spacing="64px" w="full">
+          <Box flex={1}>
             <Heading fontSize="lg">Ngưng sử dụng useMemo!</Heading>
             <Text mt="16px">
               It is a long established fact that a reader will be distracted by
@@ -69,6 +72,46 @@ const Article = () => {
           <Icons.Heart width="24px" height="24px" color="currentColor" />
           <Text>1</Text>
         </HStack>
+      </HStack>
+    </Box>
+  );
+};
+
+Article.Skeleton = () => {
+  return (
+    <Box pb="20px" borderBottom="1px" borderColor="gray.50">
+      <VStack align="flex-start" spacing="16px">
+        <HStack spacing="10px" className="w-full">
+          <SkeletonCircle size="24px" />
+          <SkeletonText noOfLines={1} skeletonHeight="13px" w={60} />
+          <SkeletonCircle size="2px" />
+          <SkeletonText noOfLines={1} skeletonHeight="13px" w={20} />
+        </HStack>
+        <HStack as={Link} href="/" align="flex-start" spacing="64px" w="full">
+          <Box flex={1}>
+            <SkeletonText
+              noOfLines={1}
+              endColor="gray.600"
+              skeletonHeight="22px"
+              w={60}
+            />
+
+            <SkeletonText
+              mt="16px"
+              noOfLines={4}
+              spacing="3"
+              skeletonHeight="16px"
+            />
+          </Box>
+          <Skeleton width="120px" height="120px" />
+        </HStack>
+      </VStack>
+      <HStack mt="22px" align="center" justify="space-between">
+        <HStack>
+          <Skeleton width="24px" height="24px" />
+          <Skeleton width="84px" height="32px" rounded="full" />
+        </HStack>
+        <Skeleton width="40px" height="24px" />
       </HStack>
     </Box>
   );
