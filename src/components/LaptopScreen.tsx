@@ -13,7 +13,7 @@ export default function LaptopScreen({ url }: Props) {
   };
 
   return (
-    <div>
+    <div className="relative">
       <LaptopScreenSvg />
       <iframe
         className={classNames(

@@ -41,6 +41,7 @@ import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
 import { getDraftsKey, useUpdateDraft } from "@/services/client";
 import { Article } from "@/types/common";
 import { useQueryClient } from "@tanstack/react-query";
+import { getArticleKey } from "@/services/client/use-article";
 
 interface Props {
   draft: Article;
@@ -65,6 +66,7 @@ const Editor = ({ draft }: Props) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(getDraftsKey);
+      queryClient.invalidateQueries(getArticleKey(draft.id));
       changeIsSaving(false);
     },
   });
@@ -88,7 +90,7 @@ const Editor = ({ draft }: Props) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [backgroundImage, content, subtitle, title, draft, isFirstRender]);
+  }, [backgroundImage, content, subtitle, title, draft.id, isFirstRender]);
 
   useEffect(() => {
     isFirstRender.current = false;
@@ -216,20 +218,6 @@ const Editor = ({ draft }: Props) => {
               Thêm phụ đề
             </Button>
           )}
-
-          {/* <Button
-            onClick={() =>
-              updateDraft.mutate({
-                id: draft.id,
-                description: content,
-                title: title,
-                brief: subtitle,
-                mainImage: backgroundImage,
-              })
-            }
-          >
-            Update
-          </Button> */}
         </HStack>
         {backgroundImage && (
           <Box className="relative aspect-[40/21]">

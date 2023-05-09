@@ -17,9 +17,9 @@ export default function PageContent({ drafts, currentDraft }: Props) {
   return isPreviewMode ? (
     <PreviewPage currentDraft={currentDraft} />
   ) : (
-    <>
+    <div className="w-full flex min-h-screen max-w-full 2xl:max-w-[1328px] justify-between mx-auto">
       <Aside drafts={drafts} currentDraft={currentDraft} />
       <EditDraft draft={currentDraft} />
-    </>
+    </div>
   );
 }

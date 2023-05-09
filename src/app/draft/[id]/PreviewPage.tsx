@@ -11,7 +11,7 @@ export default function PreviewPage({ currentDraft }: Props) {
   const { changeIsPreviewMode } = useDraftContext();
 
   return (
-    <div className="w-full">
+    <>
       <header className="py-5 border-b border-gray-200 bg-gray-50">
         <div className="flex flex-row items-center justify-between mx-auto max-w-7xl">
           <Text className="flex items-center gap-2 text-lg font-bold">
@@ -29,9 +29,11 @@ export default function PreviewPage({ currentDraft }: Props) {
           </Button>
         </div>
       </header>
-      <main className="relative py-10 mx-auto w-fit">
-        <LaptopScreen url={`/preview/${currentDraft.id}`} />
-      </main>
-    </div>
+      <div className="w-full flex min-h-screen max-w-full 2xl:max-w-[1328px] justify-between mx-auto">
+        <main className="relative py-10 mx-auto w-fit">
+          <LaptopScreen url={`/preview/${currentDraft.id}`} />
+        </main>
+      </div>
+    </>
   );
 }

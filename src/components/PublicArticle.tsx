@@ -15,10 +15,53 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import MultiSelect from "./MultiSelect";
+import { toast } from "react-toastify";
 
-const PublicArticle = () => {
+import MultiSelect from "./MultiSelect";
+import { Article, ArticleStatus } from "@/types/common";
+import { useEffect, useState } from "react";
+import { getDraftsKey, useUpdateDraft } from "@/services/client";
+import { getArticleKey } from "@/services/client/use-article";
+import { useQueryClient } from "@tanstack/react-query";
+
+interface Props {
+  draft: Article;
+}
+const PublicArticle = ({ draft }: Props) => {
+  const queryClient = useQueryClient();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { mainImage, title: _title, brief: _brief } = draft;
+
+  const [title, setTitle] = useState(_title);
+  const [brief, setBrief] = useState(_brief);
+
+  const sendDraft = useUpdateDraft({
+    onSuccess: () => {
+      queryClient.invalidateQueries(getDraftsKey);
+      toast.success("Bài viết của bạn đã gửi về admin để duyệt.");
+    },
+    onError: (err) => {
+      toast.error(err.response?.data.message || "Đã có lỗi xảy ra.");
+    },
+  });
+
+  useEffect(() => {
+    setTitle(_title);
+    setBrief(_brief);
+  }, [_title, _brief]);
+
+  const handleSendDraft = () => {
+    sendDraft.mutate({
+      ...draft,
+      title,
+      brief,
+      status: ArticleStatus.Create,
+    });
+
+    onClose();
+  };
 
   return (
     <>
@@ -44,28 +87,43 @@ const PublicArticle = () => {
                   Xem lại
                 </Text>
                 <Box className="relative aspect-[40/21] mt-3">
-                  <Flex
-                    w="full"
-                    height="full"
-                    bg="gray.100"
-                    align="center"
-                    justify="center"
-                  >
-                    <Text fontSize="md" w="70%" align="center">
-                      Thêm một hình ảnh chất lượng cao trong câu chuyện của bạn
-                      để làm cho nó hấp dẫn hơn đối với độc giả.
-                    </Text>
-                  </Flex>
-                  {/* <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    // background: `url(${url}) no-repeat center center / cover`,
-                  }}
-                /> */}
+                  {mainImage ? (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        background: `url(${mainImage}) no-repeat center center / cover`,
+                      }}
+                    />
+                  ) : (
+                    <Flex
+                      w="full"
+                      height="full"
+                      bg="gray.100"
+                      align="center"
+                      justify="center"
+                    >
+                      <Text fontSize="md" w="70%" align="center">
+                        Thêm một hình ảnh chất lượng cao trong câu chuyện của
+                        bạn để làm cho nó hấp dẫn hơn đối với độc giả.
+                      </Text>
+                    </Flex>
+                  )}
                 </Box>
-                <Input mt="4" placeholder="Viết tiêu đề..." variant="flushed" />
-                <Input mt="4" placeholder="Viết phụ đề..." variant="flushed" />
+                <Input
+                  mt="4"
+                  placeholder="Viết tiêu đề..."
+                  variant="flushed"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <Input
+                  mt="4"
+                  placeholder="Viết phụ đề..."
+                  variant="flushed"
+                  value={brief}
+                  onChange={(e) => setBrief(e.target.value)}
+                />
                 <Alert status="info" mt="4">
                   <AlertIcon />
                   Những thay đổi ở đây sẽ ảnh hưởng đến cách bài viết của bạn
@@ -76,7 +134,7 @@ const PublicArticle = () => {
               </Box>
               <Box flex={1}>
                 <MultiSelect />
-                <Button colorScheme="teal" mr={3}>
+                <Button colorScheme="teal" mr={3} onClick={handleSendDraft}>
                   Gửi bài
                 </Button>
                 <Button variant="ghost" onClick={onClose}>

@@ -17,6 +17,7 @@ import { Article } from "@/types/common";
 import { BsCloudCheck } from "react-icons/bs";
 import { Fragment } from "react";
 import Editor from "./Editor";
+import { useArticle } from "@/services/client/use-article";
 
 interface Props {
   draft: Article;
@@ -29,6 +30,11 @@ export default function EditDraft({ draft }: Props) {
     isSaving,
     changeIsPreviewMode,
   } = useDraftContext();
+
+  const { article } = useArticle(draft.id);
+
+  const currentArticle = article || draft;
+
   const SaveStateWrapper = isSaved ? Fragment : VisuallyHidden;
 
   return (
@@ -64,11 +70,11 @@ export default function EditDraft({ draft }: Props) {
           >
             Xem trước
           </Button>
-          <PublicArticle />
+          <PublicArticle draft={currentArticle} />
         </HStack>
       </HStack>
       <Box minH="calc(100% - 72px)">
-        <Editor draft={draft} />
+        <Editor draft={currentArticle} />
       </Box>
     </Box>
   );

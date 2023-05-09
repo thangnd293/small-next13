@@ -10,19 +10,21 @@ interface Props {
   article: Article;
 }
 export default function ViewArticle({ article }: Props) {
+  const { mainImage, title, brief, updatedAt, description } = article;
   return (
     <>
-      <div className="w-full h-full relative aspect-[40/21]">
-        {article.mainImage && (
+      {mainImage && (
+        <div className="w-full h-full relative aspect-[40/21]">
           <Image
             alt="Background image article"
-            src={article.mainImage}
+            src={mainImage}
             fill
             sizes="100vw"
           />
-        )}
-      </div>
-      {article.title && (
+        </div>
+      )}
+
+      {title && (
         <Text
           mt="20px"
           mb="10px"
@@ -31,22 +33,20 @@ export default function ViewArticle({ article }: Props) {
           fontSize="xl"
           fontWeight="medium"
         >
-          {article.title}
+          {title}
         </Text>
       )}
-      {article.brief && (
+      {brief && (
         <Text as="h1" align="center" fontSize="lg" color="gray.500">
-          {article.brief}
+          {brief}
         </Text>
       )}
       <HStack my="20px" justify="center">
         <Avatar />
         <Text fontWeight="semibold">Nguyen Dac Thang</Text>
-        <Text>· {article.updatedAt.toPrettyDate()}</Text>
+        <Text>· {updatedAt.toPrettyDate()}</Text>
       </HStack>
-      {article.description && (
-        <ViewArticleContent content={article.description} />
-      )}
+      {description && <ViewArticleContent content={description} />}
     </>
   );
 }

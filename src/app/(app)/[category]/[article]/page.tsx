@@ -3,7 +3,6 @@
 import { Image } from "@chakra-ui/next-js";
 import { Avatar, Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 
-import ViewArticleContent from "@/components/ViewArticle/ViewArticleContent";
 import Article from "@/components/Article";
 
 export default function ArticlePage({
@@ -15,14 +14,16 @@ export default function ArticlePage({
   const { title, subtitle, backgroundImage, content } = data;
   return (
     <div>
-      <div className="w-full h-full relative aspect-[40/21]">
-        <Image
-          alt="Background image article"
-          src={backgroundImage}
-          fill
-          sizes="100vw"
-        />
-      </div>
+      {backgroundImage && (
+        <div className="w-full h-full relative aspect-[40/21]">
+          <Image
+            alt="Background image article"
+            src={backgroundImage}
+            fill
+            sizes="100vw"
+          />
+        </div>
+      )}
       <Text
         mt="20px"
         mb="10px"
@@ -41,7 +42,7 @@ export default function ArticlePage({
         <Text fontWeight="semibold">Nguyen Dac Thang</Text>
         <Text>· Apr 18, 2023</Text>
       </HStack>
-      <ViewArticleContent content={content} />
+      {/* <ViewArticleContent content={content} /> */}
       <HStack justify="space-between">
         <HStack spacing="12px">
           <Avatar size="lg" />

@@ -37,6 +37,7 @@ export enum ArticleStatus {
   Draft = "DRAFT",
   Approved = "APPROVED",
   Delete = "DELETE",
+  Create = "CREATE",
 }
 
 export type Article = {
