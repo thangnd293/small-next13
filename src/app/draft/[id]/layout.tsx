@@ -12,7 +12,7 @@ export default function EditorLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full flex min-h-screen max-w-full 2xl:max-w-[1328px] justify-between">
+    <div className="w-full flex min-h-screen max-w-full 2xl:max-w-[1328px] justify-between mx-auto">
       <DraftProvider>{children}</DraftProvider>
     </div>
   );
