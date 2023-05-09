@@ -6,7 +6,7 @@ export const useCreateDraft = (
   config: UseMutationOptions<
     AxiosResponse<Response<Article>>,
     AxiosError<ResponseError>,
-    unknown
+    void
   > = {}
 ) => {
   return useMutation(

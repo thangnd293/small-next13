@@ -26,7 +26,7 @@ export default function DraftItem({ draft, isActive }: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries(getDraftsKey);
       toast.success(`Xóa ${draftName} thành công`);
-      router.push("/draft");
+      router.replace("/draft");
     },
   });
 
@@ -36,6 +36,7 @@ export default function DraftItem({ draft, isActive }: Props) {
 
   return (
     <Flex
+      className="group"
       borderRadius="4px"
       bg={isActive ? "gray.50" : "transparent"}
       color="gray.500"
@@ -45,7 +46,7 @@ export default function DraftItem({ draft, isActive }: Props) {
       cursor="pointer"
       align="center"
       _hover={{ bg: "gray.50" }}
-      onClick={() => router.push(`/draft/${draft.id}`)}
+      onClick={() => router.replace(`/draft/${draft.id}`)}
     >
       <Icons.DocumentChartBar width="22px" height="22px" />
       <Text flex={1} noOfLines={1}>
@@ -53,7 +54,10 @@ export default function DraftItem({ draft, isActive }: Props) {
       </Text>
       <Menu>
         <MenuButton onClick={(e) => e.stopPropagation()}>
-          <Icons.EllipsisVertical width={18} />
+          <Icons.EllipsisVertical
+            width={20}
+            className="hidden group-hover:block"
+          />
         </MenuButton>
         <MenuList minW="100px">
           <MenuItem

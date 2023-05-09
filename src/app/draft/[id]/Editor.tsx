@@ -79,7 +79,7 @@ const Editor = ({ draft }: Props) => {
           id: draft.id,
           description: content || "",
           title: title,
-          brief: subtitle,
+          brief: subtitle || "",
           mainImage: backgroundImage,
         }),
       500

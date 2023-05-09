@@ -2,6 +2,7 @@
 
 import Icons from "@/components/Icons";
 import { SearchBar } from "@/components/SearchBar";
+import { useCreateDraft, useDrafts } from "@/services/client";
 import { Article } from "@/types/common";
 import {
   Accordion,
@@ -14,11 +15,10 @@ import {
   Flex,
   VStack,
 } from "@chakra-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDraftContext } from "./DraftContext";
 import DraftItem from "./DraftItem";
-import { getDraftsKey, useCreateDraft, useDrafts } from "@/services/client";
 
 interface Props {
   drafts: Article[];
@@ -26,16 +26,21 @@ interface Props {
 }
 export default function Aside({ drafts: _drafts, currentDraft }: Props) {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { isOpenSidebar } = useDraftContext();
 
   const { drafts } = useDrafts();
   const createDraft = useCreateDraft({
     onSuccess: () => {
-      queryClient.invalidateQueries(getDraftsKey);
+      router.replace("/draft");
     },
   });
+
+  useEffect(() => {
+    if (drafts && drafts.length === 0) {
+      router.replace("/draft");
+    }
+  }, [drafts]);
 
   const allDrafts = drafts || _drafts;
 
@@ -62,6 +67,7 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
       </Flex>
       <VStack p="16px" spacing="30px">
         <SearchBar placeholder="Tìm bản nháp" size="sm" />
+
         <Accordion defaultIndex={[0, 1]} allowMultiple w="100%">
           <AccordionItem pb="20px">
             <AccordionButton>
@@ -106,7 +112,9 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
           size="sm"
           w="full"
           leftIcon={<Icons.DocumentPlus width="24px" height="24px" />}
-          onClick={createDraft.mutate}
+          onClick={() => {
+            createDraft.mutate();
+          }}
         >
           Bản nháp mới
         </Button>
