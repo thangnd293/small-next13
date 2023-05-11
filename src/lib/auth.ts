@@ -43,10 +43,13 @@ export const authOptions: AuthOptions = {
       const res = await fetch(`${API_URL}/user/me`, {
         headers: {
           Authorization: "Bearer " + token.accessToken,
+          "Content-Type": "application/json",
         },
+        cache: "no-cache",
       });
 
       const { data } = await res.json();
+
       const username = data.username || token.name;
 
       const user = await fetch(`${API_URL}/user/${username}`, {
@@ -54,7 +57,9 @@ export const authOptions: AuthOptions = {
           Authorization: "Bearer " + token.accessToken,
           "Content-Type": "application/json",
         },
+        cache: "no-cache",
       }).then((res) => res.json());
+
       if (token) {
         session.user = {
           ...token,

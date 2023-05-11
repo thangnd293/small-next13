@@ -1,5 +1,4 @@
-import { authOptions } from "@/lib/auth";
-import { Session, getServerSession } from "next-auth";
+import { Session } from "next-auth";
 import { headers } from "next/headers";
 
 export async function getSession(): Promise<Session | null> {
@@ -21,7 +20,6 @@ export async function getSession(): Promise<Session | null> {
 }
 
 export async function getCurrentUser() {
-  // const session = await getServerSession(authOptions);
   const session = await getSession();
 
   return session?.user;
