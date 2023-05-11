@@ -12,12 +12,12 @@ import {
 
 interface UserInfoContextValue {
   userInfo: User | null;
-  refeshUserInfo: (data?: any) => Promise<Session | null>;
+  refreshUserInfo: (data?: any) => Promise<Session | null>;
 }
 
 const initialValue: UserInfoContextValue = {
   userInfo: null,
-  refeshUserInfo: async () => null,
+  refreshUserInfo: async () => null,
 };
 
 const UserInfoContext = createContext<UserInfoContextValue>(initialValue);
@@ -36,7 +36,7 @@ export const UserInfoContextProvider: FC<PropsWithChildren> = ({
     <UserInfoContext.Provider
       value={{
         userInfo,
-        refeshUserInfo: update,
+        refreshUserInfo: update,
       }}
     >
       {children}

@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 
 export default function AboutTab() {
-  const { userInfo, refeshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo } = useUserInfoContext();
   const { mutate: updateUserInfo } = useUpdateUserInfo();
   const [bio, setBio] = useState(userInfo?.bio || "");
 
@@ -22,7 +22,7 @@ export default function AboutTab() {
     updateUserInfo(
       { id: userInfo?.id, bio: value },
       {
-        onSuccess: () => refeshUserInfo(),
+        onSuccess: () => refreshUserInfo(),
       }
     );
   };

@@ -34,7 +34,7 @@ const EditProfileSchema = Yup.object().shape({
 });
 
 export default function EditProfile() {
-  const { userInfo, refeshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo } = useUserInfoContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { mutate: updateUserInfo, isLoading } = useUpdateUserInfo();
@@ -43,7 +43,7 @@ export default function EditProfile() {
       { id: userInfo?.id, ...values },
       {
         onSuccess: () => {
-          refeshUserInfo();
+          refreshUserInfo();
           onClose();
         },
       }

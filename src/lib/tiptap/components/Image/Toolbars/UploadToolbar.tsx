@@ -45,7 +45,7 @@ export const UploadToolbar = ({
           <input
             className="hidden"
             type="file"
-            accept=".png, .jpg, .jpeg"
+            accept="image/*"
             onChange={handleFileChange}
             ref={inputRef}
           />

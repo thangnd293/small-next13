@@ -2,7 +2,7 @@
 
 import IconButton from "@/components/IconButton";
 import Icons from "@/components/Icons";
-import PublicArticle from "@/components/PublicArticle";
+import PublicArticle from "@/app/draft/[id]/PublicArticle";
 import {
   Box,
   Button,

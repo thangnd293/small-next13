@@ -50,9 +50,10 @@ export type Article = {
   brief: string;
   status: ArticleStatus;
   mainImage: string;
-  image1: string;
+  thumbnail: string;
   description: string;
   type: string;
-  category: string;
-  keyword: string;
+  category?: Category;
+  keyword: string[];
+  shortDescription: string;
 };

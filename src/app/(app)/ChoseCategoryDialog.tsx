@@ -22,7 +22,7 @@ interface Props {
   isOpen: boolean;
 }
 export default function ChoseCategoryDialog({ isOpen }: Props) {
-  const { userInfo, refeshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo } = useUserInfoContext();
 
   const [_isOpen, setIsOpen] = useState(isOpen);
   const { categories } = useCategories();
@@ -59,7 +59,7 @@ export default function ChoseCategoryDialog({ isOpen }: Props) {
         categories: categoriesSelected,
       },
       {
-        onSuccess: () => refeshUserInfo(),
+        onSuccess: () => refreshUserInfo(),
       }
     );
   };
@@ -120,11 +120,11 @@ function CategoryTag({ isActive, category, toggleCategory }: CategoryTagProps) {
       borderRadius="full"
       variant={isActive ? "solid" : "outline"}
       colorScheme="teal"
+      cursor="pointer"
+      onClick={() => toggleCategory(category)}
     >
       <TagLabel mr={1}>{category.name}</TagLabel>
-      <button onClick={() => toggleCategory(category)}>
-        {isActive ? <Icons.X width={18} /> : <PlusIcon width={18} />}
-      </button>
+      {isActive ? <Icons.X width={18} /> : <PlusIcon width={18} />}
     </Tag>
   );
 }

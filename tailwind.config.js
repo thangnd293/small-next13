@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#319795",
+        modal: "rgba(0, 0, 0, 0.2)",
         text: {
           primary: "#292929",
           secondary: "#757575",

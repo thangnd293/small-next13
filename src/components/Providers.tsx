@@ -16,7 +16,13 @@ interface IProps {
 }
 
 export default function Providers({ children }: IProps) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <CacheProvider>

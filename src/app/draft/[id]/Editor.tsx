@@ -12,6 +12,7 @@ import { lowlight } from "lowlight/lib/core";
 import {
   Box,
   Button,
+  CloseButton,
   HStack,
   IconButton,
   Popover,
@@ -37,11 +38,11 @@ lowlight.registerLanguage("java", java);
 
 import { useDraftContext } from "@/app/draft/[id]/DraftContext";
 import { extensions } from "@/components/Editor/extensions";
-import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
+import useUpdateImage from "@/hooks/useUpdateImage";
 import { getDraftsKey, useUpdateDraft } from "@/services/client";
+import { getArticleKey } from "@/services/client/use-article";
 import { Article } from "@/types/common";
 import { useQueryClient } from "@tanstack/react-query";
-import { getArticleKey } from "@/services/client/use-article";
 
 interface Props {
   draft: Article;
@@ -56,8 +57,8 @@ const Editor = ({ draft }: Props) => {
   const [content, setContent] = useState(draft.description);
   const [backgroundImage, setBackgroundImage] = useState(draft.mainImage || "");
 
-  const { handleUploadToCloudinary, isUploading } = useCloudinaryUpload(
-    (value) => setBackgroundImage(value)
+  const [ref, hiddenInput, isUploading] = useUpdateImage((value) =>
+    setBackgroundImage(value)
   );
 
   const updateDraft = useUpdateDraft({
@@ -80,9 +81,9 @@ const Editor = ({ draft }: Props) => {
         updateDraft.mutate({
           id: draft.id,
           description: content || "",
-          title: title,
+          title: title || "",
           brief: subtitle || "",
-          mainImage: backgroundImage,
+          mainImage: backgroundImage || "",
         }),
       500
     );
@@ -110,14 +111,6 @@ const Editor = ({ draft }: Props) => {
   });
 
   const [isAddSubtitle, setIsAddSubtitle] = useState(!!draft.brief);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    handleUploadToCloudinary(file);
-  };
 
   const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const subtitleTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -192,17 +185,10 @@ const Editor = ({ draft }: Props) => {
                 <PopoverBody className="p-5">
                   <div
                     className="flex items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer select-none hover:bg-gray-100"
-                    onClick={() => inputRef.current?.click()}
+                    ref={ref}
                   >
                     <div className="flex items-center gap-2 p-2 text-xl font-semibold rounded-lg cursor-pointer text-slate-500">
                       <Icons.Photo width={24} height={24} /> Thêm ảnh
-                      <input
-                        className="hidden"
-                        type="file"
-                        accept=".png, .jpg, .jpeg"
-                        onChange={handleFileChange}
-                        ref={inputRef}
-                      />
                     </div>
                   </div>
                 </PopoverBody>
@@ -220,11 +206,11 @@ const Editor = ({ draft }: Props) => {
           )}
         </HStack>
         {backgroundImage && (
-          <Box className="relative aspect-[40/21]">
+          <Box className="relative aspect-[40/21] group">
             <Tooltip label="Xóa ảnh bìa">
               <IconButton
                 colorScheme="gray"
-                className="absolute top-1 right-1"
+                className="absolute z-20 top-1 right-1"
                 aria-label={"Delete background image"}
                 onClick={() => setBackgroundImage("")}
               >
@@ -238,6 +224,17 @@ const Editor = ({ draft }: Props) => {
                 background: `url(${backgroundImage}) no-repeat center center / cover`,
               }}
             />
+            <div className="absolute inset-0 z-10 items-center justify-center hidden group-hover:flex bg-modal">
+              <div ref={ref} className="w-fit h-fit">
+                <Button
+                  isLoading={isUploading}
+                  colorScheme="gray"
+                  leftIcon={<Icons.Image width={16} />}
+                >
+                  Thay đổi ảnh bìa
+                </Button>
+              </div>
+            </div>
           </Box>
         )}
         <TextareaAutosize
@@ -250,14 +247,23 @@ const Editor = ({ draft }: Props) => {
         />
 
         {isAddSubtitle && (
-          <TextareaAutosize
-            className="w-full text-3xl font-medium border-none outline-none resize-none"
-            placeholder="Phụ đề..."
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-            onKeyDown={handleSubtitleKeyDown}
-            ref={subtitleTextareaRef}
-          />
+          <div className="relative">
+            <TextareaAutosize
+              className="w-full text-3xl font-medium border-none outline-none resize-none"
+              placeholder="Phụ đề..."
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+              onKeyDown={handleSubtitleKeyDown}
+              ref={subtitleTextareaRef}
+            />
+            <CloseButton
+              className="absolute -translate-y-1/2 right-2 top-1/2"
+              onClick={() => {
+                setSubtitle("");
+                setIsAddSubtitle(false);
+              }}
+            />
+          </div>
         )}
 
         <EditorContent
@@ -268,6 +274,7 @@ const Editor = ({ draft }: Props) => {
       </Box>
       <CommonToolbar editor={editor} />
       <LinkToolbar editor={editor} />
+      {hiddenInput}
     </>
   );
 };

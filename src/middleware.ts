@@ -32,7 +32,7 @@ export default withAuth(
     }
 
     if (req.nextUrl.pathname === "/draft") {
-      const draft = await getLatestDraft();
+      const draft = await getLatestDraft(token);
 
       return NextResponse.redirect(new URL(`/draft/${draft.id}`, req.url));
     }
