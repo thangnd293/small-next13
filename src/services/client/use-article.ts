@@ -12,7 +12,6 @@ export const useArticle = (id: number) => {
   const { data, ...rest } = useQuery({
     queryKey: getArticleKey(id),
     queryFn: () => getArticle(id),
-    refetchOnWindowFocus: false,
   });
 
   return {

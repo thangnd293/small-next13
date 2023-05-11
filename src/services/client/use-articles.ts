@@ -19,6 +19,5 @@ export const useArticles = () => {
         data: { number },
       },
     }) => number + 1,
-    refetchOnWindowFocus: false,
   });
 };
