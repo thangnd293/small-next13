@@ -119,6 +119,8 @@ const PublicArticle = ({ draft }: Props) => {
       title,
       shortDescription: description,
       thumbnail,
+      category: category?.value,
+      keywords: keywords?.map((keyword: any) => keyword.value).join(","),
     };
 
     updateDraft.mutate(payload);

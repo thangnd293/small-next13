@@ -249,7 +249,7 @@ const Editor = ({ draft }: Props) => {
         {isAddSubtitle && (
           <div className="relative">
             <TextareaAutosize
-              className="w-full text-3xl font-medium border-none outline-none resize-none"
+              className="w-full text-3xl font-medium border-none outline-none resize-none pr-9"
               placeholder="Phụ đề..."
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}

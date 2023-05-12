@@ -16,8 +16,12 @@ export const useArticles = () => {
     queryFn: ({ pageParam = 1 }) => getArticles(pageParam),
     getNextPageParam: ({
       data: {
-        data: { number },
+        data: { number, totalPages },
       },
-    }) => number + 1,
+    }) => {
+      if (number < totalPages) return number + 1;
+
+      return;
+    },
   });
 };

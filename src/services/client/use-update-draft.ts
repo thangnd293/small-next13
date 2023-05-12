@@ -2,7 +2,11 @@ import { Article, Response, ResponseError } from "@/types/common";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const updateDraft = (draft: Partial<Article>) => {
+export type UpdateDraftInput = Omit<Partial<Article>, "category"> & {
+  category?: number;
+};
+
+const updateDraft = (draft: UpdateDraftInput) => {
   return axios.put<Response<Article>>(`/article/update`, draft);
 };
 
@@ -10,7 +14,7 @@ export const useUpdateDraft = (
   config: UseMutationOptions<
     AxiosResponse<Response<Article>>,
     AxiosError<ResponseError>,
-    Partial<Article>
+    Partial<UpdateDraftInput>
   > = {}
 ) => {
   return useMutation(updateDraft, config);
