@@ -21,18 +21,17 @@ import { toast } from "react-toastify";
 
 import Icons from "@/components/Icons";
 import Select from "@/components/Select";
+import SelectCreatable from "@/components/SelectCreatable";
+import { useUserInfoContext } from "@/context/UserContext";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import {
-  getDraftsKey,
   useCategories,
   usePublicDraft,
   useUpdateDraft,
 } from "@/services/client";
 import { Article } from "@/types/common";
-import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import SelectCreatable from "@/components/SelectCreatable";
-import { useUserInfoContext } from "@/context/UserContext";
 
 type Option = {
   label: string;
@@ -41,9 +40,10 @@ type Option = {
 
 interface Props {
   draft: Article;
+  isDisabled?: boolean;
 }
-const PublicArticle = ({ draft }: Props) => {
-  const queryClient = useQueryClient();
+const PublicArticle = ({ draft, isDisabled }: Props) => {
+  const router = useRouter();
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -53,6 +53,9 @@ const PublicArticle = ({ draft }: Props) => {
     title: _title,
     shortDescription,
     category: _category,
+    description: _description,
+    id,
+    brief,
   } = draft;
 
   const { userInfo } = useUserInfoContext();
@@ -77,8 +80,8 @@ const PublicArticle = ({ draft }: Props) => {
 
   const publicDraft = usePublicDraft({
     onSuccess: () => {
-      queryClient.invalidateQueries(getDraftsKey);
       toast.success("Bài viết của bạn đã gửi về admin để duyệt.");
+      router.push("/draft");
     },
     onError: (err) => {
       toast.error(err.response?.data.message || "Đã có lỗi xảy ra.");
@@ -107,20 +110,20 @@ const PublicArticle = ({ draft }: Props) => {
   }, [_title, shortDescription, mainImage, _thumbnail]);
 
   const isFilled = title?.trim() && description?.trim() && category;
-  // TODO: Add update keywords and category
   const handleSendDraft = () => {
     if (!isFilled)
       return toast.error(
         "Để bài viết của bạn xuất hiện với chất lượng tốt vui lòng điền đầy đủ thông tin."
       );
-
     const payload = {
-      ...draft,
+      id,
+      description: _description,
+      brief,
       title,
       shortDescription: description,
       thumbnail,
-      category: category?.value,
-      keywords: keywords?.map((keyword: any) => keyword.value).join(","),
+      categoryId: category?.value,
+      keyword: keywords?.map((keyword: any) => keyword.value).join(","),
     };
 
     updateDraft.mutate(payload);
@@ -130,7 +133,12 @@ const PublicArticle = ({ draft }: Props) => {
 
   return (
     <>
-      <Button colorScheme="teal" size="sm" onClick={onOpen}>
+      <Button
+        colorScheme="teal"
+        size="sm"
+        onClick={onOpen}
+        isDisabled={isDisabled}
+      >
         Đăng bài
       </Button>
 

@@ -37,6 +37,10 @@ export default function EditDraft({ draft }: Props) {
 
   const SaveStateWrapper = isSaved ? Fragment : VisuallyHidden;
 
+  const isDisabled =
+    !currentArticle.title.trim() ||
+    currentArticle.description.trim() === "<p></p>";
+
   return (
     <Box
       as="main"
@@ -67,10 +71,11 @@ export default function EditDraft({ draft }: Props) {
             colorScheme="teal"
             size="sm"
             onClick={() => changeIsPreviewMode(true)}
+            isDisabled={isDisabled}
           >
             Xem trước
           </Button>
-          <PublicArticle draft={currentArticle} />
+          <PublicArticle draft={currentArticle} isDisabled={isDisabled} />
         </HStack>
       </HStack>
       <Box minH="calc(100% - 72px)">

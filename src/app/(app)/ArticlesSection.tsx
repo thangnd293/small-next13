@@ -1,10 +1,9 @@
 "use client";
 
-import Article from "@/components/Article";
+import { Article } from "@/components/Article";
 import { useArticles } from "@/services/client/use-articles";
 import React, { useEffect } from "react";
 
-//TODO: Fix infinity scroll
 export default function ArticlesSection() {
   const { data, isSuccess, isFetching, fetchNextPage, hasNextPage } =
     useArticles();

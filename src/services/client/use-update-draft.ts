@@ -2,8 +2,8 @@ import { Article, Response, ResponseError } from "@/types/common";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-export type UpdateDraftInput = Omit<Partial<Article>, "category"> & {
-  category?: number;
+export type UpdateDraftInput = Partial<Article> & {
+  categoryId?: number;
 };
 
 const updateDraft = (draft: UpdateDraftInput) => {

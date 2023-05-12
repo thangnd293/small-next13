@@ -1,9 +1,8 @@
 "use client";
 
+import { Article } from "@/components/Article";
 import { Image } from "@chakra-ui/next-js";
 import { Avatar, Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
-
-import Article from "@/components/Article";
 
 export default function ArticlePage({
   params,
