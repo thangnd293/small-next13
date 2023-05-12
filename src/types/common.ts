@@ -54,6 +54,8 @@ export type Article = {
   description: string;
   type: string;
   category?: Category;
-  keyword: string[];
+  keyword: string;
   shortDescription: string;
+  user: User;
+  slug: string;
 };

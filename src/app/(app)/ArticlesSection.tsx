@@ -1,40 +1,22 @@
 "use client";
 
 import { Article } from "@/components/Article";
+import { useUserInfoContext } from "@/context/UserContext";
 import { useArticles } from "@/services/client/use-articles";
-import React, { useEffect } from "react";
 
 export default function ArticlesSection() {
-  const { data, isSuccess, isFetching, fetchNextPage, hasNextPage } =
-    useArticles();
-
-  useEffect(() => {
-    let fetching = false;
-
-    const handleScroll = async (e: any) => {
-      const { scrollHeight, scrollTop, clientHeight } =
-        e.target.scrollingElement;
-
-      const isAtBottom = scrollHeight - scrollTop <= clientHeight * 1.2;
-
-      if (!fetching && isAtBottom) {
-        fetching = true;
-        if (hasNextPage) await fetchNextPage();
-        fetching = false;
-      }
-    };
-
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, [fetchNextPage, hasNextPage]);
+  const { userInfo } = useUserInfoContext();
+  const { data, isSuccess, isFetching } = useArticles(
+    userInfo?.categories.map((category) => category.name)
+  );
 
   return (
     <div className="flex flex-col gap-8">
       {isSuccess &&
         data.pages.map((page) =>
-          page.data.data.content.map((article) => <Article key={article.id} />)
+          page.data.data.content.map((article) => (
+            <Article key={article.id} article={article} />
+          ))
         )}
 
       {isFetching &&

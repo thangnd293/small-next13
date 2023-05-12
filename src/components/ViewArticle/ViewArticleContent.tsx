@@ -44,7 +44,7 @@ export default function ViewArticleContent({ content }: Props) {
     ],
     editorProps: {
       attributes: {
-        class: "outline-none pb-14",
+        class: "outline-none pb-10",
       },
     },
     content,

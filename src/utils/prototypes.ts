@@ -4,3 +4,7 @@ import "dayjs/locale/vi";
 String.prototype.toPrettyDate = function () {
   return dayjs(String(this)).locale("vi").format("MMMM D, YYYY");
 };
+
+String.prototype.toDateString = function () {
+  return dayjs(String(this)).locale("vi").format("MMMM D, YYYY");
+};

@@ -14,42 +14,55 @@ import Icons from "../Icons";
 import { Image, Link } from "@chakra-ui/next-js";
 import IconButton from "../IconButton";
 import { ArticleSkeleton } from "./ArticleSkeleton";
+import { Article as TArticle } from "@/types/common";
 
-export const Article = () => {
+const MAX_KEYWORDS_SHOW = 3;
+interface Props {
+  article: TArticle;
+}
+export const Article = ({ article }: Props) => {
+  const { user, category } = article;
+  const keywords = article.keyword?.split(",") || [];
+
+  const keywordsLeft = keywords.length - MAX_KEYWORDS_SHOW;
+
   return (
     <Box pb="20px" borderBottom="1px" borderColor="gray.50">
       <VStack align="flex-start" spacing="16px">
         <HStack>
           <HStack as={Link} href="/" spacing="10px">
-            <Avatar size="xs" />
-            <Text fontSize="xs">Nguyễn Đắc Thắng</Text>
+            <Avatar size="xs" src={user.image || undefined} />
+            <Text fontSize="xs">{user.name}</Text>
           </HStack>
           <Text fontSize="xs" ml="4px !important">
             <Text as="span" color="gray.500">
               đăng trong
             </Text>
-            <Link href="/"> Kiến thức React</Link>
+            <Link href="/"> {category?.name}</Link>
             <Text as="span" color="gray.500" px="10px">
               ·
             </Text>
-            1 ngày trước
+            {article.updatedAt.toDateString()}
           </Text>
         </HStack>
-        <HStack as={Link} href="/" align="flex-start" spacing="64px" w="full">
+        <HStack
+          as={Link}
+          href={`/${article.slug}`}
+          align="flex-start"
+          spacing="64px"
+          w="full"
+        >
           <Box flex={1}>
-            <Heading fontSize="lg">Ngưng sử dụng useMemo!</Heading>
-            <Text mt="16px">
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed to using &apos;Content here,
-              ...
+            <Heading fontSize="lg">{article.title}</Heading>
+            <Text mt="16px" noOfLines={3}>
+              {article.shortDescription}
             </Text>
           </Box>
           <Image
+            className="object-cover"
             width={120}
             height={120}
-            src={"/images/thumbnail.png"}
+            src={article.thumbnail || article.mainImage}
             alt={"thumbnail"}
           />
         </HStack>
@@ -59,12 +72,12 @@ export const Article = () => {
           <IconButton aria-label="Bookmark">
             <Icons.Bookmark width="24px" height="24px" color="currentColor" />
           </IconButton>
-          <Badge as={Link} href="/">
-            Category
-          </Badge>
-          <Badge as={Link} href="/">
-            Category
-          </Badge>
+          {keywords.slice(0, MAX_KEYWORDS_SHOW).map((keyword) => (
+            <Badge key={keyword} as={Link} href="/">
+              {keyword}
+            </Badge>
+          ))}
+          {keywordsLeft > 0 && <Badge>{`+${keywordsLeft}`}</Badge>}
         </HStack>
         <HStack color="gray.500">
           <Icons.Heart width="24px" height="24px" color="currentColor" />

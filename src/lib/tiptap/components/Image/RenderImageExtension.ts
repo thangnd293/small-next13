@@ -34,16 +34,18 @@ export const ImageComponent = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const {align, ...rest} = HTMLAttributes;
+    const { align, ...rest } = HTMLAttributes;
 
-    return ['div', {
-      class: classNames('flex overflow-hidden', {
-        'justify-start': align === 'start',
-        'justify-center': align === 'center',
-        'justify-end': align === 'end',
-      })
-    },['img', {...rest, class: 'block max-w-4xl'}]]
+    return [
+      "div",
+      {
+        class: classNames("flex overflow-hidden max-w-full", {
+          "justify-start": align === "start",
+          "justify-center": align === "center",
+          "justify-end": align === "end",
+        }),
+      },
+      ["img", { ...rest, class: "block max-w-full" }],
+    ];
   },
-
-
 });

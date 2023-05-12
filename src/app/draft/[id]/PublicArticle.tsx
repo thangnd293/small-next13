@@ -81,7 +81,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
   const publicDraft = usePublicDraft({
     onSuccess: () => {
       toast.success("Bài viết của bạn đã gửi về admin để duyệt.");
-      router.push("/draft");
+      router.replace("/draft");
     },
     onError: (err) => {
       toast.error(err.response?.data.message || "Đã có lỗi xảy ra.");

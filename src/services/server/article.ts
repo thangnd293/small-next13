@@ -71,3 +71,14 @@ export async function getDrafts() {
 
   return data.data.content;
 }
+
+export async function getArticle(slug: string) {
+  const res = await fetch(`${API_URL}/article/getDetail/${slug}`);
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  const data: Response<Article> = await res.json();
+
+  return data.data;
+}
