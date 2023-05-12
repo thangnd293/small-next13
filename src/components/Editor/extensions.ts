@@ -5,12 +5,7 @@ import {
   render,
 } from "@/lib/tiptap";
 
-import css from "highlight.js/lib/languages/css";
-import java from "highlight.js/lib/languages/java";
-import js from "highlight.js/lib/languages/javascript";
-import ts from "highlight.js/lib/languages/typescript";
-import html from "highlight.js/lib/languages/xml";
-import { lowlight } from "lowlight/lib/core";
+import { lowlight } from "lowlight/lib/common";
 
 import Code from "@tiptap/extension-code";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -21,14 +16,8 @@ import StarterKit from "@tiptap/starter-kit";
 
 import { ImageComponent } from "@/lib/tiptap/components/Image";
 
-lowlight.registerLanguage("html", html);
-lowlight.registerLanguage("css", css);
-lowlight.registerLanguage("js", js);
-lowlight.registerLanguage("ts", ts);
-lowlight.registerLanguage("java", java);
-
-import { Extensions } from "@tiptap/react";
 import CodeBlockExtension from "@/lib/tiptap/components/CodeBlock/CodeBlockExtension";
+import { Extensions } from "@tiptap/react";
 
 const CustomLink = Link.extend({
   selectable: true,
@@ -84,6 +73,6 @@ export const extensions: Extensions = [
     lowlight,
     exitOnTripleEnter: false,
     exitOnArrowDown: false,
-    defaultLanguage: "js",
+    // defaultLanguage: "cpp",
   }),
 ];

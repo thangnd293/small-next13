@@ -16,14 +16,6 @@ export default Node.create({
 
   selectable: false,
 
-  addAttributes() {
-    return {
-      language: {
-        default: "javascript",
-      },
-    };
-  },
-
   parseHTML() {
     return [
       {

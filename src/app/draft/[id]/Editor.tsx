@@ -1,14 +1,5 @@
 import "@/styles/tiptap.scss";
 
-import { useEffect, useRef, useState } from "react";
-
-import css from "highlight.js/lib/languages/css";
-import java from "highlight.js/lib/languages/java";
-import js from "highlight.js/lib/languages/javascript";
-import ts from "highlight.js/lib/languages/typescript";
-import html from "highlight.js/lib/languages/xml";
-import { lowlight } from "lowlight/lib/core";
-
 import {
   Box,
   Button,
@@ -24,17 +15,12 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { useEditor } from "@tiptap/react";
+import { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 import EditorContent from "@/components/Editor/EditorContent";
 import { CommonToolbar, LinkToolbar } from "@/components/Editor/Toolbars";
 import Icons from "@/components/Icons";
-
-lowlight.registerLanguage("html", html);
-lowlight.registerLanguage("css", css);
-lowlight.registerLanguage("js", js);
-lowlight.registerLanguage("ts", ts);
-lowlight.registerLanguage("java", java);
 
 import { useDraftContext } from "@/app/draft/[id]/DraftContext";
 import { extensions } from "@/components/Editor/extensions";
