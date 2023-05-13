@@ -3,7 +3,7 @@
 import { Button, Text } from "@chakra-ui/react";
 import { Formik, FormikHelpers } from "formik";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import * as Yup from "yup";
 
 import Link from "next/link";
@@ -26,6 +26,7 @@ const validateSchema = Yup.object().shape({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const handleSubmit = async (
@@ -33,10 +34,9 @@ export default function LoginForm() {
     { setSubmitting }: FormikHelpers<Input>
   ) => {
     const signInResult = await signIn("credentials", {
-      redirect: true,
+      redirect: false,
       usernameOrEmail: values.usernameOrEmail,
       password: values.password,
-      callbackUrl: searchParams?.get("from") || "/",
     });
 
     setSubmitting(false);
@@ -46,7 +46,7 @@ export default function LoginForm() {
         "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập"
       );
     }
-
+    router.push(searchParams?.get("from") || "/");
     toast.success("Đăng nhập thành công");
   };
 

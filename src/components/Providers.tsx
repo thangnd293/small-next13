@@ -24,16 +24,16 @@ export default function Providers({ children }: IProps) {
     },
   });
   return (
-    <QueryClientProvider client={queryClient}>
-      <CacheProvider>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <ChakraProvider theme={theme}>
-          <SessionProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <CacheProvider>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <ChakraProvider theme={theme}>
             <UserInfoContextProvider>{children}</UserInfoContextProvider>
-          </SessionProvider>
-        </ChakraProvider>
-        <ToastContainer />
-      </CacheProvider>
-    </QueryClientProvider>
+          </ChakraProvider>
+          <ToastContainer />
+        </CacheProvider>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
