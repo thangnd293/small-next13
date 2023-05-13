@@ -8,7 +8,7 @@ export const useCategories = () => {
   );
 
   return {
-    categories: data?.data.data,
+    categories: data?.data.data || [],
     ...rest,
   };
 };

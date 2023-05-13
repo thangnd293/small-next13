@@ -1,4 +1,9 @@
-import { Article, DataWithPaging, Response } from "@/types/common";
+import {
+  Article,
+  DataWithPaging,
+  Response,
+  UserLikeArticle,
+} from "@/types/common";
 import { JWT } from "next-auth/jwt";
 
 const { API_URL } = process.env;
@@ -81,4 +86,23 @@ export async function getArticle(slug: string) {
   const data: Response<Article> = await res.json();
 
   return data.data;
+}
+
+export async function checkUserLikeArticle(articleId: number, userId?: number) {
+  if (!userId) return false;
+
+  const res = await fetch(
+    `${API_URL}/interaction/v1/like/getAll/${articleId}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  const data: Response<UserLikeArticle[]> = await res.json();
+
+  return data.data.some((user) => user.userId === userId && user.isLike === 1);
 }
