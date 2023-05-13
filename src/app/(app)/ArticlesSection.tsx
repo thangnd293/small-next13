@@ -2,11 +2,11 @@
 
 import { Article } from "@/components/Article";
 import { useUserInfoContext } from "@/context/UserContext";
-import { useArticles } from "@/services/client/use-articles";
+import { useArticlesInfinite } from "@/services/client/use-articles-Infinite";
 
 export default function ArticlesSection() {
   const { userInfo } = useUserInfoContext();
-  const { data, isSuccess, isFetching } = useArticles(
+  const { data, isSuccess, isFetching } = useArticlesInfinite(
     userInfo?.categories.map((category) => category.name)
   );
 

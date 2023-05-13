@@ -59,3 +59,21 @@ export type Article = {
   user: User;
   slug: string;
 };
+
+export type Comment = {
+  id: number;
+  description: string;
+  name: string;
+  image: string;
+  createdAt: string;
+};
+
+export type UserLikeArticle = {
+  id: number;
+  name: string;
+  articleId: number;
+  userId: number;
+  createdDate: string;
+  lastModifyDate: string;
+  isLike: 0 | 1;
+};

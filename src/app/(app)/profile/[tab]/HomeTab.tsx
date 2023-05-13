@@ -4,9 +4,10 @@ import { useArticlesOfUser } from "@/services/client/use-articles-of-user";
 
 export default function HomeTab() {
   const { userInfo } = useUserInfoContext();
+
+  const { articles } = useArticlesOfUser(userInfo?.username || "");
   if (!userInfo) return null;
 
-  const { articles } = useArticlesOfUser(userInfo.username);
   return (
     <div className="flex flex-col gap-8">
       {articles.map((article) => (
