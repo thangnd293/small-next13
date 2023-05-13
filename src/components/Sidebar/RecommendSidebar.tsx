@@ -1,4 +1,5 @@
-import { Image } from "@chakra-ui/next-js";
+import { useArticles, useCategories } from "@/services/client";
+import { Image, Link } from "@chakra-ui/next-js";
 import {
   Flex,
   HStack,
@@ -9,16 +10,18 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-
 const RecommendSidebar = () => {
+  const { categories } = useCategories();
+  const { articles } = useArticles();
+
   return (
     <Box>
       <Box pb="30px" borderBottom="1px" borderColor="gray.50">
         <Text>Chủ đề nổi bật</Text>
         <HStack wrap={"wrap"} gap="10px" mt="14px">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <Badge key={index} variant="outline" ml="0 !important">
-              Category
+          {categories.map((category) => (
+            <Badge key={category.id} variant="outline" ml="0 !important">
+              {category.name}
             </Badge>
           ))}
         </HStack>
@@ -26,12 +29,17 @@ const RecommendSidebar = () => {
       <Box py="30px" borderBottom="1px" borderColor="gray.50">
         <Text>Bài viết nổi bật</Text>
         <VStack wrap={"wrap"} spacing="10px" mt="14px">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <HStack key={index} spacing="10px">
+          {articles.slice(0, 3).map((article) => (
+            <HStack
+              key={article.id}
+              as={Link}
+              href={article.slug}
+              spacing="10px"
+            >
               <Image
                 width={10}
                 height={10}
-                src={"/images/thumbnail-small.png"}
+                src={article.thumbnail || article.mainImage}
                 alt={"Thumbnail"}
               />
               <Flex
@@ -39,13 +47,9 @@ const RecommendSidebar = () => {
                 align="flex-start"
                 justify="space-between"
               >
-                <Text>Ngưng sử dụng useMemo!</Text>
+                <Text>{article.title}</Text>
                 <Text color="gray.500" noOfLines={1}>
-                  It is a long established fact that a reader will be
-                  distracted by the readable content of a page when looking at
-                  its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to
-                  using Content here, ...
+                  {article.shortDescription}
                 </Text>
               </Flex>
             </HStack>

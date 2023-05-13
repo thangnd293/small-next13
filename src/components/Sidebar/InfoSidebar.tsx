@@ -1,11 +1,10 @@
-import { Avatar, VStack, Box, Text, Button } from "@chakra-ui/react";
+import { useUserInfoContext } from "@/context/UserContext";
+import { Avatar, Box, Button, Text, VStack } from "@chakra-ui/react";
 import SmallCollection from "../SmallCollection";
 import EditProfile from "./EditProfile";
-import { useUserInfoContext } from "@/context/UserContext";
 
 const InfoSidebar = () => {
   const { userInfo } = useUserInfoContext();
-
   return (
     <>
       <VStack align="flex-start" spacing="16px">

@@ -1,5 +1,4 @@
 import { useLayoutContext } from "@/app/(app)/LayoutContext";
-import { Link } from "@chakra-ui/next-js";
 import { Flex, HStack, Text } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import InfoSidebar from "./InfoSidebar";
@@ -10,6 +9,7 @@ const Sidebar = () => {
   const header = headerRef.current as HTMLElement;
   const pathname = usePathname();
 
+  const currentYear = new Date().getFullYear();
   return (
     <Flex
       as="aside"
@@ -31,11 +31,9 @@ const Sidebar = () => {
         <RecommendSidebar />
       )}
       <HStack as="footer" spacing="10px" mt="auto">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <Text key={index} as={Link} href="/" color="gray.500" py="24px">
-            © 2023
-          </Text>
-        ))}
+        <Text color="gray.500" py="24px">
+          Nhóm 6 © {currentYear}
+        </Text>
       </HStack>
     </Flex>
   );
