@@ -43,6 +43,24 @@ export default function Header() {
     setColorMode(colorMode === "light" ? "dark" : "light");
   };
 
+  const menuLinkItems = [
+    {
+      label: "Viết bài",
+      href: "/draft",
+      icon: Icons.PencilSquare,
+    },
+    {
+      label: "Lưu trữ",
+      href: "/profile/library",
+      icon: Icons.Bookmark,
+    },
+    {
+      label: "Thống kê",
+      href: "/",
+      icon: Icons.ChartBar,
+    },
+  ];
+
   return (
     <Box
       as="header"
@@ -148,42 +166,22 @@ export default function Header() {
                   <Text noOfLines={1}>{userInfo.name}</Text>
                 </HStack>
                 <MenuDivider />
-                <MenuItem
-                  icon={renderIcon(Icons.PencilSquare)}
-                  color="gray.500"
-                  _dark={{
-                    color: "gray.300",
-                  }}
-                >
-                  Viết bài
-                </MenuItem>
-                <MenuItem
-                  icon={renderIcon(Icons.Bookmark)}
-                  color="gray.500"
-                  _dark={{
-                    color: "gray.300",
-                  }}
-                >
-                  Lưu trữ
-                </MenuItem>
-                <MenuItem
-                  icon={renderIcon(Icons.Document)}
-                  color="gray.500"
-                  _dark={{
-                    color: "gray.300",
-                  }}
-                >
-                  Bản nháp
-                </MenuItem>
-                <MenuItem
-                  icon={renderIcon(Icons.ChartBar)}
-                  color="gray.500"
-                  _dark={{
-                    color: "gray.300",
-                  }}
-                >
-                  Thống kê
-                </MenuItem>
+                {menuLinkItems.map((item) => {
+                  return (
+                    <MenuItem
+                      key={item.label}
+                      as={Link}
+                      icon={renderIcon(item.icon)}
+                      href={item.href}
+                      color="gray.500"
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    >
+                      {item.label}
+                    </MenuItem>
+                  );
+                })}
                 <MenuDivider />
                 <MenuItem
                   color="gray.500"

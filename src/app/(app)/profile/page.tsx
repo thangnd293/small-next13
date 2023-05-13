@@ -1,17 +1,5 @@
-import { Metadata } from "next";
-import Tabs from "./Tabs";
-import Title from "./Title";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Thông tin cá nhân",
-  description: "Thông tin cá nhân",
-};
-
-export default async function UserInfoPage() {
-  return (
-    <>
-      <Title />
-      <Tabs />
-    </>
-  );
+export default function index() {
+  return redirect("/profile/home");
 }
