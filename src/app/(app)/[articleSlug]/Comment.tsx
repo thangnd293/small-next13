@@ -1,6 +1,7 @@
 "use client";
 
 import { Comment as TComment } from "@/types/common";
+import { Link } from "@chakra-ui/next-js";
 import { Avatar, Box, HStack, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 
@@ -16,9 +17,11 @@ export default function Comment({
       <HStack>
         <Avatar size="sm" src={image || undefined} />
         <VStack align="flex-start" spacing={0}>
-          <Text fontSize="14px">{name}</Text>
+          <Text as={Link} href={`/`} fontSize="14px">
+            {name}
+          </Text>
           <Text fontSize="14px" color="gray.500">
-            {createdAt}
+            {createdAt.fromNow()}
           </Text>
         </VStack>
       </HStack>

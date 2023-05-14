@@ -30,7 +30,7 @@ export const Article = ({ article }: Props) => {
     <Box pb="20px" borderBottom="1px" borderColor="gray.50">
       <VStack align="flex-start" spacing="16px">
         <HStack>
-          <HStack as={Link} href="/" spacing="10px">
+          <HStack as={Link} href={`/user/${user.username}`} spacing="10px">
             <Avatar size="xs" src={user.image || undefined} />
             <Text fontSize="xs">{user.name}</Text>
           </HStack>

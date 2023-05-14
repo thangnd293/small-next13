@@ -6,6 +6,7 @@ import {
   UserLikeArticle,
 } from "@/types/common";
 import { JWT } from "next-auth/jwt";
+import { redirect } from "next/navigation";
 
 const { API_URL } = process.env;
 
@@ -24,7 +25,7 @@ export async function createDraft(token: JWT) {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<Article> = await res.json();
@@ -38,7 +39,7 @@ export async function getLatestDraft(token: JWT) {
     { cache: "no-store" }
   );
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<DataWithPaging<Article[]>> = await res.json();
@@ -56,7 +57,7 @@ export async function getDraft(id: string) {
     cache: "no-store",
   });
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<Article> = await res.json();
@@ -70,7 +71,7 @@ export async function getDrafts() {
     { cache: "no-store" }
   );
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<DataWithPaging<Article[]>> = await res.json();
@@ -81,7 +82,7 @@ export async function getDrafts() {
 export async function getArticle(slug: string) {
   const res = await fetch(`${API_URL}/article/getDetail/${slug}`);
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<Article> = await res.json();
@@ -100,7 +101,7 @@ export async function checkUserLikeArticle(articleId: number, userId?: number) {
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<UserLikeArticle[]> = await res.json();
@@ -123,11 +124,26 @@ export async function searchArticle({
     `${API_URL}/article/getAll?sort=createAt%2Cdesc&status=APPROVE&${params}`,
     { cache: "no-store" }
   );
+
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    redirect("/404");
   }
 
   const data: Response<Article[]> = await res.json();
 
+  return data.data;
+}
+
+export async function getArticlesOfUser(username: string) {
+  const res = await fetch(
+    `${API_URL}/article/getAll?status=APPROVE&username=${username}`,
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) {
+    redirect("/404");
+  }
+
+  const data: Response<Article[]> = await res.json();
   return data.data;
 }

@@ -18,6 +18,7 @@ export default function Tabs({ items }: Props) {
     <div className="space-x-8 border-b border-b-border">
       {items.map((item) => (
         <Link
+          key={item.label}
           className={classNames(
             "inline-block py-2 text-sm translate-y-[1px] border-b text-text-primary hover:border-b-text-primary",
             {
