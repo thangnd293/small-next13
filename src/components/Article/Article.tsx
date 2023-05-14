@@ -38,7 +38,10 @@ export const Article = ({ article }: Props) => {
             <Text as="span" color="gray.500">
               đăng trong
             </Text>
-            <Link href="/"> {category?.name}</Link>
+            <Link href={`/search?category=${category?.name}`}>
+              {" "}
+              {category?.name}
+            </Link>
             <Text as="span" color="gray.500" px="10px">
               ·
             </Text>
@@ -81,7 +84,7 @@ export const Article = ({ article }: Props) => {
         </HStack>
         <HStack color="gray.500">
           <Icons.Heart width="24px" height="24px" color="currentColor" />
-          <Text>1</Text>
+          <Text>{article.totalLike}</Text>
         </HStack>
       </HStack>
     </Box>

@@ -5,7 +5,9 @@ import { useArticlesOfUser } from "@/services/client/use-articles-of-user";
 export default function HomeTab() {
   const { userInfo } = useUserInfoContext();
 
-  const { articles } = useArticlesOfUser(userInfo?.username || "");
+  const { articles, isSuccess, isLoading } = useArticlesOfUser(
+    userInfo?.username || ""
+  );
   if (!userInfo) return null;
 
   return (
@@ -13,6 +15,11 @@ export default function HomeTab() {
       {articles.map((article) => (
         <Article key={article.id} article={article} />
       ))}
+      {!isSuccess &&
+        isLoading &&
+        Array.from({ length: 3 }).map((_, index) => (
+          <Article.Skeleton key={index} />
+        ))}
     </div>
   );
 }
