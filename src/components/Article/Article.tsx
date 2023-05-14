@@ -73,7 +73,7 @@ export const Article = ({ article }: Props) => {
             <Icons.Bookmark width="24px" height="24px" color="currentColor" />
           </IconButton>
           {keywords.slice(0, MAX_KEYWORDS_SHOW).map((keyword) => (
-            <Badge key={keyword} as={Link} href="/">
+            <Badge key={keyword} as={Link} href={`/search?keyword=${keyword}`}>
               {keyword}
             </Badge>
           ))}

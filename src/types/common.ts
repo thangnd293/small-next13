@@ -58,6 +58,7 @@ export type Article = {
   shortDescription: string;
   user: User;
   slug: string;
+  totalLike: number;
 };
 
 export type Comment = {

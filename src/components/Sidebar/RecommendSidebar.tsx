@@ -20,7 +20,13 @@ const RecommendSidebar = () => {
         <Text>Chủ đề nổi bật</Text>
         <HStack wrap={"wrap"} gap="10px" mt="14px">
           {categories.map((category) => (
-            <Badge key={category.id} variant="outline" ml="0 !important">
+            <Badge
+              key={category.id}
+              as={Link}
+              href={`/search?category=${category.name}`}
+              variant="outline"
+              ml="0 !important"
+            >
               {category.name}
             </Badge>
           ))}
