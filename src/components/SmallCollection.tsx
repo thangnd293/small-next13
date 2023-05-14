@@ -15,7 +15,7 @@ const SmallCollection = () => {
           Nào rảnh đọc
         </Text>
         <Text fontSize="md" color="gray.500">
-          3 lữ trữ
+          3 lưu trữ
         </Text>
       </Box>
     </HStack>

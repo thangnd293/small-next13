@@ -15,3 +15,4 @@ export * from "./use-like-article";
 export * from "./use-all-user-like-article";
 export * from "./use-articles-Infinite";
 export * from "./use-articles";
+export * from "./use-user";
