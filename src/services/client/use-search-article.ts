@@ -3,10 +3,16 @@ import axios from "axios";
 
 import { Article, Response } from "@/types/common";
 
-export const searchArticleKey = (keyword: string) => ["articles", keyword];
+export const searchArticleKey = (keyword: string) => [
+  "search",
+  "article",
+  keyword,
+];
 
 const searchArticle = (keyword: string) =>
-  axios.get<Response<Article[]>>(`/article/getAll?title=${keyword}`);
+  axios.get<Response<Article[]>>(
+    `/article/getAll?status=APPROVE&title=${keyword}`
+  );
 
 export const useSearchArticle = (keyword: string) => {
   const { data, ...rest } = useQuery(
@@ -18,7 +24,7 @@ export const useSearchArticle = (keyword: string) => {
   );
 
   return {
-    articleFound: data?.data.data,
+    articleFound: data?.data.data || [],
     ...rest,
   };
 };

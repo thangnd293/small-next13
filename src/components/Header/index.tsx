@@ -27,9 +27,9 @@ import {
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import IconButton from "./IconButton";
-import Icons, { renderIcon } from "./Icons";
+import Icons, { renderIcon } from "../Icons";
 import { SearchBar } from "./SearchBar";
+import IconButton from "../IconButton";
 
 export default function Header() {
   const { userInfo } = useUserInfoContext();
@@ -95,15 +95,7 @@ export default function Header() {
               Small
             </Text>
           </HStack>
-          <SearchBar
-            containerProps={{
-              display: {
-                base: "none",
-                md: "flex",
-              },
-            }}
-            placeholder="Tìm kiếm trên Small"
-          />
+          <SearchBar placeholder="Tìm kiếm trên Small" />
         </HStack>
 
         <HStack spacing="20px">
@@ -161,10 +153,12 @@ export default function Header() {
             />
             {userInfo ? (
               <MenuList>
-                <HStack as={Link} href={"/profile"} px={3} py={1}>
-                  <Avatar src={userInfo.image || ""} />
-                  <Text noOfLines={1}>{userInfo.name}</Text>
-                </HStack>
+                <MenuItem>
+                  <HStack as={Link} href={"/profile"} px={3} py={1}>
+                    <Avatar src={userInfo.image || ""} />
+                    <Text noOfLines={1}>{userInfo.name}</Text>
+                  </HStack>
+                </MenuItem>
                 <MenuDivider />
                 {menuLinkItems.map((item) => {
                   return (
