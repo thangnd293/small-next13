@@ -3,16 +3,15 @@ import { checkUserLikeArticle, getArticle } from "@/services/server";
 import ArticlesSection from "./ArticlesSection";
 import AuthorSection from "./AuthorSection";
 import { getCurrentUser } from "@/utils/session";
+import { Metadata } from "next";
 
+interface Props {
+  params: { articleSlug: string };
+}
 // TODO:
-// Fix like behavior
 // Follow author
 // Delete, edit comment
-export default async function ArticlePage({
-  params,
-}: {
-  params: { articleSlug: string };
-}) {
+export default async function ArticlePage({ params }: Props) {
   const { articleSlug } = params;
   const id = Number(articleSlug.split("-").pop()?.slice(1));
   const user = await getCurrentUser();
@@ -29,4 +28,14 @@ export default async function ArticlePage({
       <ArticlesSection article={article} />
     </>
   );
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { articleSlug } = params;
+  const article = await getArticle(articleSlug);
+
+  return {
+    title: article.title,
+    description: article.shortDescription,
+  };
 }

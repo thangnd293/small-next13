@@ -1,15 +1,14 @@
 import { useArticles, useCategories } from "@/services/client";
 import { Image, Link } from "@chakra-ui/next-js";
 import {
+  Badge,
+  Box,
+  Button,
   Flex,
   HStack,
-  Badge,
-  VStack,
-  Button,
-  Box,
-  Text,
   Skeleton,
-  SkeletonText,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 
 const RecommendSidebar = () => {
@@ -57,6 +56,7 @@ const RecommendSidebar = () => {
                   as={Link}
                   href={article.slug}
                   spacing="10px"
+                  width="full"
                 >
                   <Image
                     className="object-cover object-center"
