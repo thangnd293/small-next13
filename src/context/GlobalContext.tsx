@@ -1,4 +1,5 @@
-import { User } from "@/types/common";
+import { useArticlesBookmarked } from "@/services/client";
+import { Article, User } from "@/types/common";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import {
@@ -10,40 +11,42 @@ import {
   useState,
 } from "react";
 
-interface UserInfoContextValue {
+interface GlobalContextValue {
   userInfo: User | null;
+  articlesBookmarked: Article[];
   refreshUserInfo: (data?: any) => Promise<Session | null>;
 }
 
-const initialValue: UserInfoContextValue = {
+const initialValue: GlobalContextValue = {
   userInfo: null,
+  articlesBookmarked: [],
   refreshUserInfo: async () => null,
 };
 
-const UserInfoContext = createContext<UserInfoContextValue>(initialValue);
+const GlobalContext = createContext<GlobalContextValue>(initialValue);
 
-export const UserInfoContextProvider: FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const GlobalContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data, update } = useSession();
   const [userInfo, setUserInfo] = useState<User | null>(data?.user || null);
+  const { articles } = useArticlesBookmarked(userInfo?.id);
 
   useEffect(() => {
     setUserInfo(data?.user || null);
   }, [data]);
 
   return (
-    <UserInfoContext.Provider
+    <GlobalContext.Provider
       value={{
         userInfo,
+        articlesBookmarked: articles,
         refreshUserInfo: update,
       }}
     >
       {children}
-    </UserInfoContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 
-export const useUserInfoContext = () => {
-  return useContext(UserInfoContext);
+export const useGlobalContext = () => {
+  return useContext(GlobalContext);
 };

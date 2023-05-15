@@ -1,10 +1,10 @@
 "use client";
 
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { Skeleton, Text } from "@chakra-ui/react";
 
 export default function Title() {
-  const { userInfo } = useUserInfoContext();
+  const { userInfo } = useGlobalContext();
 
   return !userInfo ? (
     <Skeleton h="36px" />

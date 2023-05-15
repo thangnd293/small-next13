@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         primary: "#319795",
         modal: "rgba(0, 0, 0, 0.2)",
+        "dark-visible": "rgba(11, 11, 11, 0.8)",
         text: {
           primary: "#292929",
           secondary: "#757575",

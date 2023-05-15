@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutContext } from "@/app/(app)/LayoutContext";
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { Link } from "@chakra-ui/next-js";
 import {
   Avatar,
@@ -32,7 +32,7 @@ import { SearchBar } from "./SearchBar";
 import IconButton from "../IconButton";
 
 export default function Header() {
-  const { userInfo } = useUserInfoContext();
+  const { userInfo } = useGlobalContext();
 
   const router = useRouter();
 

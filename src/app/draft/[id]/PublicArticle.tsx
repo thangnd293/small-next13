@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import Icons from "@/components/Icons";
 import Select from "@/components/Select";
 import SelectCreatable from "@/components/SelectCreatable";
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import {
   useCategories,
@@ -58,7 +58,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
     brief,
   } = draft;
 
-  const { userInfo } = useUserInfoContext();
+  const { userInfo } = useGlobalContext();
 
   const [title, setTitle] = useState(_title);
   const [description, setDescription] = useState(shortDescription);

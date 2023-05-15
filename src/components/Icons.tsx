@@ -2,8 +2,8 @@ import {
   ArrowUpTrayIcon,
   Bars3BottomLeftIcon,
   BellIcon,
-  BookmarkIcon,
   ChartBarIcon,
+  BookmarkIcon,
   ChevronLeftIcon,
   DocumentChartBarIcon,
   DocumentDuplicateIcon,
@@ -20,6 +20,8 @@ import {
   EyeIcon,
   EyeSlashIcon,
 } from "@heroicons/react/24/outline";
+import { BookmarkIcon as BookmarkSolidIcon } from "@heroicons/react/24/solid";
+
 import { SVGAttributes } from "react";
 import { AiOutlineHighlight, AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -301,6 +303,7 @@ const Icons = {
   Bell: BellIcon,
   Sun: SunIcon,
   Bookmark: BookmarkIcon,
+  Bookmarked: BookmarkSolidIcon,
   Document: DocumentIcon,
   ChartBar: ChartBarIcon,
   PencilSquare: PencilSquareIcon,

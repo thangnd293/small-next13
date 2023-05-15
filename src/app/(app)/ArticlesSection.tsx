@@ -1,11 +1,11 @@
 "use client";
 
 import { Article } from "@/components/Article";
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { useArticlesInfinite } from "@/services/client/use-articles-Infinite";
 
 export default function ArticlesSection() {
-  const { userInfo } = useUserInfoContext();
+  const { userInfo, articlesBookmarked } = useGlobalContext();
   const { data, isSuccess, isFetching } = useArticlesInfinite(
     userInfo?.categories.map((category) => category.name)
   );
@@ -15,7 +15,13 @@ export default function ArticlesSection() {
       {isSuccess &&
         data.pages.map((page) =>
           page.data.data.content.map((article) => (
-            <Article key={article.id} article={article} />
+            <Article
+              key={article.id}
+              article={article}
+              hasBookmarked={articlesBookmarked.some(
+                (ar) => ar.id === article.id
+              )}
+            />
           ))
         )}
 

@@ -67,6 +67,7 @@ export type Comment = {
   name: string;
   image: string;
   createdAt: string;
+  username: string;
 };
 
 export type UserLikeArticle = {

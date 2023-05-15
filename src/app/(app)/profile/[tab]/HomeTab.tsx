@@ -1,9 +1,9 @@
 import { Article } from "@/components/Article";
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { useArticlesOfUser } from "@/services/client/use-articles-of-user";
 
 export default function HomeTab() {
-  const { userInfo } = useUserInfoContext();
+  const { userInfo, articlesBookmarked } = useGlobalContext();
 
   const { articles, isSuccess, isLoading } = useArticlesOfUser(
     userInfo?.username || ""
@@ -13,7 +13,11 @@ export default function HomeTab() {
   return (
     <div className="flex flex-col gap-8">
       {articles.map((article) => (
-        <Article key={article.id} article={article} />
+        <Article
+          key={article.id}
+          article={article}
+          hasBookmarked={articlesBookmarked.some((ar) => ar.id === article.id)}
+        />
       ))}
       {!isSuccess &&
         isLoading &&

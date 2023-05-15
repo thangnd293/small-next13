@@ -1,7 +1,7 @@
 "use client";
 
 import { Article } from "@/components/Article";
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { useUpdateCategories } from "@/services/client";
 import { useArticlesInfinite } from "@/services/client/use-articles-Infinite";
 import { Article as TArticle } from "@/types/common";
@@ -18,7 +18,7 @@ export default function ArticlesSection({ article }: Props) {
     category?.name ? [category?.name] : undefined
   );
 
-  const { userInfo, refreshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo, articlesBookmarked } = useGlobalContext();
   const followCategory = useUpdateCategories({
     onSuccess: refreshUserInfo,
   });
@@ -44,6 +44,7 @@ export default function ArticlesSection({ article }: Props) {
       categories: newCategories,
     });
   };
+
   return (
     <VStack mt="40px" p="20px" spacing="10px" bg="#FAFAFA" borderRadius="4px">
       <HStack w="full" align="flex-start" justify="space-between" mb="10px">
@@ -68,7 +69,13 @@ export default function ArticlesSection({ article }: Props) {
         {isSuccess &&
           data.pages.map((page) =>
             page.data.data.content.map((article) => (
-              <Article key={article.id} article={article} />
+              <Article
+                key={article.id}
+                article={article}
+                hasBookmarked={articlesBookmarked.some(
+                  (ar) => ar.id === article.id
+                )}
+              />
             ))
           )}
 

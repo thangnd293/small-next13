@@ -8,7 +8,7 @@ import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { UserInfoContextProvider } from "@/context/UserContext";
+import { GlobalContextProvider } from "@/context/GlobalContext";
 import "../lib/axios";
 
 interface IProps {
@@ -29,7 +29,7 @@ export default function Providers({ children }: IProps) {
         <CacheProvider>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <ChakraProvider theme={theme}>
-            <UserInfoContextProvider>{children}</UserInfoContextProvider>
+            <GlobalContextProvider>{children}</GlobalContextProvider>
           </ChakraProvider>
           <ToastContainer />
         </CacheProvider>

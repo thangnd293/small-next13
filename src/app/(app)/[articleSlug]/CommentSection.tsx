@@ -19,7 +19,7 @@ import { useRef, useState } from "react";
 import { HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
 import { RiSendPlaneLine } from "react-icons/ri";
 
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { getCommentsKey, useAddComment, useComments } from "@/services/client";
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -36,7 +36,7 @@ export default function CommentSection({ articleId, slug }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { userInfo } = useUserInfoContext();
+  const { userInfo } = useGlobalContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -83,6 +83,7 @@ export default function CommentSection({ articleId, slug }: Props) {
           </Text>
         </Button>
       </HStack>
+
       <Drawer
         isOpen={isOpen}
         placement="right"
@@ -128,7 +129,11 @@ export default function CommentSection({ articleId, slug }: Props) {
             <Box px={6}>
               {comments.length > 0 ? (
                 comments.map((comment) => (
-                  <Comment key={comment.id} {...comment} />
+                  <Comment
+                    key={comment.id}
+                    {...comment}
+                    isSelf={comment.username === userInfo?.username}
+                  />
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center p-10">

@@ -1,4 +1,4 @@
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { useUpdateUserInfo } from "@/services/client";
 import {
   Button,
@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 
 export default function AboutTab() {
-  const { userInfo, refreshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo } = useGlobalContext();
   const { mutate: updateUserInfo } = useUpdateUserInfo();
   const [bio, setBio] = useState(userInfo?.bio || "");
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Icons from "@/components/Icons";
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { useCategories, useUpdateCategories } from "@/services/client";
 import { Category } from "@/types/common";
 import {
@@ -22,7 +22,7 @@ interface Props {
   isOpen: boolean;
 }
 export default function ChoseCategoryDialog({ isOpen }: Props) {
-  const { userInfo, refreshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo } = useGlobalContext();
 
   const [_isOpen, setIsOpen] = useState(isOpen);
   const { categories } = useCategories();

@@ -14,7 +14,7 @@ import {
 import { Form, Formik, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 
-import { useUserInfoContext } from "@/context/UserContext";
+import { useGlobalContext } from "@/context/GlobalContext";
 import InputField from "../InputField";
 import useCloudinaryUpload from "@/hooks/useCloudinaryUpload";
 import { useRef } from "react";
@@ -34,7 +34,7 @@ const EditProfileSchema = Yup.object().shape({
 });
 
 export default function EditProfile() {
-  const { userInfo, refreshUserInfo } = useUserInfoContext();
+  const { userInfo, refreshUserInfo } = useGlobalContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { mutate: updateUserInfo, isLoading } = useUpdateUserInfo();
