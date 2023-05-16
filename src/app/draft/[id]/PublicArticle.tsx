@@ -131,6 +131,8 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
     onClose();
   };
 
+  const isLoading = updateDraft.isLoading || publicDraft.isLoading;
+
   return (
     <>
       <Button
@@ -143,7 +145,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
       </Button>
 
       <Modal
-        isOpen={isOpen}
+        isOpen={isOpen || isLoading}
         onClose={onClose}
         size="4xl"
         isCentered
@@ -242,6 +244,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
                   <Button
                     colorScheme="teal"
                     mr={3}
+                    isLoading={isLoading}
                     isDisabled={!isFilled}
                     onClick={handleSendDraft}
                   >
