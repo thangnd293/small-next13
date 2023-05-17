@@ -133,7 +133,7 @@ export default function CommentSection({ articleId, slug }: Props) {
                     color: "gray.300",
                   }}
                 >
-                  Nguyễn Đắc Thắng
+                  {userInfo?.username}
                 </Text>
               </HStack>
               <Textarea

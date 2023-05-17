@@ -57,7 +57,14 @@ export default function EditProfile() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader fontSize="lg">Cập nhật thông tin</ModalHeader>
+          <ModalHeader
+            fontSize="lg"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
+            Cập nhật thông tin
+          </ModalHeader>
           <ModalCloseButton />
           <Formik
             initialValues={{
