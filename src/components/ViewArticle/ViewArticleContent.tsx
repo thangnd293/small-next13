@@ -51,5 +51,5 @@ export default function ViewArticleContent({ content }: Props) {
     editable: false,
   });
 
-  return <EditorContent id="article-content" editor={editor} />;
+  return <EditorContent editor={editor} />;
 }
