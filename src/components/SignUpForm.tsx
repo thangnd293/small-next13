@@ -60,7 +60,12 @@ export default function SignUpForm() {
       toast.success("Đăng ký thành công");
       router.push("/login");
     } else {
-      toast.error("Đăng ký thất bại");
+      const error = await response.json();
+      if (error.message === "Username is already taken!")
+        toast.error("Tên đăng nhập đã tồn tại");
+      else if (error.message === "Email Address already in use!")
+        toast.error("Email đã tồn tại");
+      else toast.error("Đăng ký thất bại");
     }
   };
 
