@@ -46,8 +46,18 @@ export function SearchBar({ ...restProps }: IProps) {
   };
 
   return (
-    <InputGroup>
-      <InputLeftElement color="gray.500" pointerEvents="none">
+    <InputGroup
+      _dark={{
+        color: "gray.300",
+      }}
+    >
+      <InputLeftElement
+        color="gray.500"
+        pointerEvents="none"
+        _dark={{
+          color: "gray.400",
+        }}
+      >
         {isLoading && isFetching ? (
           <AiOutlineLoading className="animate-spin" size={18} />
         ) : (
@@ -65,7 +75,7 @@ export function SearchBar({ ...restProps }: IProps) {
           {...restProps}
         />
         {articleFound.length > 0 && (
-          <div
+          <Box
             className={classNames(
               "absolute flex-col gap-1 w-full mt-2 py-4 bg-white border border-solid shadow-lg border-border max-h-96 overflow-auto",
               {
@@ -73,6 +83,10 @@ export function SearchBar({ ...restProps }: IProps) {
                 hidden: !isOpenSearchResult,
               }
             )}
+            _dark={{
+              bg: "gray.700",
+              borderColor: "gray.600",
+            }}
           >
             {articleFound.map((article) => (
               <SearchItem
@@ -81,7 +95,7 @@ export function SearchBar({ ...restProps }: IProps) {
                 onNavigate={() => setKeyword("")}
               />
             ))}
-          </div>
+          </Box>
         )}
       </Box>
     </InputGroup>
@@ -113,6 +127,11 @@ const SearchItem = ({
       _hover={{
         bg: "gray.100",
       }}
+      _dark={{
+        _hover: {
+          bg: "gray.600",
+        },
+      }}
       cursor="pointer"
       onClick={onClick}
     >
@@ -124,10 +143,23 @@ const SearchItem = ({
         alt={title}
       />
       <VStack align="start">
-        <Text fontSize="14px" noOfLines={1}>
+        <Text
+          fontSize="14px"
+          noOfLines={1}
+          _dark={{
+            color: "gray.300",
+          }}
+        >
           {title}
         </Text>
-        <Text fontSize="14px" color="gray.500" noOfLines={1}>
+        <Text
+          fontSize="14px"
+          color="gray.500"
+          noOfLines={1}
+          _dark={{
+            color: "gray.400",
+          }}
+        >
           {user.name} · {totalLike} lượt thích · {createdAt.toDateString()}
         </Text>
       </VStack>

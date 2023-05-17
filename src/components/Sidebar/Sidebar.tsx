@@ -31,7 +31,13 @@ const Sidebar = () => {
     >
       {<SidebarShow />}
       <HStack as="footer" spacing="10px" mt="auto">
-        <Text color="gray.500" py="24px">
+        <Text
+          color="gray.500"
+          py="24px"
+          _dark={{
+            color: "gray.300",
+          }}
+        >
           Nhóm 6 © {currentYear}
         </Text>
       </HStack>

@@ -37,7 +37,14 @@ export default function AboutTab() {
 
     return isEditing ? (
       <ButtonGroup justifyContent="end" size="sm" w="full" spacing={2} mt={2}>
-        <Button {...getCancelButtonProps()}>Huỷ</Button>
+        <Button
+          _dark={{
+            color: "gray.300",
+          }}
+          {...getCancelButtonProps()}
+        >
+          Huỷ
+        </Button>
         <Button colorScheme="teal" {...getSubmitButtonProps()}>
           Lưu
         </Button>
@@ -50,12 +57,22 @@ export default function AboutTab() {
         borderBottom="1px"
         borderStyle="solid"
         borderColor="gray.50"
+        _dark={{
+          borderColor: "gray.700",
+        }}
       >
         <Button
           colorScheme="blackAlpha"
           variant="outline"
           borderRadius="full"
           fontWeight="normal"
+          _dark={{
+            borderColor: "gray.700",
+            color: "gray.300",
+            _hover: {
+              bg: "gray.700",
+            },
+          }}
           {...getEditButtonProps()}
         >
           {bio ? "Chỉnh sửa" : "Thêm"}
@@ -76,11 +93,27 @@ export default function AboutTab() {
         onCancel={() => setBio(userInfo?.bio || "")}
         onSubmit={handleUpdate}
       >
-        <EditablePreview />
-        <Textarea as={EditableTextarea} />
+        <EditablePreview
+          _dark={{
+            color: "gray.300",
+          }}
+        />
+        <Textarea
+          as={EditableTextarea}
+          _dark={{
+            color: "gray.300",
+          }}
+        />
         <EditableControls />
       </Editable>
-      <Text mt="10px">3 người theo dõi · Đang theo dõi 4</Text>
+      <Text
+        mt="10px"
+        _dark={{
+          color: "gray.300",
+        }}
+      >
+        3 người theo dõi · Đang theo dõi 4
+      </Text>
     </>
   );
 }

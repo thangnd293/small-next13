@@ -1,5 +1,5 @@
 import { TItem } from "@/lib/tiptap";
-import { Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import classnames from "classnames";
 import React, {
   useImperativeHandle,
@@ -69,39 +69,49 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
   );
 
   return (
-    <div
+    <Box
       className="flex flex-col w-[382px] max-h-[400px] overflow-auto items bg-white shadow-md border border-slate-200 rounded-md"
       onKeyDown={onKeydown}
       autoFocus
+      _dark={{
+        bg: "gray.700",
+        borderColor: "gray.700",
+      }}
     >
       {items.map((item, index) => {
         const isActive = index === selectedIndex;
         return (
-          <button
+          <Button
             key={index}
+            variant="unstyled"
+            borderRadius={0}
             className={classnames(
-              "group flex items-center p-4 hover:bg-slate-50",
-              {
-                "bg-slate-50": isActive,
-                "bg-white": !isActive,
-              }
+              "py-10 group flex items-center p-4 hover:bg-slate-50"
             )}
+            bg={isActive ? "gray.50" : "transparent"}
+            _dark={{
+              bg: isActive ? "gray.700" : "transparent",
+              _hover: {
+                bg: "gray.600",
+              },
+            }}
             onClick={() => command(item)}
             ref={(el) => {
               if (isActive) currentItemActiveRef.current = el;
             }}
           >
-            <div
+            <Box
               className={classnames(
-                "w-10 h-10 flex items-center justify-center border border-slate-200 mr-3 group-hover:bg-white",
-                {
-                  "bg-white": isActive,
-                  "bg-slate-50": !isActive,
-                }
+                "w-10 h-10 flex items-center justify-center border border-slate-200 mr-3 group-hover:bg-white"
               )}
+              bg={isActive ? "white" : "gray.50"}
+              _dark={{
+                bg: isActive ? "gray.700" : "transparent",
+                color: "gray.300",
+              }}
             >
               {<item.icon className="w-6 h-6" />}
-            </div>
+            </Box>
             <div className="flex flex-col items-start flex-1">
               <Text fontSize="md" fontWeight="medium">
                 {item.title}
@@ -110,10 +120,10 @@ const Commands = React.forwardRef(({ items, command }: IProps, ref) => {
                 {item.description}
               </Text>
             </div>
-          </button>
+          </Button>
         );
       })}
-    </div>
+    </Box>
   );
 });
 

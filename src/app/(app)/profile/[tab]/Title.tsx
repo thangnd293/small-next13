@@ -9,6 +9,13 @@ export default function Title() {
   return !userInfo ? (
     <Skeleton h="36px" />
   ) : (
-    <Text fontSize="36px">{userInfo.name}</Text>
+    <Text
+      fontSize="36px"
+      _dark={{
+        color: "gray.300",
+      }}
+    >
+      {userInfo.name}
+    </Text>
   );
 }

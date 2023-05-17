@@ -1,5 +1,6 @@
 "use client";
 import { User } from "@/types/common";
+import { Link } from "@chakra-ui/next-js";
 import { HStack, Avatar, VStack, Button, Box, Text } from "@chakra-ui/react";
 import React from "react";
 
@@ -14,16 +15,37 @@ export default function AuthorSection({ user }: Props) {
         <HStack spacing="12px">
           <Avatar size="lg" src={image || undefined} />
           <VStack align="start">
-            <Text fontSize="12px" color="gray.500">
+            <Text
+              fontSize="12px"
+              color="gray.500"
+              _dark={{
+                color: "gray.400",
+              }}
+            >
               ĐĂNG BỞI
             </Text>
-            <Text>{name}</Text>
+            <Text
+              as={Link}
+              href={`/user/${user.username}`}
+              _dark={{
+                color: "gray.300",
+              }}
+            >
+              {name}
+            </Text>
           </VStack>
         </HStack>
         <Button colorScheme="teal">Theo dõi</Button>
       </HStack>
       {bio && (
-        <Text pl="76px" fontSize="14px" color="gray.500">
+        <Text
+          pl="76px"
+          fontSize="14px"
+          color="gray.500"
+          _dark={{
+            color: "gray.400",
+          }}
+        >
           {bio}
         </Text>
       )}

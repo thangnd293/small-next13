@@ -24,10 +24,22 @@ const AuthorInfoSidebar = () => {
           </Box>
         ) : (
           <Box>
-            <Text fontSize="md" color="gray.900">
+            <Text
+              fontSize="md"
+              color="gray.900"
+              _dark={{
+                color: "gray.300",
+              }}
+            >
               {user?.name}
             </Text>
-            <Text fontSize="md" color="gray.500">
+            <Text
+              fontSize="md"
+              color="gray.500"
+              _dark={{
+                color: "gray.400",
+              }}
+            >
               1.1k người theo dõi
             </Text>
           </Box>
@@ -36,7 +48,13 @@ const AuthorInfoSidebar = () => {
         {isLoading ? (
           <SkeletonText noOfLines={3} skeletonHeight="16px " w="full" />
         ) : (
-          <Text>{user?.bio}</Text>
+          <Text
+            _dark={{
+              color: "gray.300",
+            }}
+          >
+            {user?.bio}
+          </Text>
         )}
       </VStack>
     </>

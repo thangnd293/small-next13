@@ -51,8 +51,19 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
       borderLeft="1px"
       borderColor="gray.50"
       display={isOpenSidebar ? "block" : "none"}
+      _dark={{
+        borderColor: "gray.700",
+      }}
     >
-      <Flex align="center" h="72px" borderBottom="1px" borderColor="gray.50">
+      <Flex
+        align="center"
+        h="72px"
+        borderBottom="1px"
+        borderColor="gray.50"
+        _dark={{
+          borderColor: "gray.700",
+        }}
+      >
         <Button
           variant="text"
           leftIcon={<Icons.ChevronLeft width="16px" height="16px" />}
@@ -60,6 +71,12 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
           fontWeight="normal"
           color="gray.500"
           ml="16px"
+          _dark={{
+            color: "gray.300",
+            _hover: {
+              bg: "gray.700",
+            },
+          }}
           onClick={() => router.back()}
         >
           Trở lại
@@ -71,20 +88,38 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
         <Accordion defaultIndex={[0, 1]} allowMultiple w="100%">
           <AccordionItem pb="20px">
             <AccordionButton>
-              <Box as="span" flex="1" textAlign="left">
+              <Box
+                as="span"
+                flex="1"
+                textAlign="left"
+                _dark={{
+                  color: "gray.300",
+                }}
+              >
                 YÊU THÍCH
               </Box>
               <AccordionIcon />
             </AccordionButton>
 
-            <AccordionPanel>
+            <AccordionPanel
+              _dark={{
+                color: "gray.300",
+              }}
+            >
               Bản nháp yêu thích của bạn sẽ xuất hiện ở đây.
             </AccordionPanel>
           </AccordionItem>
 
           <AccordionItem>
             <AccordionButton>
-              <Box as="span" flex="1" textAlign="left">
+              <Box
+                as="span"
+                flex="1"
+                textAlign="left"
+                _dark={{
+                  color: "gray.300",
+                }}
+              >
                 BẢN NHÁP ( {allDrafts.length} )
               </Box>
               <AccordionIcon />

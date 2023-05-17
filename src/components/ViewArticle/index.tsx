@@ -4,7 +4,7 @@ import CommentSection from "@/app/(app)/[articleSlug]/CommentSection";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { Article } from "@/types/common";
 import { Image, Link } from "@chakra-ui/next-js";
-import { Avatar, Badge, HStack, Text, Tooltip } from "@chakra-ui/react";
+import { Avatar, Badge, Button, HStack, Text, Tooltip } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 
@@ -94,16 +94,33 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
           align="center"
           fontSize="xl"
           fontWeight="medium"
+          _dark={{
+            color: "gray.300",
+          }}
         >
           {title}
         </Text>
       )}
       {brief && (
-        <Text as="h1" align="center" fontSize="lg" color="gray.500">
+        <Text
+          as="h1"
+          align="center"
+          fontSize="lg"
+          color="gray.500"
+          _dark={{
+            color: "gray.300",
+          }}
+        >
           {brief}
         </Text>
       )}
-      <HStack my="20px" justify="center">
+      <HStack
+        my="20px"
+        justify="center"
+        _dark={{
+          color: "gray.300",
+        }}
+      >
         <Avatar />
         <Text fontWeight="semibold">Nguyen Dac Thang</Text>
         <Text>· {updatedAt.toPrettyDate()}</Text>
@@ -112,23 +129,24 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
       <HStack spacing={8}>
         <HStack spacing={1}>
           <Tooltip label="Thích bài viết">
-            <button
+            <Button
+              variant="unstyled"
               aria-label={"Like article"}
-              className="group"
+              className="group min-w-[unset]"
               onClick={handleLikeArticle}
+              _dark={{
+                color: "gray.400",
+                _hover: {
+                  color: "gray.300",
+                },
+              }}
             >
               {!isLiked ? (
-                <IoIosHeartEmpty
-                  className="text-text-secondary group-hover:text-text-primary"
-                  size={22}
-                />
+                <IoIosHeartEmpty size={22} />
               ) : (
-                <IoIosHeart
-                  className="text-text-primary opacity-80"
-                  size={22}
-                />
+                <IoIosHeart size={22} />
               )}
-            </button>
+            </Button>
           </Tooltip>
           <div className="relative">
             <Text
@@ -155,10 +173,24 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
         <HStack
           borderY="1px solid"
           borderColor="gray.50"
+          _dark={{
+            borderColor: "gray.700",
+          }}
           className="py-10 my-14"
         >
           {keywords.map((keyword) => (
-            <Badge key={keyword} as={Link} href="/">
+            <Badge
+              key={keyword}
+              as={Link}
+              href="/"
+              _dark={{
+                color: "gray.300",
+                backgroundColor: "gray.700",
+                _hover: {
+                  bg: "gray.600",
+                },
+              }}
+            >
               {keyword}
             </Badge>
           ))}

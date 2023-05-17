@@ -46,9 +46,23 @@ export default function ArticlesSection({ article }: Props) {
   };
 
   return (
-    <VStack mt="40px" p="20px" spacing="10px" bg="#FAFAFA" borderRadius="4px">
+    <VStack
+      mt="40px"
+      p="20px"
+      spacing="10px"
+      bg="#FAFAFA"
+      borderRadius="4px"
+      _dark={{
+        bg: "#354155",
+      }}
+    >
       <HStack w="full" align="flex-start" justify="space-between" mb="10px">
-        <Text maxW="50%">
+        <Text
+          maxW="50%"
+          _dark={{
+            color: "gray.300",
+          }}
+        >
           Xem thêm về{" "}
           <Text as="span" fontWeight="semibold">
             {category?.name}

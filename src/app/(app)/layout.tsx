@@ -21,7 +21,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }}
         justify="space-between"
       >
-        <Box flex="1" pt="40px" borderRight="1px" borderColor="gray.50">
+        <Box
+          flex="1"
+          pt="40px"
+          borderRight="1px"
+          borderColor="gray.50"
+          _dark={{
+            borderColor: "gray.700",
+          }}
+        >
           <Box
             as="main"
             maxW="745px"

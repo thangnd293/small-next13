@@ -6,7 +6,7 @@ import Icons from "./Icons";
 
 export default function LogoBackHome() {
   return (
-    <Link href="/">
+    <Link href="/" color="teal.500">
       <Icons.Logo />
     </Link>
   );

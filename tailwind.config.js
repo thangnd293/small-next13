@@ -17,8 +17,11 @@ module.exports = {
         text: {
           primary: "#292929",
           secondary: "#757575",
+          "primary-dark": "#cbd5e0",
+          "secondary-dark": "#a0aec0",
         },
         border: "#F2F2F2",
+        "border-dark": "#2D3748",
       },
     },
   },

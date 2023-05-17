@@ -11,8 +11,21 @@ export default function RecommendUserRegister({ isAuth }: Props) {
 
   return (
     <VStack align="flex-start" spacing="20px" mb="60px">
-      <Heading fontSize="4xl">Chưa là thành viên?</Heading>
-      <Text fontSize="lg" maxW="570px">
+      <Heading
+        fontSize="3xl"
+        _dark={{
+          color: "gray.300",
+        }}
+      >
+        Chưa là thành viên?
+      </Heading>
+      <Text
+        fontSize="medium"
+        maxW="570px"
+        _dark={{
+          color: "gray.300",
+        }}
+      >
         Trở thành thành viên để khám phá đầy đủ các tính năng của chúng tôi
       </Text>
       <Link href="/sign-up">

@@ -20,19 +20,46 @@ export default function Comment({
   const displayUsername = isSelf ? "Bạn" : name;
 
   return (
-    <Box py={6} borderBottom="1px solid" borderColor="gray.50">
+    <Box
+      py={6}
+      borderBottom="1px solid"
+      borderColor="gray.50"
+      _dark={{
+        borderColor: "gray.600",
+      }}
+    >
       <HStack>
         <Avatar size="sm" src={image || undefined} />
         <VStack align="flex-start" spacing={0}>
-          <Text as={Link} href={redirectTo} fontSize="14px">
+          <Text
+            as={Link}
+            href={redirectTo}
+            fontSize="14px"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
             {displayUsername}
           </Text>
-          <Text fontSize="14px" color="gray.500">
+          <Text
+            fontSize="14px"
+            color="gray.500"
+            _dark={{
+              color: "gray.400",
+            }}
+          >
             {createdAt.fromNow()}
           </Text>
         </VStack>
       </HStack>
-      <Text mt="10px">{description}</Text>
+      <Text
+        mt="10px"
+        _dark={{
+          color: "gray.300",
+        }}
+      >
+        {description}
+      </Text>
     </Box>
   );
 }

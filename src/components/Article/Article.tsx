@@ -63,7 +63,14 @@ export const Article = ({ article, hasBookmarked }: Props) => {
   const isSelfArticle = userInfo?.id === article.user.id;
 
   return (
-    <Box pb="20px" borderBottom="1px" borderColor="gray.50">
+    <Box
+      pb="20px"
+      borderBottom="1px"
+      borderColor="gray.50"
+      _dark={{
+        borderColor: "gray.700",
+      }}
+    >
       <VStack align="flex-start" spacing="16px">
         <HStack>
           <HStack
@@ -72,10 +79,29 @@ export const Article = ({ article, hasBookmarked }: Props) => {
             spacing="10px"
           >
             <Avatar size="xs" src={user.image || undefined} />
-            <Text fontSize="xs">{isSelfArticle ? "Bạn" : user.name}</Text>
+            <Text
+              fontSize="xs"
+              _dark={{
+                color: "gray.300",
+              }}
+            >
+              {isSelfArticle ? "Bạn" : user.name}
+            </Text>
           </HStack>
-          <Text fontSize="xs" ml="4px !important">
-            <Text as="span" color="gray.500">
+          <Text
+            fontSize="xs"
+            ml="4px !important"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
+            <Text
+              as="span"
+              color="gray.500"
+              _dark={{
+                color: "gray.400",
+              }}
+            >
               đăng trong
             </Text>
             <Link href={`/search?category=${category?.name}`}>
@@ -90,14 +116,27 @@ export const Article = ({ article, hasBookmarked }: Props) => {
         </HStack>
         <HStack
           as={Link}
-          href={`/${article.slug}`}
+          href={`/${encodeURIComponent(article.slug)}`}
           align="flex-start"
           spacing="64px"
           w="full"
         >
           <Box flex={1}>
-            <Heading fontSize="lg">{article.title}</Heading>
-            <Text mt="16px" noOfLines={3}>
+            <Heading
+              fontSize="lg"
+              _dark={{
+                color: "gray.300",
+              }}
+            >
+              {article.title}
+            </Heading>
+            <Text
+              mt="16px"
+              noOfLines={3}
+              _dark={{
+                color: "gray.300",
+              }}
+            >
               {article.shortDescription}
             </Text>
           </Box>
@@ -112,7 +151,16 @@ export const Article = ({ article, hasBookmarked }: Props) => {
       </VStack>
       <HStack mt="22px" align="center" justify="space-between">
         <HStack>
-          <IconButton aria-label="Bookmark" onClick={handleToggleBookmark}>
+          <IconButton
+            aria-label="Bookmark"
+            onClick={handleToggleBookmark}
+            _dark={{
+              color: "gray.300",
+              _hover: {
+                bg: "gray.700",
+              },
+            }}
+          >
             {unbookmarkArticle.isLoading || bookmarkArticle.isLoading ? (
               <Icons.Loading width={24} className="animate-spin" />
             ) : (
@@ -120,13 +168,33 @@ export const Article = ({ article, hasBookmarked }: Props) => {
             )}
           </IconButton>
           {keywords.slice(0, MAX_KEYWORDS_SHOW).map((keyword) => (
-            <Badge key={keyword} as={Link} href={`/search?keyword=${keyword}`}>
+            <Badge
+              key={keyword}
+              as={Link}
+              href={`/search?keyword=${keyword}`}
+              _dark={{
+                color: "gray.300",
+                bg: "gray.700",
+              }}
+            >
               {keyword}
             </Badge>
           ))}
-          {keywordsLeft > 0 && <Badge>{`+${keywordsLeft}`}</Badge>}
+          {keywordsLeft > 0 && (
+            <Badge
+              _dark={{
+                color: "gray.300",
+                bg: "gray.700",
+              }}
+            >{`+${keywordsLeft}`}</Badge>
+          )}
         </HStack>
-        <HStack color="gray.500">
+        <HStack
+          color="gray.500"
+          _dark={{
+            color: "gray.300",
+          }}
+        >
           <Icons.Heart width="24px" height="24px" color="currentColor" />
           <Text>{article.totalLike}</Text>
         </HStack>

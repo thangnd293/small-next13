@@ -74,6 +74,12 @@ export default function CommentSection({ articleId, slug }: Props) {
           ref={btnRef}
           variant="unstyled"
           color="gray.500"
+          _dark={{
+            color: "gray.400",
+            _hover: {
+              color: "gray.300",
+            },
+          }}
           onClick={handleOpenComments}
           className="flex items-center gap-1 hover:text-text-primary"
         >
@@ -93,16 +99,40 @@ export default function CommentSection({ articleId, slug }: Props) {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
+          <DrawerCloseButton
+            _dark={{
+              color: "gray.300",
+            }}
+          />
           <DrawerHeader>
-            <Text fontSize="16px">Bình luận ( 4 )</Text>
+            <Text
+              fontSize="16px"
+              _dark={{
+                color: "gray.300",
+              }}
+            >
+              Bình luận ( 4 )
+            </Text>
           </DrawerHeader>
 
           <DrawerBody px={0}>
-            <Box px={6} borderBottom="1px solid" borderColor="gray.50">
+            <Box
+              px={6}
+              borderBottom="1px solid"
+              borderColor="gray.50"
+              _dark={{
+                borderColor: "gray.600",
+              }}
+            >
               <HStack mb="10px">
                 <Avatar size="sm" />
-                <Text fontWeight="semibold" fontSize="14px">
+                <Text
+                  fontWeight="semibold"
+                  fontSize="14px"
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                >
                   Nguyễn Đắc Thắng
                 </Text>
               </HStack>
@@ -112,6 +142,9 @@ export default function CommentSection({ articleId, slug }: Props) {
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Viết bình luận của bạn tại đây..."
                 size="sm"
+                _dark={{
+                  color: "gray.300",
+                }}
               />
               <HStack justify="end" py="4">
                 <Button
@@ -143,7 +176,14 @@ export default function CommentSection({ articleId, slug }: Props) {
                     src="/images/write.png"
                     alt={"Write comment"}
                   />
-                  <Text mt={4}>Trở thành người bình luận đầu tiên</Text>
+                  <Text
+                    mt={4}
+                    _dark={{
+                      color: "gray.300",
+                    }}
+                  >
+                    Trở thành người bình luận đầu tiên
+                  </Text>
                 </div>
               )}
             </Box>

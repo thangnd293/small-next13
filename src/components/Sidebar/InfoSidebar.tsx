@@ -15,26 +15,51 @@ const InfoSidebar = () => {
       <VStack align="flex-start" spacing="16px">
         <Avatar size="lg" src={userInfo?.image || ""} />
         <Box>
-          <Text fontSize="md" color="gray.900">
+          <Text
+            fontSize="md"
+            color="gray.900"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
             {userInfo?.name}
           </Text>
-          <Text fontSize="md" color="gray.500">
+          <Text
+            fontSize="md"
+            color="gray.500"
+            _dark={{
+              color: "gray.400",
+            }}
+          >
             1.1k người theo dõi
           </Text>
         </Box>
-        <Text>{userInfo?.bio}</Text>
+        <Text
+          _dark={{
+            color: "gray.300",
+          }}
+        >
+          {userInfo?.bio}
+        </Text>
 
         <EditProfile />
       </VStack>
-      <Box mt="40px">
-        <Text fontSize="md" color="gray.900">
-          Lưu trữ
-        </Text>
-        <VStack align="flex-start" mt="16px">
-          {articles.map((article) => (
-            <SmallArticle key={article.id} {...article} />
-          ))}
-          {articlesLeft > 0 && (
+      {articlesLeft > 0 && (
+        <Box mt="40px">
+          <Text
+            fontSize="md"
+            color="gray.900"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
+            Lưu trữ
+          </Text>
+          <VStack align="flex-start" mt="16px">
+            {articles.map((article) => (
+              <SmallArticle key={article.id} {...article} />
+            ))}
+
             <Button
               colorScheme="teal"
               variant="link"
@@ -44,9 +69,9 @@ const InfoSidebar = () => {
             >
               Xem tất cả
             </Button>
-          )}
-        </VStack>
-      </Box>
+          </VStack>
+        </Box>
+      )}
     </>
   );
 };

@@ -49,10 +49,32 @@ export default function Tabs() {
       isLazy
       size="sm"
     >
-      <TabList>
-        <Tab>Trang chủ</Tab>
-        <Tab>Danh sách đọc</Tab>
-        <Tab>Giới thiệu</Tab>
+      <TabList
+        _dark={{
+          borderColor: "gray.700 !important",
+        }}
+      >
+        <Tab
+          _dark={{
+            color: "gray.300",
+          }}
+        >
+          Trang chủ
+        </Tab>
+        <Tab
+          _dark={{
+            color: "gray.300",
+          }}
+        >
+          Danh sách đọc
+        </Tab>
+        <Tab
+          _dark={{
+            color: "gray.300",
+          }}
+        >
+          Giới thiệu
+        </Tab>
       </TabList>
 
       <TabPanels>

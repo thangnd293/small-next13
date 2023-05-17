@@ -161,22 +161,45 @@ const Editor = ({ draft }: Props) => {
                       <Icons.Photo width="24px" height="24px" />
                     )
                   }
+                  _dark={{
+                    color: "gray.300",
+                    _hover: {
+                      bg: "gray.700",
+                    },
+                  }}
                 >
                   {isUploading ? "Đang tải lên" : "Tải ảnh lên"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[732px]">
                 <PopoverCloseButton />
-                <PopoverHeader>Tải ảnh lên</PopoverHeader>
+                <PopoverHeader
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                >
+                  Tải ảnh lên
+                </PopoverHeader>
                 <PopoverBody className="p-5">
-                  <div
+                  <Box
                     className="flex items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer select-none hover:bg-gray-100"
+                    _dark={{
+                      borderColor: "gray.400",
+                      _hover: {
+                        bg: "gray.600",
+                      },
+                    }}
                     ref={ref}
                   >
-                    <div className="flex items-center gap-2 p-2 text-xl font-semibold rounded-lg cursor-pointer text-slate-500">
+                    <Box
+                      className="flex items-center gap-2 p-2 text-xl font-semibold rounded-lg cursor-pointer text-slate-500"
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    >
                       <Icons.Photo width={24} height={24} /> Thêm ảnh
-                    </div>
-                  </div>
+                    </Box>
+                  </Box>
                 </PopoverBody>
               </PopoverContent>
             </Popover>
@@ -184,6 +207,12 @@ const Editor = ({ draft }: Props) => {
           {!isAddSubtitle && (
             <Button
               variant="text"
+              _dark={{
+                color: "gray.300",
+                _hover: {
+                  bg: "gray.700",
+                },
+              }}
               leftIcon={<Icons.Bars3BottomLeft width="24px" height="24px" />}
               onClick={() => setIsAddSubtitle(true)}
             >
@@ -223,19 +252,30 @@ const Editor = ({ draft }: Props) => {
             </div>
           </Box>
         )}
-        <TextareaAutosize
-          className="w-full text-4xl font-bold leading-relaxed border-none outline-none resize-none"
-          placeholder="Tiêu đề..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          onKeyDown={handleTitleKeyDown}
-          ref={titleTextareaRef}
-        />
+        <Box
+          _dark={{
+            color: "gray.300",
+          }}
+        >
+          <TextareaAutosize
+            className="w-full text-4xl font-bold leading-relaxed bg-transparent border-none outline-none resize-none"
+            placeholder="Tiêu đề..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={handleTitleKeyDown}
+            ref={titleTextareaRef}
+          />
+        </Box>
 
         {isAddSubtitle && (
-          <div className="relative">
+          <Box
+            className="relative"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
             <TextareaAutosize
-              className="w-full text-3xl font-medium border-none outline-none resize-none pr-9"
+              className="w-full text-3xl font-medium bg-transparent border-none outline-none resize-none pr-9"
               placeholder="Phụ đề..."
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}
@@ -249,7 +289,7 @@ const Editor = ({ draft }: Props) => {
                 setIsAddSubtitle(false);
               }}
             />
-          </div>
+          </Box>
         )}
 
         <EditorContent

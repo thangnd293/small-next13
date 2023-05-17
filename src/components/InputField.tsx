@@ -27,12 +27,23 @@ export default function InputField({ label, name, type, ...props }: Props) {
   const hasError = meta.touched && meta.error;
   return (
     <FormControl w="full">
-      <FormLabel>{label}</FormLabel>
+      <FormLabel
+        _dark={{
+          color: "gray.300",
+        }}
+      >
+        {label}
+      </FormLabel>
       <InputGroup size="md">
         <Input
           type={show ? "text" : "password"}
           w="full"
           pr={type === "password" ? "3.5rem" : "0"}
+          _dark={{
+            bg: "gray.700",
+            borderColor: "gray.600",
+            color: "gray.300",
+          }}
           {...field}
           {...props}
         />

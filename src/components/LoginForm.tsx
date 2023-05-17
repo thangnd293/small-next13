@@ -6,9 +6,9 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import * as Yup from "yup";
 
-import Link from "next/link";
 import { toast } from "react-toastify";
 import InputField from "./InputField";
+import { Link } from "@chakra-ui/next-js";
 
 type Input = {
   usernameOrEmail: string;
@@ -79,9 +79,14 @@ export default function LoginForm() {
           </form>
         )}
       </Formik>
-      <Text mt="20px">
+      <Text
+        mt="20px"
+        _dark={{
+          color: "gray.300",
+        }}
+      >
         Chưa có tài khoản?{" "}
-        <Link href="/sign-up" className="text-primary">
+        <Link href="/sign-up" className="text-primary" fontWeight="semibold">
           Đăng ký ngay
         </Link>
       </Text>

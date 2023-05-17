@@ -47,19 +47,34 @@ export default function EditDraft({ draft }: Props) {
       flex="1"
       borderLeft="1px"
       borderColor="gray.50"
+      _dark={{
+        borderColor: "gray.700",
+      }}
       maxW={`calc(100% - ${isOpenSidebar ? "304px" : "0px"})`}
     >
       <HStack h="72px" px="16px" justify="space-between">
-        <IconButton aria-label={"Toggle sidebar"} onClick={toggleSidebar}>
+        <IconButton
+          aria-label={"Toggle sidebar"}
+          onClick={toggleSidebar}
+          _dark={{
+            color: "gray.300",
+            _hover: {
+              bg: "gray.700",
+            },
+          }}
+        >
           <Icons.Sidebar />
         </IconButton>
         <HStack>
           <SaveStateWrapper>
             <Text
+              className="flex items-center gap-1.5"
               color={isSaving ? "gray.500" : "green.500"}
               size="sm"
               mr={3}
-              className="flex items-center gap-1.5"
+              _dark={{
+                color: isSaving ? "gray.400" : "green.400",
+              }}
             >
               {isSaving ? <Spinner size="sm" /> : <BsCloudCheck size={18} />}
               {isSaving ? "Đang lưu" : "Đã lưu"}

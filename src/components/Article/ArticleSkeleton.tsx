@@ -10,7 +10,14 @@ import {
 
 export const ArticleSkeleton = () => {
   return (
-    <Box pb="20px" borderBottom="1px" borderColor="gray.50">
+    <Box
+      pb="20px"
+      borderBottom="1px"
+      borderColor="gray.50"
+      _dark={{
+        borderColor: "gray.700",
+      }}
+    >
       <VStack align="flex-start" spacing="16px">
         <HStack spacing="10px" className="w-full">
           <SkeletonCircle size="24px" />

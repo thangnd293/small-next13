@@ -74,6 +74,7 @@ export default function Header() {
       transition="transform 0.2s ease-in-out"
       _dark={{
         borderBottomColor: "gray.700",
+        bg: "gray.800",
       }}
       ref={headerRef}
     >
@@ -112,7 +113,16 @@ export default function Header() {
             Viết bài
           </Button>
           <HStack spacing="10px">
-            <IconButton aria-label="Toggle Dark mode" onClick={toggleColorMode}>
+            <IconButton
+              aria-label="Toggle Dark mode"
+              _dark={{
+                color: "gray.300",
+                _hover: {
+                  bg: "gray.700",
+                },
+              }}
+              onClick={toggleColorMode}
+            >
               {colorMode === "light"
                 ? renderIcon(Icons.Moon)
                 : renderIcon(Icons.Sun)}
@@ -120,12 +130,26 @@ export default function Header() {
 
             <Popover placement="bottom-end">
               <PopoverTrigger>
-                <IconButton aria-label="Toggle Dark mode">
+                <IconButton
+                  aria-label="Notification"
+                  _dark={{
+                    color: "gray.300",
+                    _hover: {
+                      bg: "gray.700",
+                    },
+                  }}
+                >
                   {renderIcon(Icons.Bell)}
                 </IconButton>
               </PopoverTrigger>
               <PopoverContent>
-                <PopoverHeader>Thông báo!</PopoverHeader>
+                <PopoverHeader
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                >
+                  Thông báo!
+                </PopoverHeader>
                 <PopoverBody>
                   <VStack p={2} justify="center">
                     <Image
@@ -134,7 +158,12 @@ export default function Header() {
                       src="/images/work-in-progress.png"
                       alt="Work in progress"
                     />
-                    <Text align="center">
+                    <Text
+                      align="center"
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    >
                       Chức năng còn đang trong quá trình phát triển!
                     </Text>
                   </VStack>
@@ -156,7 +185,14 @@ export default function Header() {
                 <MenuItem>
                   <HStack as={Link} href={"/profile/home"} px={3} py={1}>
                     <Avatar src={userInfo.image || ""} />
-                    <Text noOfLines={1}>{userInfo.name}</Text>
+                    <Text
+                      noOfLines={1}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    >
+                      {userInfo.name}
+                    </Text>
                   </HStack>
                 </MenuItem>
                 <MenuDivider />

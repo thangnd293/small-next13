@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@chakra-ui/next-js";
+import { Box } from "@chakra-ui/react";
 import classNames from "classnames";
 
 type TItem = {
@@ -15,22 +16,33 @@ interface Props {
 
 export default function Tabs({ items }: Props) {
   return (
-    <div className="space-x-8 border-b border-b-border">
+    <Box
+      className="space-x-8"
+      borderBottom="1px solid"
+      borderColor="gray.50"
+      _dark={{
+        borderColor: "gray.700",
+      }}
+    >
       {items.map((item) => (
         <Link
           key={item.label}
-          className={classNames(
-            "inline-block py-2 text-sm translate-y-[1px] border-b text-text-primary hover:border-b-text-primary",
-            {
-              "border-b-text-primary": item.isActive,
-              "border-b-transparent": !item.isActive,
-            }
-          )}
           href={item.href}
+          className={classNames(
+            "inline-block py-2 text-sm translate-y-[1px] border-b text-text-primary hover:border-b-text-primary "
+          )}
+          borderColor={item.isActive ? "gray.900" : "transparent"}
+          _dark={{
+            color: "gray.300",
+            borderColor: item.isActive ? "gray.300" : "transparent",
+            _hover: {
+              borderColor: "gray.300",
+            },
+          }}
         >
           {item.label}
         </Link>
       ))}
-    </div>
+    </Box>
   );
 }

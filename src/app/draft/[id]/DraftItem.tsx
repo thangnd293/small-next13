@@ -46,10 +46,23 @@ export default function DraftItem({ draft, isActive }: Props) {
       cursor="pointer"
       align="center"
       _hover={{ bg: "gray.50" }}
+      _dark={{
+        bg: isActive ? "gray.700" : "transparent",
+        color: "gray.300",
+        _hover: {
+          bg: "gray.700",
+        },
+      }}
       onClick={() => router.replace(`/draft/${draft.id}`)}
     >
       <Icons.DocumentChartBar width="22px" height="22px" />
-      <Text flex={1} noOfLines={1}>
+      <Text
+        flex={1}
+        noOfLines={1}
+        _dark={{
+          color: "gray.400",
+        }}
+      >
         {draftName}
       </Text>
       <Menu>

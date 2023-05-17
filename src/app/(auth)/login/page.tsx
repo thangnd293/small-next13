@@ -1,7 +1,6 @@
-import AuthWithAuth0 from "@/components/AuthWithAuth0";
-import LoginForm from "@/components/LoginForm";
 import LogoBackHome from "@/components/LogoBackHome";
 import { Metadata } from "next";
+import PageContent from "./PageContent";
 
 export const metadata: Metadata = {
   title: "Đăng nhập",
@@ -12,14 +11,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col items-center w-[400px]">
       <LogoBackHome />
-      <h1 className="text-[22px] text-text-primary font-bold">
-        Chào mừng trở lại
-      </h1>
-      <p className=" text-text-secondary">
-        Nhập thông tin để truy cập vào Small của bạn
-      </p>
-      <LoginForm />
-      <AuthWithAuth0 />
+      <PageContent />
     </div>
   );
 }

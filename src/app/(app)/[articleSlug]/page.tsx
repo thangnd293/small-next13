@@ -13,11 +13,13 @@ interface Props {
 // Delete, edit comment
 export default async function ArticlePage({ params }: Props) {
   const { articleSlug } = params;
+
   const id = Number(articleSlug.split("-").pop()?.slice(1));
+
   const user = await getCurrentUser();
 
   const [article, isUserLiked] = await Promise.all([
-    await getArticle(articleSlug),
+    await getArticle(id),
     checkUserLikeArticle(id, user?.id),
   ]);
 
@@ -32,7 +34,8 @@ export default async function ArticlePage({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { articleSlug } = params;
-  const article = await getArticle(articleSlug);
+  const id = Number(articleSlug.split("-").pop()?.slice(1));
+  const article = await getArticle(id);
 
   return {
     title: article.title,

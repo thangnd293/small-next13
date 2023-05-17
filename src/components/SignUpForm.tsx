@@ -5,10 +5,9 @@ import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 
-import axios from "axios";
-import Link from "next/link";
 import { toast } from "react-toastify";
 import InputField from "./InputField";
+import { Link } from "@chakra-ui/next-js";
 
 type Input = {
   name: string;
@@ -109,9 +108,14 @@ export default function SignUpForm() {
           </form>
         )}
       </Formik>
-      <Text mt="20px">
+      <Text
+        mt="20px"
+        _dark={{
+          color: "gray.400",
+        }}
+      >
         Đã có tài khoản?{" "}
-        <Link href="/login" className="text-primary">
+        <Link href="/login" className="text-primary" fontWeight="semibold">
           Đăng nhập
         </Link>
       </Text>

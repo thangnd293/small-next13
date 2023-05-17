@@ -16,7 +16,14 @@ export default function AuthWithAuth0({ isSignUp }: Props) {
     <>
       <HStack w="full" py="30px">
         <Divider />
-        <Text color="gray.500">Hoặc</Text>
+        <Text
+          color="gray.500"
+          _dark={{
+            color: "gray.400",
+          }}
+        >
+          Hoặc
+        </Text>
         <Divider />
       </HStack>
 

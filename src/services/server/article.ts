@@ -79,8 +79,9 @@ export async function getDrafts() {
   return data.data.content;
 }
 
-export async function getArticle(slug: string) {
-  const res = await fetch(`${API_URL}/article/getDetail/${slug}`);
+export async function getArticle(id: number) {
+  const res = await fetch(`${API_URL}/article/getDetail?id=${id}`);
+
   if (!res.ok) {
     redirect("/404");
   }
