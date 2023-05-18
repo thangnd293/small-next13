@@ -125,7 +125,7 @@ export default function CommentSection({ articleId, slug }: Props) {
               }}
             >
               <HStack mb="10px">
-                <Avatar size="sm" />
+                <Avatar size="sm" src={userInfo?.image || ""} />
                 <Text
                   fontWeight="semibold"
                   fontSize="14px"

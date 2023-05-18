@@ -19,7 +19,7 @@ export default async function ArticlePage({ params }: Props) {
   const user = await getCurrentUser();
 
   const [article, isUserLiked] = await Promise.all([
-    await getArticle(id),
+    getArticle(id),
     checkUserLikeArticle(id, user?.id),
   ]);
 

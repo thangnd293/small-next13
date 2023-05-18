@@ -60,7 +60,7 @@ export const Article = ({ article, hasBookmarked }: Props) => {
 
   const IconBookmark = hasBookmarked ? Icons.Bookmarked : Icons.Bookmark;
 
-  const isSelfArticle = userInfo?.id === article.user.id;
+  const isSelfArticle = userInfo?.id === article.user?.id;
 
   return (
     <Box
