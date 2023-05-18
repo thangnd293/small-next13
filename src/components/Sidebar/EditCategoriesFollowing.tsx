@@ -105,7 +105,7 @@ export default function EditCategoriesFollowing() {
               Chọn tối thiểu 3 loại dưới đây
             </Text>
             <Flex w="full" mt="20px" gap="6px" wrap="wrap" justify="center">
-              {false
+              {!isLoading
                 ? categories?.map((category) => (
                     <CategoryTag
                       key={category.id}
@@ -119,7 +119,7 @@ export default function EditCategoriesFollowing() {
                       key={index}
                       borderRadius="full"
                       w="100px"
-                      h="30px"
+                      h="28px"
                     />
                   ))}
             </Flex>
