@@ -114,7 +114,11 @@ interface CategoryTagProps {
   toggleCategory: (category: Category) => void;
 }
 
-function CategoryTag({ isActive, category, toggleCategory }: CategoryTagProps) {
+export function CategoryTag({
+  isActive,
+  category,
+  toggleCategory,
+}: CategoryTagProps) {
   return (
     <Tag
       borderRadius="full"
