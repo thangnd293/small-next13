@@ -1,9 +1,4 @@
-import {
-  Article,
-  ArticleStatus,
-  Response,
-  ResponseError,
-} from "@/types/common";
+import { Article, Response, ResponseError } from "@/types/common";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
 

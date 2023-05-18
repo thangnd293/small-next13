@@ -32,11 +32,12 @@ export type User = {
   bio: string;
   categories: Category[];
   contentCreator: boolean;
+  reason: string;
 };
 
 export enum ArticleStatus {
   Draft = "DRAFT",
-  Approved = "APPROVED",
+  Approve = "APPROVE",
   Delete = "DELETE",
   Create = "CREATE",
 }
@@ -69,6 +70,8 @@ export type Comment = {
   image: string;
   createdAt: string;
   username: string;
+  lastModifyDate: string;
+  articleId: number;
 };
 
 export type UserLikeArticle = {

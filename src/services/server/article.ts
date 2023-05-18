@@ -89,7 +89,7 @@ export async function getArticle(id: number) {
 
   const data: Response<Article> = await res.json();
 
-  if (data.data.status !== ArticleStatus.Approved) {
+  if (data.data.status !== ArticleStatus.Approve) {
     redirect("/404");
   }
 

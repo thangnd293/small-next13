@@ -19,3 +19,6 @@ export * from "./use-user";
 export * from "./use-bookmark-article";
 export * from "./use-unbookmark-article";
 export * from "./use-articles-bookmarked";
+export * from "./use-edit-comment";
+export * from "./use-delete-comment";
+export * from "./use-register-writer";

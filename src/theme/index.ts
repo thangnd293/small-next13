@@ -4,6 +4,10 @@ import { config } from "./config";
 import foundations from "./foundations";
 
 const theme = extendTheme({
+  fonts: {
+    heading: `'Open Sans', sans-serif`,
+    body: `Utopia, sans-serif`,
+  },
   styles: {
     global: {
       "html, body": {
