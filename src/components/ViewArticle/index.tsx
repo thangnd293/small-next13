@@ -37,6 +37,7 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
     slug,
     totalLike,
     id,
+    user,
   } = article;
   const { allUserLike } = useAllUserLikeArticle(id);
 
@@ -119,8 +120,8 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
           color: "gray.300",
         }}
       >
-        <Avatar />
-        <Text fontWeight="semibold">Nguyen Dac Thang</Text>
+        <Avatar src={user.image || ""} />
+        <Text fontWeight="semibold">{user.name}</Text>
         <Text>· {updatedAt.toPrettyDate()}</Text>
       </HStack>
       {description && <ViewArticleContent content={description} />}
