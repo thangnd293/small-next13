@@ -31,6 +31,7 @@ export type User = {
   role: string;
   bio: string;
   categories: Category[];
+  contentCreator: boolean;
 };
 
 export enum ArticleStatus {

@@ -14,9 +14,19 @@ export default function Title({ keyword }: Props) {
       pb="40px"
       borderBottom="1px solid"
       borderColor="gray.50"
+      _dark={{
+        color: "gray.400",
+        borderColor: "gray.700",
+      }}
     >
       Kết quả tìm kiếm cho:{" "}
-      <Text as="span" color="gray.900">
+      <Text
+        as="span"
+        color="gray.900"
+        _dark={{
+          color: "gray.100",
+        }}
+      >
         {keyword}
       </Text>
     </Text>

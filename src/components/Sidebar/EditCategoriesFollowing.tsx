@@ -25,7 +25,6 @@ export default function EditCategoriesFollowing() {
   const [categoriesSelected, setCategoriesSelected] = useState<number[]>(
     userInfo?.categories.map((c) => c.id) || []
   );
-  console.log("categoriesSelected", categoriesSelected);
 
   useEffect(() => {
     setCategoriesSelected(userInfo?.categories.map((c) => c.id) || []);

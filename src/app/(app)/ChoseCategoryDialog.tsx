@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Skeleton,
   Tag,
   TagLabel,
   Text,
@@ -25,7 +26,7 @@ export default function ChoseCategoryDialog({ isOpen }: Props) {
   const { userInfo, refreshUserInfo } = useGlobalContext();
 
   const [_isOpen, setIsOpen] = useState(isOpen);
-  const { categories } = useCategories();
+  const { categories, isLoading } = useCategories();
   const [categoriesSelected, setCategoriesSelected] = useState<number[]>([]);
   const { mutate: updateCategoriesFollow } = useUpdateCategories({
     onSuccess: () => {
@@ -72,24 +73,52 @@ export default function ChoseCategoryDialog({ isOpen }: Props) {
       isCentered
       closeOnOverlayClick={false}
     >
-      <ModalOverlay bg="white" backdropFilter="auto" backdropBlur="2px" />
+      <ModalOverlay
+        bg="white"
+        backdropFilter="auto"
+        backdropBlur="2px"
+        _dark={{
+          bg: "gray.800",
+        }}
+      />
       <ModalContent shadow="none">
-        <ModalBody>
-          <Text align="center" fontSize="xl">
+        <ModalBody py={10}>
+          <Text
+            align="center"
+            fontSize="xl"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
             Bạn quan tâm đến lĩnh vực nào?
           </Text>
-          <Text mt="10px" align="center">
+          <Text
+            mt="10px"
+            align="center"
+            _dark={{
+              color: "gray.300",
+            }}
+          >
             Chọn tối thiểu 3 loại dưới đây
           </Text>
           <Flex mt="60px" gap="6px" wrap="wrap" justify="center">
-            {categories?.map((category) => (
-              <CategoryTag
-                key={category.id}
-                isActive={categoriesSelected.includes(category.id)}
-                category={category}
-                toggleCategory={toggleCategory}
-              />
-            ))}
+            {!isLoading
+              ? categories.map((category) => (
+                  <CategoryTag
+                    key={category.id}
+                    isActive={categoriesSelected.includes(category.id)}
+                    category={category}
+                    toggleCategory={toggleCategory}
+                  />
+                ))
+              : Array.from({ length: 5 }).map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    height="26px"
+                    width="100px"
+                    borderRadius="full"
+                  />
+                ))}
           </Flex>
           <div className="mx-auto mt-10 w-fit">
             <Button

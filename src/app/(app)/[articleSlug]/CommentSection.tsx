@@ -111,7 +111,7 @@ export default function CommentSection({ articleId, slug }: Props) {
                 color: "gray.300",
               }}
             >
-              Bình luận ( 4 )
+              Bình luận ( {comments.length} )
             </Text>
           </DrawerHeader>
 

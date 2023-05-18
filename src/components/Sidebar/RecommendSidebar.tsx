@@ -1,18 +1,23 @@
 import { useArticles, useCategories } from "@/services/client";
-import { Image, Link } from "@chakra-ui/next-js";
+import { Link } from "@chakra-ui/next-js";
 import {
   Badge,
   Box,
   Button,
-  Flex,
   HStack,
   Skeleton,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import SmallArticle from "../SmallArticle";
+import { usePathname } from "next/navigation";
 
 const RecommendSidebar = () => {
+  const pathname = usePathname();
+  const lastPath = pathname?.split("-").pop() || "";
+  const isId = lastPath.startsWith("p");
+  const id = isId ? +lastPath.slice(1) : Infinity;
+
   const getCategories = useCategories();
   const getArticles = useArticles();
 
@@ -85,6 +90,7 @@ const RecommendSidebar = () => {
                 </HStack>
               ))
             : getArticles.articles
+                .filter((article) => article.id !== id)
                 .slice(0, 3)
                 .map((article) => (
                   <SmallArticle key={article.id} {...article} />

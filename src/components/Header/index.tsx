@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import Icons, { renderIcon } from "../Icons";
 import { SearchBar } from "./SearchBar";
 import IconButton from "../IconButton";
+import WriteArticleControl from "./WriteArticleControl";
 
 export default function Header() {
   const { userInfo } = useGlobalContext();
@@ -100,18 +101,7 @@ export default function Header() {
         </HStack>
 
         <HStack spacing="20px">
-          <Button
-            as={Link}
-            href="/draft"
-            variant="link"
-            leftIcon={<Icons.PencilSquare width="20px" height="20px" />}
-            display={{
-              base: "none",
-              md: "flex",
-            }}
-          >
-            Viết bài
-          </Button>
+          <WriteArticleControl />
           <HStack spacing="10px">
             <IconButton
               aria-label="Toggle Dark mode"
@@ -227,10 +217,23 @@ export default function Header() {
               <MenuList>
                 <VStack maxW={300} p={4}>
                   <Avatar size="lg" />
-                  <Text fontSize="22" fontWeight="semibold">
+                  <Text
+                    fontSize="22"
+                    fontWeight="semibold"
+                    _dark={{
+                      color: "gray.300",
+                    }}
+                  >
                     Đăng ký hoặc đăng nhập vào tài khoản Small của bạn
                   </Text>
-                  <Text alignSelf="flex-start">Mất ít hơn một vài giây.</Text>
+                  <Text
+                    alignSelf="flex-start"
+                    _dark={{
+                      color: "gray.300",
+                    }}
+                  >
+                    Mất ít hơn một vài giây.
+                  </Text>
                   <HStack>
                     <Button
                       colorScheme="teal"

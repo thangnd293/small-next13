@@ -53,8 +53,6 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
 
   const likeArticle = useLikeArticle({
     onSuccess: () => {
-      console.log("likeArticle", article.id);
-
       queryClient.invalidateQueries(getAllUserLikeArticleKey(article.id));
     },
   });

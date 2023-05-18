@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import { getLatestDraft } from "./services/server/article";
+import { getUser, getUserByToken } from "./services/server";
 
 export default withAuth(
   async function middleware(req) {
@@ -29,6 +30,18 @@ export default withAuth(
       return NextResponse.redirect(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       );
+    }
+
+    if (req.nextUrl.pathname.startsWith("/draft")) {
+      const user = await getUserByToken(token.accessToken as string);
+      if (!user) return NextResponse.redirect(new URL("/login", req.url));
+
+      const userInfo = await getUser(user.username);
+      if (!userInfo) return NextResponse.redirect(new URL("/login", req.url));
+
+      if (!userInfo.contentCreator) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
     }
 
     if (req.nextUrl.pathname === "/draft") {

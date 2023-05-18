@@ -1,6 +1,7 @@
 import { SearchArticleParams } from "@/app/(app)/search/page";
 import {
   Article,
+  ArticleStatus,
   DataWithPaging,
   Response,
   UserLikeArticle,
@@ -87,6 +88,10 @@ export async function getArticle(id: number) {
   }
 
   const data: Response<Article> = await res.json();
+
+  if (data.data.status !== ArticleStatus.Approved) {
+    redirect("/404");
+  }
 
   return data.data;
 }

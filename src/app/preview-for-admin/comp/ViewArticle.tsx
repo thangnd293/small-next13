@@ -1,13 +1,12 @@
 "use client";
 
 import CommentSection from "@/app/(app)/[articleSlug]/CommentSection";
-import { useGlobalContext } from "@/context/GlobalContext";
 import { Article } from "@/types/common";
 import { Image, Link } from "@chakra-ui/next-js";
-import { Avatar, Badge, Button, HStack, Text, Tooltip } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { Badge, Button, HStack, Text, Tooltip } from "@chakra-ui/react";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 
+import ViewArticleContent from "@/components/ViewArticle/ViewArticleContent";
 import {
   getAllUserLikeArticleKey,
   useAllUserLikeArticle,
@@ -15,29 +14,17 @@ import {
 } from "@/services/client";
 import { useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDebounce } from "usehooks-ts";
-import ViewArticleContent from "@/components/ViewArticle/ViewArticleContent";
 
 interface Props {
   article: Article;
   hasLiked?: boolean;
 }
 export default function ViewArticle({ article, hasLiked = false }: Props) {
-  const router = useRouter();
   const queryClient = useQueryClient();
-  // const { userInfo } = useGlobalContext();
-  const {
-    mainImage,
-    title,
-    brief,
-    updatedAt,
-    description,
-    keyword,
-    slug,
-    totalLike,
-    id,
-  } = article;
+  const { mainImage, title, brief, description, keyword, slug, totalLike, id } =
+    article;
   const { allUserLike } = useAllUserLikeArticle(id);
 
   const keywords = keyword?.split(",") || [];
@@ -53,8 +40,6 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
 
   const likeArticle = useLikeArticle({
     onSuccess: () => {
-      console.log("likeArticle", article.id);
-
       queryClient.invalidateQueries(getAllUserLikeArticleKey(article.id));
     },
   });

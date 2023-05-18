@@ -66,7 +66,7 @@ export default function Tabs() {
             color: "gray.300",
           }}
         >
-          Danh sách đọc
+          Lưu trữ
         </Tab>
         <Tab
           _dark={{

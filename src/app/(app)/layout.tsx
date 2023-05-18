@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import { Box, Container, Flex } from "@chakra-ui/react";
 import { LayoutProvider } from "./LayoutContext";
-import { useEffect } from "react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
