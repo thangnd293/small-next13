@@ -12,6 +12,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 
 interface Props {
   draft: Partial<Article>;
@@ -73,13 +74,11 @@ export default function DraftItem({ draft, isActive }: Props) {
           />
         </MenuButton>
         <MenuList minW="100px">
-          <MenuItem
-            fontSize="14px"
-            icon={<Icons.Trash width={14} />}
-            onClick={handleDelete}
-          >
-            Delete
-          </MenuItem>
+          <ConfirmDeleteDialog
+            isDeleting={deleteDraft.isLoading}
+            onDelete={handleDelete}
+            {...draft}
+          />
         </MenuList>
       </Menu>
     </Flex>
