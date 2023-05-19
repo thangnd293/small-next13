@@ -80,7 +80,7 @@ export async function getDrafts() {
   return data.data.content;
 }
 
-export async function getArticle(id: number) {
+export async function getArticle(id: number | string) {
   const res = await fetch(`${API_URL}/article/getDetail?id=${id}`);
 
   if (!res.ok) {

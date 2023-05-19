@@ -7,11 +7,11 @@ interface Props
   extends Pick<Article, "thumbnail" | "title" | "shortDescription" | "slug"> {}
 const SmallArticle = ({ thumbnail, title, shortDescription, slug }: Props) => {
   return (
-    <HStack as={Link} href={`/${encodeURIComponent(slug)}`}>
+    <HStack as={Link} href={`/${encodeURIComponent(slug)}`} w="full">
       <Image
         width={40}
         height={40}
-        src={thumbnail}
+        src={thumbnail || ""}
         alt="Thumbnail"
         quality={100}
         className="object-cover object-center aspect-square"

@@ -12,7 +12,7 @@ export const useArticlesBookmarked = (userId?: number) => {
     getArticleBookmarkedKey(userId),
     () =>
       axios.get<Response<DataWithPaging<Article[]>>>(
-        `/article/user/saveArticle/getAll?userId=${userId}&page=0&size=100`
+        `/article/user/saveArticle/getAll?userId=${userId}&page=0&size=100&status=APPROVE`
       ),
     {
       enabled: !!userId,

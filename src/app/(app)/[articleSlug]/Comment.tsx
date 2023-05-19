@@ -1,5 +1,6 @@
 "use client";
 
+import ActionButton from "@/components/ActionButton";
 import Icons from "@/components/Icons";
 import {
   getCommentsKey,
@@ -13,10 +14,6 @@ import {
   Box,
   HStack,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
   Textarea,
   VStack,
@@ -43,7 +40,7 @@ export default function Comment({
 }: Props) {
   const queryClient = useQueryClient();
 
-  const redirectTo = isSelf ? "/profile/home" : `/user/${username}`;
+  const redirectTo = isSelf ? "/profile" : `/user/${username}`;
   const displayUsername = isSelf ? "Bạn" : name;
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [value, setValue] = useState(description);
@@ -77,6 +74,20 @@ export default function Comment({
   const onDelete = () => {
     deleteComment.mutate(id);
   };
+
+  const actions = [
+    {
+      label: "Sửa",
+      icon: <Icons.Pencil width={14} />,
+      onClick: onOpen,
+    },
+    {
+      label: "Xóa",
+      icon: <Icons.Trash width={14} />,
+      color: "red.500",
+      onClick: onDelete,
+    },
+  ];
 
   return (
     <Box
@@ -152,39 +163,7 @@ export default function Comment({
         </Text>
       )}
 
-      {isSelf && (
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            onClick={(e) => e.stopPropagation()}
-            className="hidden group-hover:block"
-            size="sm"
-            variant="link"
-            position="absolute"
-            right={2}
-            top={4}
-            aria-label={"Action"}
-          >
-            <Icons.EllipsisVertical width={24} height={24} />
-          </MenuButton>
-          <MenuList minW="100px">
-            <MenuItem
-              fontSize="14px"
-              icon={<Icons.Pencil width={14} />}
-              onClick={onOpen}
-            >
-              Edit
-            </MenuItem>
-            <MenuItem
-              fontSize="14px"
-              icon={<Icons.Trash width={14} />}
-              onClick={onDelete}
-            >
-              Delete
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      )}
+      {isSelf && <ActionButton actions={actions} aria-label="Action" />}
     </Box>
   );
 }

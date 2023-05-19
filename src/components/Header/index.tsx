@@ -173,7 +173,7 @@ export default function Header() {
             {userInfo ? (
               <MenuList>
                 <MenuItem>
-                  <HStack as={Link} href={"/profile/home"} px={3} py={1}>
+                  <HStack as={Link} href={"/profile"} px={3} py={1}>
                     <Avatar src={userInfo.image || ""} />
                     <Text
                       noOfLines={1}

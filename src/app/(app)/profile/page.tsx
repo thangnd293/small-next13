@@ -1,5 +1,4 @@
 import Tabs from "@/components/Tabs";
-import { getArticlesOfUser } from "@/services/server";
 import { getCurrentUser } from "@/utils/session";
 import Articles from "./Articles";
 
@@ -12,11 +11,9 @@ export default async function HomePage() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const articles = await getArticlesOfUser(user.username);
-
   const tabs = [
     {
-      label: "Trang chủ",
+      label: "Bài viết",
       href: `/profile`,
       isActive: true,
     },

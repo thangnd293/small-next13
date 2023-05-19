@@ -17,7 +17,7 @@ export default function LaptopScreen({ url }: Props) {
       <LaptopScreenSvg />
       <iframe
         className={classNames(
-          "absolute overflow-hidden -top-[135px] -left-[210px] scale-[0.5]",
+          "absolute overflow-hidden -top-[166px] -left-[210px] scale-[0.5]",
           { hidden: !isLoadDone, block: isLoadDone }
         )}
         ref={iframeRef}

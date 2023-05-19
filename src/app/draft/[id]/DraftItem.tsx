@@ -1,5 +1,5 @@
 import Icons from "@/components/Icons";
-import { getDraftsKey, useDeleteDraft } from "@/services/client";
+import { getDraftsKey, useDeleteArticle } from "@/services/client";
 import { Article } from "@/types/common";
 import {
   Flex,
@@ -23,7 +23,7 @@ export default function DraftItem({ draft, isActive }: Props) {
   const queryClient = useQueryClient();
 
   const draftName = draft.title || "Bản nháp";
-  const deleteDraft = useDeleteDraft({
+  const deleteDraft = useDeleteArticle({
     onSuccess: () => {
       queryClient.invalidateQueries(getDraftsKey);
       toast.success(`Xóa ${draftName} thành công`);
