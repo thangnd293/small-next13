@@ -56,6 +56,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
     description: _description,
     id,
     brief,
+    keyword,
   } = draft;
 
   const { userInfo } = useGlobalContext();
@@ -71,7 +72,9 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
       value: _category.id,
     };
   });
-  const [keywords, setKeywords] = useState<any>();
+  const [keywords, setKeywords] = useState<any>(() =>
+    keyword.split(",").map((item) => ({ label: item, value: item }))
+  );
 
   const { categories } = useCategories();
   const [ref, hiddenInput, isUploading] = useUpdateImage((value) =>
@@ -107,9 +110,23 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
     setTitle(_title);
     setDescription(shortDescription);
     setThumbnail(_thumbnail || mainImage);
-  }, [_title, shortDescription, mainImage, _thumbnail]);
+    setKeywords(
+      () =>
+        keyword.split(",").map((item) => ({ label: item, value: item })) || []
+    );
+    setCategory(() => {
+      if (!_category) return;
 
-  const isFilled = title?.trim() && description?.trim() && category;
+      return {
+        label: _category.name,
+        value: _category.id,
+      };
+    });
+  }, [_title, shortDescription, mainImage, _thumbnail, keyword, _category]);
+
+  const isFilled =
+    title?.trim() && description?.trim() && category && thumbnail;
+
   const handleSendDraft = () => {
     if (!isFilled)
       return toast.error(
