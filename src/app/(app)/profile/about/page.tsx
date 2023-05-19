@@ -1,24 +1,16 @@
 import Tabs from "@/components/Tabs";
-import { getArticlesOfUser } from "@/services/server";
-import { getCurrentUser } from "@/utils/session";
-import Articles from "./Articles";
-
+import React from "react";
+import AboutUser from "./AboutUser";
 export const metadata = {
-  title: "Quản lý bài viết",
+  title: "Trang cá nhân",
   description: "Trang cá nhân của người dùng",
 };
 
-export default async function HomePage() {
-  const user = await getCurrentUser();
-  if (!user) return null;
-
-  const articles = await getArticlesOfUser(user.username);
-
+export default function AboutPage() {
   const tabs = [
     {
       label: "Trang chủ",
       href: `/profile`,
-      isActive: true,
     },
     {
       label: "Lưu trữ",
@@ -27,13 +19,14 @@ export default async function HomePage() {
     {
       label: "Giới thiệu",
       href: `/profile/about`,
+      isActive: true,
     },
   ];
 
   return (
     <>
       <Tabs mb="10" items={tabs} />
-      <Articles username={user.username} />
+      <AboutUser />
     </>
   );
 }

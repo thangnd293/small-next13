@@ -1,3 +1,5 @@
+"use client";
+
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useUpdateUserInfo } from "@/services/client";
 import {
@@ -11,9 +13,9 @@ import {
   VStack,
   useEditableControls,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function AboutTab() {
+export default function AboutUser() {
   const { userInfo, refreshUserInfo } = useGlobalContext();
   const { mutate: updateUserInfo } = useUpdateUserInfo();
   const [bio, setBio] = useState(userInfo?.bio || "");
@@ -26,6 +28,10 @@ export default function AboutTab() {
       }
     );
   };
+
+  useEffect(() => {
+    setBio(userInfo?.bio || "");
+  }, [userInfo?.bio]);
 
   function EditableControls() {
     const {

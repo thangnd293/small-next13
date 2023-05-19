@@ -15,12 +15,14 @@ interface GlobalContextValue {
   userInfo: User | null;
   articlesBookmarked: Article[];
   refreshUserInfo: (data?: any) => Promise<Session | null>;
+  isArticlesBookedLoading?: boolean;
 }
 
 const initialValue: GlobalContextValue = {
   userInfo: null,
   articlesBookmarked: [],
   refreshUserInfo: async () => null,
+  isArticlesBookedLoading: false,
 };
 
 const GlobalContext = createContext<GlobalContextValue>(initialValue);
@@ -28,7 +30,8 @@ const GlobalContext = createContext<GlobalContextValue>(initialValue);
 export const GlobalContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data, update } = useSession();
   const [userInfo, setUserInfo] = useState<User | null>(data?.user || null);
-  const { articles } = useArticlesBookmarked(userInfo?.id);
+  const { articles, isLoading: isArticlesBookedLoading } =
+    useArticlesBookmarked(userInfo?.id);
 
   useEffect(() => {
     setUserInfo(data?.user || null);
@@ -40,6 +43,7 @@ export const GlobalContextProvider: FC<PropsWithChildren> = ({ children }) => {
         userInfo,
         articlesBookmarked: articles,
         refreshUserInfo: update,
+        isArticlesBookedLoading,
       }}
     >
       {children}

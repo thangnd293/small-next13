@@ -1,10 +1,22 @@
+"use client";
+
 import { Article } from "@/components/Article";
 import Icons from "@/components/Icons";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { Box } from "@chakra-ui/react";
+import React from "react";
 
-export default function ListTab() {
-  const { articlesBookmarked } = useGlobalContext();
+export default function ArticlesBookmarked() {
+  const { articlesBookmarked, isArticlesBookedLoading } = useGlobalContext();
+
+  if (isArticlesBookedLoading)
+    return (
+      <div className="flex flex-col gap-8">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <Article.Skeleton key={index} />
+        ))}
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-8">

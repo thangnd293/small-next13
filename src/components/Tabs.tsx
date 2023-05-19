@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@chakra-ui/next-js";
-import { Box } from "@chakra-ui/react";
+import { Box, BoxProps } from "@chakra-ui/react";
 import classNames from "classnames";
 
 type TItem = {
@@ -10,11 +10,11 @@ type TItem = {
   isActive?: boolean;
 };
 
-interface Props {
+interface Props extends BoxProps {
   items: TItem[];
 }
 
-export default function Tabs({ items }: Props) {
+export default function Tabs({ items, ...rest }: Props) {
   return (
     <Box
       className="space-x-8"
@@ -23,6 +23,7 @@ export default function Tabs({ items }: Props) {
       _dark={{
         borderColor: "gray.700",
       }}
+      {...rest}
     >
       {items.map((item) => (
         <Link
