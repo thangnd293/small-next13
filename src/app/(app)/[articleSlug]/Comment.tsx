@@ -32,7 +32,7 @@ export default function Comment({
   image,
   description,
   createdAt,
-  lastModifyDate,
+  updatedAt,
   username,
   isSelf,
   articleId,
@@ -121,7 +121,7 @@ export default function Comment({
               color: "gray.400",
             }}
           >
-            {lastModifyDate?.fromNow() || createdAt.fromNow()}
+            {updatedAt?.fromNow() || createdAt.fromNow()}
           </Text>
         </VStack>
       </HStack>

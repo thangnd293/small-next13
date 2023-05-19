@@ -70,7 +70,7 @@ export type Comment = {
   image: string;
   createdAt: string;
   username: string;
-  lastModifyDate: string;
+  updatedAt: string;
   articleId: number;
 };
 
@@ -80,6 +80,6 @@ export type UserLikeArticle = {
   articleId: number;
   userId: number;
   createdDate: string;
-  lastModifyDate: string;
+  updatedAt: string;
   isLike: 0 | 1;
 };

@@ -133,7 +133,7 @@ export default function CommentSection({ articleId, slug }: Props) {
                     color: "gray.300",
                   }}
                 >
-                  {userInfo?.username}
+                  {userInfo?.name}
                 </Text>
               </HStack>
               <Textarea
