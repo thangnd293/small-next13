@@ -33,8 +33,8 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
 
   const { drafts } = useDrafts(userInfo?.username || "");
   const createDraft = useCreateDraft({
-    onSuccess: () => {
-      router.replace("/draft");
+    onSuccess: (data) => {
+      router.replace(`/draft/${data.data.data.id}`);
     },
   });
 
@@ -148,9 +148,11 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
           colorScheme="teal"
           size="sm"
           w="full"
+          isLoading={createDraft.isLoading}
           leftIcon={<Icons.DocumentPlus width="24px" height="24px" />}
           onClick={() => {
-            createDraft.mutate();
+            if (!userInfo) return;
+            createDraft.mutate(userInfo.accessToken);
           }}
         >
           Bản nháp mới

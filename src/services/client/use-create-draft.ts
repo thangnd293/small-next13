@@ -6,16 +6,24 @@ export const useCreateDraft = (
   config: UseMutationOptions<
     AxiosResponse<Response<Article>>,
     AxiosError<ResponseError>,
-    void
+    string
   > = {}
 ) => {
   return useMutation(
-    () =>
-      axios.post("/article/addNewDraft", {
-        title: "",
-        brief: "",
-        description: "",
-      }),
+    (token: string) =>
+      axios.post(
+        "/article/addNewDraft",
+        {
+          title: "",
+          brief: "",
+          description: "",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
     config
   );
 };

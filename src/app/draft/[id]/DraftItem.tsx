@@ -26,8 +26,8 @@ export default function DraftItem({ draft, isActive }: Props) {
   const deleteDraft = useDeleteArticle({
     onSuccess: () => {
       queryClient.invalidateQueries(getDraftsKey);
-      toast.success(`Xóa ${draftName} thành công`);
       router.replace("/draft");
+      toast.success(`Xóa ${draftName} thành công`);
     },
   });
 

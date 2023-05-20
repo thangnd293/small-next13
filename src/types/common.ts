@@ -33,6 +33,7 @@ export type User = {
   categories: Category[];
   contentCreator: boolean;
   reason: string;
+  accessToken: string;
 };
 
 export enum ArticleStatus {

@@ -6,7 +6,6 @@ axios.interceptors.request.use(
   function (config) {
     // const token = localStorage.getItem('token');
     // const data = getSession();
-
     return config;
   },
   function (error) {
