@@ -11,14 +11,13 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const user = await getCurrentUser();
+  console.log("user", user);
 
   return (
     <>
       <RecommendUserRegister isAuth={!!user} />
       <ArticlesSection />
-      <ChoseCategoryDialog
-        isOpen={!user?.categories || user?.categories.length === 0}
-      />
+      <ChoseCategoryDialog isOpen={user?.categories.length === 0} />
     </>
   );
 }

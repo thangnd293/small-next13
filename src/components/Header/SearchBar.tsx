@@ -1,6 +1,7 @@
 import { useSearchArticle } from "@/services/client";
 import { Article } from "@/types/common";
-import { Image } from "@chakra-ui/next-js";
+import Image from "next/image";
+
 import {
   Box,
   Input as ChakraInput,
@@ -106,7 +107,7 @@ interface ISearchItemProps extends Article {
   onNavigate?: () => void;
 }
 const SearchItem = ({
-  mainImage,
+  thumbnail,
   title,
   totalLike,
   slug,
@@ -136,11 +137,12 @@ const SearchItem = ({
       onClick={onClick}
     >
       <Image
-        className="object-cover object-center"
-        width={12}
-        height={12}
-        src={mainImage}
+        className="object-cover object-center aspect-square"
+        width={40}
+        height={40}
+        src={thumbnail}
         alt={title}
+        quality={100}
       />
       <VStack align="start">
         <Text
