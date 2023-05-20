@@ -134,7 +134,9 @@ export const Article = ({ article, hasBookmarked }: Props) => {
   ];
 
   const isNotPublished = article.status !== ArticleStatus.Approve;
-
+  if (!user) {
+    console.log("article", article);
+  }
   return (
     <>
       <Box

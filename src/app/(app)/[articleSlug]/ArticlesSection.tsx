@@ -82,15 +82,17 @@ export default function ArticlesSection({ article }: Props) {
       <div className="flex flex-col gap-8">
         {isSuccess &&
           data.pages.map((page) =>
-            page.data.data.content.map((article) => (
-              <Article
-                key={article.id}
-                article={article}
-                hasBookmarked={articlesBookmarked.some(
-                  (ar) => ar.id === article.id
-                )}
-              />
-            ))
+            page.data.data.content
+              .filter((a) => a.id !== article.id)
+              .map((article) => (
+                <Article
+                  key={article.id}
+                  article={article}
+                  hasBookmarked={articlesBookmarked.some(
+                    (ar) => ar.id === article.id
+                  )}
+                />
+              ))
           )}
 
         {isFetching &&
