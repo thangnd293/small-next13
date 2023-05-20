@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDraftContext } from "./DraftContext";
 import DraftItem from "./DraftItem";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 interface Props {
   drafts: Article[];
@@ -26,10 +27,11 @@ interface Props {
 }
 export default function Aside({ drafts: _drafts, currentDraft }: Props) {
   const router = useRouter();
+  const { userInfo } = useGlobalContext();
 
   const { isOpenSidebar } = useDraftContext();
 
-  const { drafts } = useDrafts();
+  const { drafts } = useDrafts(userInfo?.username || "");
   const createDraft = useCreateDraft({
     onSuccess: () => {
       router.replace("/draft");

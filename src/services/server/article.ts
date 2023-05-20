@@ -66,9 +66,9 @@ export async function getDraft(id: string) {
   return data.data;
 }
 
-export async function getDrafts() {
+export async function getDrafts(username: string) {
   const res = await fetch(
-    `${API_URL}/article/getAllPaging?sort=updatedAt%2Cdesc&status=DRAFT`,
+    `${API_URL}/article/getAllPaging?sort=updatedAt%2Cdesc&status=DRAFT&username=${username}`,
     { cache: "no-store" }
   );
   if (!res.ok) {
