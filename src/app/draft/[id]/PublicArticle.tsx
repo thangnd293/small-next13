@@ -240,7 +240,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
                 <Text>
                   Xuất bản dưới tên:{" "}
                   <Text as="span" fontWeight="500">
-                    {userInfo?.username}
+                    {userInfo?.name}
                   </Text>
                 </Text>
                 <Select
