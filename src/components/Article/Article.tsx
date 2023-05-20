@@ -280,14 +280,16 @@ export const Article = ({ article, hasBookmarked }: Props) => {
             <Text>{article.totalLike}</Text>
           </HStack>
         </HStack>
-        <ActionButton
-          actions={actions}
-          aria-label={"Action"}
-          w="fit-content"
-          position="absolute"
-          right={0}
-          top={0}
-        />
+        {isSelfArticle && pathname?.startsWith("/profile") && (
+          <ActionButton
+            actions={actions}
+            aria-label={"Action"}
+            w="fit-content"
+            position="absolute"
+            right={0}
+            top={0}
+          />
+        )}
       </Box>
       <ConfirmDialog
         title="Sửa bài viết"

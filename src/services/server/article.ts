@@ -34,9 +34,9 @@ export async function createDraft(token: JWT) {
   return data.data;
 }
 
-export async function getLatestDraft(token: JWT) {
+export async function getLatestDraft(token: JWT, username: string) {
   const res = await fetch(
-    `${API_URL}/article/getAllPaging?page=0&size=1&sort=updatedAt%2Cdesc&status=DRAFT`,
+    `${API_URL}/article/getAllPaging?page=0&size=1&sort=updatedAt%2Cdesc&status=DRAFT&username=${username}`,
     { cache: "no-store" }
   );
   if (!res.ok) {

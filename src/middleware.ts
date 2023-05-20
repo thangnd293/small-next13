@@ -31,21 +31,20 @@ export default withAuth(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       );
     }
+    const user = await getUserByToken(token.accessToken as string);
+    if (!user) return NextResponse.redirect(new URL("/login", req.url));
+
+    const userInfo = await getUser(user.username);
+    if (!userInfo) return NextResponse.redirect(new URL("/login", req.url));
 
     if (req.nextUrl.pathname.startsWith("/draft")) {
-      const user = await getUserByToken(token.accessToken as string);
-      if (!user) return NextResponse.redirect(new URL("/login", req.url));
-
-      const userInfo = await getUser(user.username);
-      if (!userInfo) return NextResponse.redirect(new URL("/login", req.url));
-
       if (!userInfo.contentCreator) {
         return NextResponse.redirect(new URL("/", req.url));
       }
     }
 
     if (req.nextUrl.pathname === "/draft") {
-      const draft = await getLatestDraft(token);
+      const draft = await getLatestDraft(token, userInfo.username);
 
       return NextResponse.redirect(new URL(`/draft/${draft.id}`, req.url));
     }
