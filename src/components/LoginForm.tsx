@@ -16,8 +16,8 @@ type Input = {
 };
 
 const initialValues: Input = {
-  usernameOrEmail: "thang@gmail.com",
-  password: "123456789",
+  usernameOrEmail: "",
+  password: "",
 };
 
 const validateSchema = Yup.object().shape({
