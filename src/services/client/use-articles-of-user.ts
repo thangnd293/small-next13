@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 import { Article, DataWithPaging, Response } from "@/types/common";
+import { axios } from "@/lib/axios";
 
 export const getUserArticleOfUserKey = (userName: string, status: string) => [
   "articles",

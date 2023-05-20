@@ -1,6 +1,7 @@
+import { axios } from "@/lib/axios";
 import { Comment, Response, ResponseError } from "@/types/common";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 
 type Payload = {
   userId: number;
@@ -15,8 +16,7 @@ export const useAddComment = (
     Payload
   > = {}
 ) => {
-  return useMutation(
-    (payload: Payload) => axios.post("/interaction/v1/comment/add", payload),
-    config
-  );
+  return useMutation((payload: Payload) => {
+    return axios.post("/interaction/v1/comment/add", payload);
+  }, config);
 };

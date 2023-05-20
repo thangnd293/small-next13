@@ -1,10 +1,11 @@
+import { axios } from "@/lib/axios";
 import { User } from "@/types/common";
 import {
   UseMutationOptions,
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 export const useUserInfo = () => {
   const {} = useQuery(["/user-info"], () => axios.get(""));

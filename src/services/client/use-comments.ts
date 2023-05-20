@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 import { DataWithPaging, Response, Comment } from "@/types/common";
+import { axios } from "@/lib/axios";
 
 export const getCommentsKey = (articleId: number) => ["comments", articleId];
 

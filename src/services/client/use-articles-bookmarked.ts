@@ -1,6 +1,6 @@
+import { axios } from "@/lib/axios";
 import { Article, DataWithPaging, Response } from "@/types/common";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 export const getArticleBookmarkedKey = (userId?: number) => [
   "bookmarked",

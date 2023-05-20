@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 import { Article, DataWithPaging, Response } from "@/types/common";
 import { useEffect } from "react";
+import { axios } from "@/lib/axios";
 
 export const getArticlesKey = (categories: string[]) => [
   "articles",

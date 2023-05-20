@@ -1,5 +1,6 @@
+import { axios } from "@/lib/axios";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 export const useDeleteComment = (
   config: UseMutationOptions<unknown, AxiosError, number>

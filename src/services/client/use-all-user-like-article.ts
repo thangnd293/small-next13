@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 import { Response, UserLikeArticle } from "@/types/common";
+import { axios } from "@/lib/axios";
 
 export const getAllUserLikeArticleKey = (id: number) => ["all-like", id];
 
