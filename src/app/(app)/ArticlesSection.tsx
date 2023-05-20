@@ -7,7 +7,7 @@ import { useArticlesInfinite } from "@/services/client/use-articles-Infinite";
 export default function ArticlesSection() {
   const { userInfo, articlesBookmarked } = useGlobalContext();
   const { data, isSuccess, isFetching } = useArticlesInfinite(
-    userInfo?.categories.map((category) => category.name)
+    userInfo?.categories?.map((category) => category.name)
   );
 
   return (

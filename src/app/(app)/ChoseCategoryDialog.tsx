@@ -54,6 +54,7 @@ export default function ChoseCategoryDialog({ isOpen }: Props) {
 
   const handleUpdateCategories = async () => {
     if (!userInfo) return;
+
     updateCategoriesFollow(
       {
         userId: userInfo.id,

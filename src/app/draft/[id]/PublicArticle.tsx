@@ -72,8 +72,9 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
       value: _category.id,
     };
   });
-  const [keywords, setKeywords] = useState<any>(() =>
-    keyword.split(",").map((item) => ({ label: item, value: item }))
+  const [keywords, setKeywords] = useState<any>(
+    () =>
+      keyword?.split(",").map((item) => ({ label: item, value: item })) || []
   );
 
   const { categories } = useCategories();
@@ -112,7 +113,7 @@ const PublicArticle = ({ draft, isDisabled }: Props) => {
     setThumbnail(_thumbnail || mainImage);
     setKeywords(
       () =>
-        keyword.split(",").map((item) => ({ label: item, value: item })) || []
+        keyword?.split(",").map((item) => ({ label: item, value: item })) || []
     );
     setCategory(() => {
       if (!_category) return;

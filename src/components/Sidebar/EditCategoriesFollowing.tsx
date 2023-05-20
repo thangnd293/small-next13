@@ -23,7 +23,7 @@ export default function EditCategoriesFollowing() {
   const { userInfo, refreshUserInfo } = useGlobalContext();
 
   const [categoriesSelected, setCategoriesSelected] = useState<number[]>(
-    userInfo?.categories.map((c) => c.id) || []
+    userInfo?.categories?.map((c) => c.id) || []
   );
 
   useEffect(() => {

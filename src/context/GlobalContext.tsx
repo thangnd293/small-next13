@@ -29,6 +29,7 @@ const GlobalContext = createContext<GlobalContextValue>(initialValue);
 
 export const GlobalContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data, update } = useSession();
+
   const [userInfo, setUserInfo] = useState<User | null>(data?.user || null);
   const { articles, isLoading: isArticlesBookedLoading } =
     useArticlesBookmarked(userInfo?.id);
