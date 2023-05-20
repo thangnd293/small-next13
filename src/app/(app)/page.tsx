@@ -16,7 +16,7 @@ export default async function Home() {
     <>
       <RecommendUserRegister isAuth={!!user} />
       <ArticlesSection />
-      <ChoseCategoryDialog isOpen={user?.categories.length === 0} />
+      <ChoseCategoryDialog isOpen={user?.categories?.length === 0} />
     </>
   );
 }
