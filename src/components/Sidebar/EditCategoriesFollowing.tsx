@@ -126,7 +126,17 @@ export default function EditCategoriesFollowing() {
           </ModalBody>
 
           <ModalFooter>
-            <Button size="sm" variant="ghost" mr={3} onClick={onClose}>
+            <Button
+              size="sm"
+              variant="ghost"
+              mr={3}
+              onClick={() => {
+                setCategoriesSelected(
+                  userInfo?.categories.map((c) => c.id) || []
+                );
+                onClose();
+              }}
+            >
               Bỏ qua
             </Button>
             <Button

@@ -1,8 +1,7 @@
 "use client";
 import { User } from "@/types/common";
 import { Link } from "@chakra-ui/next-js";
-import { HStack, Avatar, VStack, Button, Box, Text } from "@chakra-ui/react";
-import React from "react";
+import { Avatar, Button, HStack, Text, VStack } from "@chakra-ui/react";
 
 interface Props {
   user: User;

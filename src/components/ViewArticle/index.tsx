@@ -5,18 +5,22 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { Article } from "@/types/common";
 import { Image, Link } from "@chakra-ui/next-js";
 import { Avatar, Badge, Button, HStack, Text, Tooltip } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 
 import {
   getAllUserLikeArticleKey,
+  getArticleBookmarkedKey,
   useAllUserLikeArticle,
+  useBookmarkArticle,
   useLikeArticle,
+  useUnBookmarkArticle,
 } from "@/services/client";
 import { useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
+import Icons from "../Icons";
 import ViewArticleContent from "./ViewArticleContent";
 
 interface Props {
@@ -25,8 +29,9 @@ interface Props {
 }
 export default function ViewArticle({ article, hasLiked = false }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
   const queryClient = useQueryClient();
-  const { userInfo } = useGlobalContext();
+  const { userInfo, articlesBookmarked } = useGlobalContext();
   const {
     mainImage,
     title,
@@ -70,6 +75,27 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
 
     likeArticle.mutate({ userId: userInfo?.id, articleId: article.id });
   }, [isLikedDebounced]);
+
+  const onSuccess = () =>
+    queryClient.invalidateQueries(getArticleBookmarkedKey(userInfo?.id));
+
+  const bookmarkArticle = useBookmarkArticle({ onSuccess });
+  const unbookmarkArticle = useUnBookmarkArticle({ onSuccess });
+  const hasBookmarked = articlesBookmarked.some((a) => a.id === article.id);
+  const IconBookmark = hasBookmarked ? Icons.Bookmarked : Icons.Bookmark;
+
+  const handleToggleBookmark = () => {
+    if (!userInfo) {
+      return router.push(`/login?from=${pathname}`);
+    }
+    const payload = { articleId: article.id, userId: userInfo.id };
+
+    if (hasBookmarked) {
+      unbookmarkArticle.mutate(payload);
+    } else {
+      bookmarkArticle.mutate(payload);
+    }
+  };
 
   return (
     <>
@@ -147,6 +173,7 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
               )}
             </Button>
           </Tooltip>
+
           <div className="relative">
             <Text
               fontSize="13px"
@@ -167,6 +194,27 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
           </div>
         </HStack>
         <CommentSection articleId={article.id} slug={article.slug} />
+        <Tooltip label="Lưu bài viết">
+          <Button
+            variant="unstyled"
+            aria-label={"Like article"}
+            className="group min-w-[unset]"
+            onClick={handleToggleBookmark}
+            color="gray.500"
+            _dark={{
+              color: "gray.400",
+              _hover: {
+                color: "gray.300",
+              },
+            }}
+          >
+            {unbookmarkArticle.isLoading || bookmarkArticle.isLoading ? (
+              <Icons.Loading width={24} className="animate-spin" />
+            ) : (
+              <IconBookmark width={24} />
+            )}
+          </Button>
+        </Tooltip>
       </HStack>
       {keywords.length > 0 && (
         <HStack
