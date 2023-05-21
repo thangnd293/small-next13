@@ -61,10 +61,13 @@ export default function SignUpForm() {
       router.push("/login");
     } else {
       const error = await response.json();
+
       if (error.message === "Username is already taken!")
         toast.error("Tên đăng nhập đã tồn tại");
       else if (error.message === "Email Address already in use!")
         toast.error("Email đã tồn tại");
+      else if (error.message === "Invalid param")
+        toast.error("Mật khẩu phải có ít nhất 6 ký tự");
       else toast.error("Đăng ký thất bại");
     }
   };

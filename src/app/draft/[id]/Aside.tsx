@@ -62,9 +62,14 @@ export default function Aside({ drafts: _drafts, currentDraft }: Props) {
         h="72px"
         borderBottom="1px"
         borderColor="gray.50"
+        bg="white"
         _dark={{
           borderColor: "gray.700",
+          bg: "gray.800",
         }}
+        position="sticky"
+        top="0"
+        zIndex="10"
       >
         <Button
           variant="text"

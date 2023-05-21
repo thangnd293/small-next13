@@ -15,7 +15,7 @@ import {
 import { useDraftContext } from "./DraftContext";
 import { Article } from "@/types/common";
 import { BsCloudCheck } from "react-icons/bs";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Editor from "./Editor";
 import { useArticle } from "@/services/client/use-article";
 
@@ -30,6 +30,7 @@ export default function EditDraft({ draft }: Props) {
     isSaving,
     changeIsPreviewMode,
   } = useDraftContext();
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const { article } = useArticle(draft.id);
 
@@ -40,6 +41,20 @@ export default function EditDraft({ draft }: Props) {
   const isDisabled =
     !currentArticle.title.trim() ||
     currentArticle.description.trim() === "<p></p>";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = headerRef.current;
+      if (!header) return;
+      if (window.scrollY !== 0) header.style.borderBlockColor = "#F2F2F2";
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <Box
@@ -52,7 +67,21 @@ export default function EditDraft({ draft }: Props) {
       }}
       maxW={`calc(100% - ${isOpenSidebar ? "304px" : "0px"})`}
     >
-      <HStack h="72px" px="16px" justify="space-between">
+      <HStack
+        ref={headerRef}
+        h="72px"
+        px="16px"
+        justify="space-between"
+        position="sticky"
+        top="0"
+        zIndex="10"
+        bg="white"
+        borderBottom="1px solid"
+        borderColor="transparent"
+        _dark={{
+          bg: "gray.800",
+        }}
+      >
         <IconButton
           aria-label={"Toggle sidebar"}
           onClick={toggleSidebar}

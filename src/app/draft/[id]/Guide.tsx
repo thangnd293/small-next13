@@ -32,8 +32,8 @@ const Guide = () => {
           justifyContent="center"
           variant="unstyled"
           position="fixed"
-          bottom={10}
-          right={10}
+          bottom={2}
+          right={2}
           color="gray.500"
           _hover={{ color: "gray.700" }}
           _dark={{ color: "gray.200", _hover: { color: "gray.400" } }}
@@ -55,7 +55,15 @@ const Guide = () => {
   };
 
   return (
-    <Box position="fixed" bottom={0} left={0} bg="gray.50" h="300px" w="full">
+    <Box
+      id="guide"
+      position="fixed"
+      bottom={0}
+      left={0}
+      bg="gray.50"
+      h="300px"
+      w="full"
+    >
       <Box w="fit-content" p="15px" marginLeft="auto">
         <Tooltip label="Đóng hướng dẫn">
           <CloseButton onClick={() => setIsShow(false)} />

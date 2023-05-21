@@ -184,7 +184,7 @@ export default function ViewArticle({ article, hasLiked = false }: Props) {
             >
               {likeCount}
             </Text>
-            <div className="absolute hidden w-40 p-3 peer-hover:flex bg-dark-visible rounded-xl">
+            <div className="absolute flex-col hidden w-40 p-3 peer-hover:flex bg-dark-visible rounded-xl">
               {allUserLike?.map((user) => (
                 <Text key={user.id} noOfLines={1} color="white" fontSize="14px">
                   {user.name}
