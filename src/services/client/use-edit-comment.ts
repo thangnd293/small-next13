@@ -2,7 +2,7 @@ import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
 import { Comment, Response } from "@/types/common";
-import { axios } from "@/lib/axios";
+import axios from "axios";
 
 type Payload = Pick<Comment, "id" | "description">;
 

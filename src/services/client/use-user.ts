@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { Response, User } from "@/types/common";
-import { axios } from "@/lib/axios";
+import axios from "axios";
 
 export const getUserKey = (username: string) => ["user", username];
 

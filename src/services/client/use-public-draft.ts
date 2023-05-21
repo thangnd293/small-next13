@@ -1,7 +1,7 @@
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { Article, Response, ResponseError } from "@/types/common";
 import { AxiosError } from "axios";
-import { axios } from "@/lib/axios";
+import axios from "axios";
 
 export const usePublicDraft = (
   config: UseMutationOptions<

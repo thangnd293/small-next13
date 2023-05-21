@@ -1,4 +1,4 @@
-import { axios } from "@/lib/axios";
+import axios from "axios";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

@@ -1,7 +1,7 @@
 import { Article, Response, ResponseError } from "@/types/common";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { axios } from "@/lib/axios";
+import axios from "axios";
 
 const deleteArticle = (id: number) => {
   return axios.put<Response<Article>>(

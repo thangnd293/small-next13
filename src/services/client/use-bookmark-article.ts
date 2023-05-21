@@ -1,4 +1,4 @@
-import { axios } from "@/lib/axios";
+import axios from "axios";
 import { Article, Response, ResponseError } from "@/types/common";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";

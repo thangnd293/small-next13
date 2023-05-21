@@ -2,7 +2,7 @@ import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 import { Response } from "@/types/common";
-import { axios } from "@/lib/axios";
+import axios from "axios";
 
 type Payload = {
   userId: number;

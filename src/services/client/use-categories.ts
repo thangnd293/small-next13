@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Response, Category } from "@/types/common";
-import { axios } from "@/lib/axios";
+import axios from "axios";
 
 export const useCategories = () => {
   const { data, ...rest } = useQuery(["categories"], () =>

@@ -1,4 +1,4 @@
-import { axios } from "@/lib/axios";
+import axios from "axios";
 import { Article, DataWithPaging, Response } from "@/types/common";
 import { useQuery } from "@tanstack/react-query";
 
