@@ -81,7 +81,9 @@ export async function getDrafts(username: string) {
 }
 
 export async function getArticle(id: number | string) {
-  const res = await fetch(`${API_URL}/article/getDetail?id=${id}`);
+  const res = await fetch(`${API_URL}/article/getDetail?id=${id}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     redirect("/404");
