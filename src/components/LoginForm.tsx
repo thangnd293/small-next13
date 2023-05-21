@@ -21,8 +21,8 @@ const initialValues: Input = {
 };
 
 const validateSchema = Yup.object().shape({
-  usernameOrEmail: Yup.string().required(),
-  password: Yup.string().required(),
+  usernameOrEmail: Yup.string().required("Vui lòng nhập Email"),
+  password: Yup.string().required("Vui lòng nhập mật khẩu"),
 });
 
 export default function LoginForm() {
